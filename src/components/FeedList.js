@@ -1,12 +1,16 @@
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../firebase";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Feed from "./Feed";
 
-const FeedList = () => {
-  const [feedList, setFeedList] = useState([]);
-  const [haveFeed, setHaveFeed] = useState(false);
-
+const FeedList = ({
+  nowUser,
+  feedList,
+  setFeedList,
+  haveFeed,
+  setHaveFeed,
+}) => {
+  /* 읽기 */
   useEffect(() => {
     const getFeeds = async () => {
       const feedRef = collection(db, "feeds");
@@ -14,26 +18,29 @@ const FeedList = () => {
         query(feedRef, orderBy("createdAt", "desc"))
       );
       if (feedSnap.docs.length !== 0) {
-        setHaveFeed(true);
         const feeds = feedSnap.docs.map((item) => ({
           id: item.id,
           ...item.data(),
         }));
+        setHaveFeed(true);
         setFeedList(feeds);
       } else {
         setHaveFeed(false);
       }
     };
     getFeeds();
-  }, []);
+  }, [setFeedList, setHaveFeed]);
 
   const list = feedList.map((item) => (
     <li key={item.id}>
       <Feed
         feedText={item.feedText}
         displayName={item.displayName}
-        uid={item.uid}
+        validUser={nowUser.uid === item.creatorId}
         id={item.id}
+        feedList={feedList}
+        setFeedList={setFeedList}
+        imgUrl={item.imgUrl}
       />
     </li>
   ));
