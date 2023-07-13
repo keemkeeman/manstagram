@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../firebase";
 
 const LoginForm = () => {
@@ -29,28 +32,39 @@ const LoginForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validEmail || !validPw) {
       window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
     } else {
       try {
-        createUserWithEmailAndPassword(auth, email, pw);
+        await createUserWithEmailAndPassword(auth, email, pw);
       } catch (err) {
-        console.error(`login error: ${err}`);
+        console.error(`Join error: ${err}`);
       }
       setEmail("");
       setPw("");
     }
   };
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, pw);
+    } catch (err) {
+      console.error(`Login error: ${err}`);
+    }
+  };
+
   const handleLoginPage = () => {
     setHaveAccount((prev) => !prev);
+    setEmail("");
+    setPw("");
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={haveAccount ? handleLogin : handleSubmit}>
         <input
           onChange={handleValidEmail}
           value={email}
@@ -65,10 +79,7 @@ const LoginForm = () => {
           type="password"
         />
         {!validPw && <p>영문, 숫자 조합 8자리 이상 입력해주세요.</p>}
-        <input
-          type="submit"
-          value={haveAccount ? "로그인" : "계정 생성"}
-        />
+        <input type="submit" value={haveAccount ? "로그인" : "계정 생성"} />
       </form>
       <p onClick={handleLoginPage}>
         {haveAccount ? "새로운 계정 만들기" : "로그인하러 가기"}

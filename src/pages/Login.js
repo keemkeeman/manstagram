@@ -13,6 +13,7 @@ const Login = () => {
   };
   return (
     <div>
+      <h2>Manstagram</h2>
       <LoginForm />
       <button onClick={googleLogin}>구글 로그인</button>
     </div>

@@ -1,25 +1,38 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AppRoutes from "./components/AppRoutes";
+import { auth } from "./firebase";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [init, setInit] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [nowUser, setNowUser] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setNowUser({
+          displayName: user.displayName,
+          uid: user.uid,
+        });
+      } else {
+        setNowUser(null);
+      }
+      setInit(true);
+    });
+  }, []);
 
   return (
     <div className="App">
-      <BrowserRouter>
-        {isLogin && <Header />}
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-        {isLogin && <Footer />}
-      </BrowserRouter>
+      {init ? (
+        <AppRoutes
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          nowUser={nowUser}
+        />
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }
