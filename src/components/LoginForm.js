@@ -4,6 +4,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { db } from "../firebase";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -32,13 +34,21 @@ const LoginForm = () => {
     }
   };
 
+  /* 회원가입 */
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!validEmail || !validPw) {
-      window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+      window.alert("이메일 또는 비밀번호가 올바르지 않습니다.");
     } else {
       try {
         await createUserWithEmailAndPassword(auth, email, pw);
+        await addDoc(collection(db, "users"), {
+          createdAt: Timestamp.now(),
+          email: email,
+          password: pw,
+          nickName: "닉네임",
+        });
       } catch (err) {
         console.error(`Join error: ${err}`);
       }
@@ -47,12 +57,13 @@ const LoginForm = () => {
     }
   };
 
+  /* 로그인 */
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, pw);
     } catch (err) {
-      console.error(`Login error: ${err}`);
+      console.error(`Login error: ${err.error}`);
     }
   };
 

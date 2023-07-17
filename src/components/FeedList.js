@@ -1,51 +1,30 @@
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { db } from "../firebase";
 import { useEffect } from "react";
 import Feed from "./Feed";
+import { getFeeds } from "../fireUtil";
 
-const FeedList = ({
-  nowUser,
-  feedList,
-  setFeedList,
-  haveFeed,
-  setHaveFeed,
-}) => {
-  /* 읽기 */
+const FeedList = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
+  
+  /* 피드 읽기 */
   useEffect(() => {
-    const getFeeds = async () => {
-      const feedRef = collection(db, "feeds");
-      const feedSnap = await getDocs(
-        query(feedRef, orderBy("createdAt", "desc"))
-      );
-      if (feedSnap.docs.length !== 0) {
-        const feeds = feedSnap.docs.map((item) => ({
-          id: item.id,
-          ...item.data(),
-        }));
-        setHaveFeed(true);
-        setFeedList(feeds);
-      } else {
-        setHaveFeed(false);
-      }
-    };
-    getFeeds();
-  }, [setFeedList, setHaveFeed]);
+    getFeeds(setFeedList);
+  }, [setFeedList]);
+  console.log(feedList);
 
-  const list = feedList.map((item) => (
-    <li key={item.id}>
+  /* 리스트 뿌려주기 */
+  const list = feedList.map((feed) => (
+    <li key={feed.id}>
       <Feed
-        feedText={item.feedText}
-        displayName={item.displayName}
-        validUser={nowUser.uid === item.creatorId}
-        id={item.id}
+        validUser={nowUser.uid === feed.creatorId}
         feedList={feedList}
         setFeedList={setFeedList}
-        imgUrl={item.imgUrl}
+        feed={feed}
+        fileUrl={fileUrl}
+        setFileUrl={setFileUrl}
       />
     </li>
   ));
 
-  return <ul>{haveFeed ? list : <p>피드가 없습니다.</p>}</ul>;
+  return <ul>{list}</ul>;
 };
 
 export default FeedList;

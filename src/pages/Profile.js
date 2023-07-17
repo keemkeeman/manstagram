@@ -11,7 +11,7 @@ const Profile = ({ setIsLoggedIn, nowUser }) => {
   return (
     <div>
       <h2>Profile</h2>
-      <p>{`welcome ${nowUser.displayName}`}</p>
+      <p>{`welcome ${nowUser.nickName}`}</p>
       <Link to="/" onClick={handleLogout}>
         Logout
       </Link>

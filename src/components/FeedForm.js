@@ -1,58 +1,41 @@
 import { useState } from "react";
-import { db, storage } from "../firebase";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { v4 as uuidv4 } from "uuid";
+import { createFeed } from "../fireUtil";
 
-const FeedForm = ({ nowUser, feedList, setFeedList, setHaveFeed }) => {
+const FeedForm = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
   const [feedText, setFeedText] = useState("");
-  const [fileUrl, setFileUrl] = useState("");
 
   const handleFeedText = (e) => {
     setFeedText(e.target.value);
   };
 
+  /* 이미지 url 생성 */
   const handleFile = (e) => {
     const file = e.target.files[0];
-
-    const reader = new FileReader();
-    reader.onloadend = (e) => {
-      setFileUrl(e.currentTarget.result);
-    };
-    reader.readAsDataURL(file);
+    if (!file || !file.type.startsWith("image/")) {
+      window.alert("올바른 이미지 파일을 선택해주세요!");
+      return;
+    } else {
+      const reader = new FileReader();
+      reader.onloadend = (e) => {
+        setFileUrl(e.currentTarget.result);
+      };
+      reader.onerror = () => {
+        window.alert("이미지를 읽는 도중 오류가 발생했습니다!");
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  /* 생성 */
+  /* 피드 생성 */
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (fileUrl === "") {
-      window.alert("사진은 필수입니다!");
-    } else {
-      let imgUrl = "";
-
-      const fileRef = ref(storage, `${nowUser.uid}/${uuidv4()}`);
-
-      const response = await uploadString(fileRef, fileUrl, "data_url");
-      imgUrl = await getDownloadURL(response.ref);
-
-      const docRef = await addDoc(collection(db, "feeds"), {
-        createdAt: Timestamp.now(),
-        creatorId: nowUser.uid,
-        feedText: feedText,
-        imgUrl: imgUrl,
-      });
-
-      const newFeed = {
-        id: docRef.id,
-        createdAt: Timestamp.now(),
-        creatorId: nowUser.uid,
-        feedText: feedText,
-      };
+    try {
+      const newFeed = await createFeed(nowUser, feedText, fileUrl);
       setFeedList([newFeed, ...feedList]);
-      setHaveFeed(true);
-      setFileUrl("");
+      setFileUrl(null);
       setFeedText("");
+    } catch (err) {
+      console.error(err);
     }
   };
 

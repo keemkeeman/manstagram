@@ -10,6 +10,7 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user);
         setIsLoggedIn(true);
         setNowUser({
           displayName: user.displayName,

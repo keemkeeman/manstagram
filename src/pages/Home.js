@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const Home = ({ nowUser }) => {
   const [feedList, setFeedList] = useState([]);
-  const [haveFeed, setHaveFeed] = useState(false);
+  const [fileUrl, setFileUrl] = useState(null);
 
   return (
     <div>
@@ -13,14 +13,15 @@ const Home = ({ nowUser }) => {
         nowUser={nowUser}
         feedList={feedList}
         setFeedList={setFeedList}
-        setHaveFeed={setHaveFeed}
+        fileUrl={fileUrl}
+        setFileUrl={setFileUrl}
       />
       <FeedList
         nowUser={nowUser}
         feedList={feedList}
         setFeedList={setFeedList}
-        haveFeed={haveFeed}
-        setHaveFeed={setHaveFeed}
+        fileUrl={fileUrl}
+        setFileUrl={setFileUrl}
       />
     </div>
   );
