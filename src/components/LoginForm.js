@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../firebase";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { db } from "../firebase";
+import { createUser, signInUser } from "../fireUtil";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -34,37 +28,23 @@ const LoginForm = () => {
     }
   };
 
-  /* 회원가입 */
+  /* 회원 생성 */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validEmail || !validPw) {
       window.alert("이메일 또는 비밀번호가 올바르지 않습니다.");
     } else {
-      try {
-        await createUserWithEmailAndPassword(auth, email, pw);
-        await addDoc(collection(db, "users"), {
-          createdAt: Timestamp.now(),
-          email: email,
-          password: pw,
-          nickName: "닉네임",
-        });
-      } catch (err) {
-        console.error(`Join error: ${err}`);
-      }
+      createUser(email, pw);
       setEmail("");
       setPw("");
     }
   };
 
-  /* 로그인 */
+  /* 회원 로그인 */
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, pw);
-    } catch (err) {
-      console.error(`Login error: ${err.error}`);
-    }
+    signInUser(email, pw);
   };
 
   const handleLoginPage = () => {

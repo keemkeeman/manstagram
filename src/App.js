@@ -6,17 +6,17 @@ function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nowUser, setNowUser] = useState(null);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log(user);
+    auth.onAuthStateChanged((loggedUser) => {
+      if (loggedUser) {
+        console.log("login");
         setIsLoggedIn(true);
-        setNowUser({
-          displayName: user.displayName,
-          uid: user.uid,
-        });
+        setNowUser(loggedUser);
       } else {
+        console.log("logout");
+        setIsLoggedIn(false);
         setNowUser(null);
       }
       setInit(true);
@@ -30,6 +30,8 @@ function App() {
           isLoggedIn={isLoggedIn}
           setIsLoggedIn={setIsLoggedIn}
           nowUser={nowUser}
+          user={user}
+          setUser={setUser}
         />
       ) : (
         <p>Loading...</p>

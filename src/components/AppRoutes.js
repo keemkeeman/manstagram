@@ -5,7 +5,7 @@ import Profile from "../pages/Profile";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const AppRoutes = ({ isLoggedIn, setIsLoggedIn, nowUser }) => {
+const AppRoutes = ({ isLoggedIn, setIsLoggedIn, nowUser, user, setUser }) => {
   return (
     <>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
@@ -15,11 +15,21 @@ const AppRoutes = ({ isLoggedIn, setIsLoggedIn, nowUser }) => {
             <Route path="/" element={<Login />} />
           ) : (
             <>
-              <Route path="/" element={<Home nowUser={nowUser} />} />
+              <Route
+                path="/"
+                element={
+                  <Home nowUser={nowUser} user={user} setUser={setUser} />
+                }
+              />
               <Route
                 path="/profile"
                 element={
-                  <Profile setIsLoggedIn={setIsLoggedIn} nowUser={nowUser} />
+                  <Profile
+                    setIsLoggedIn={setIsLoggedIn}
+                    user={user}
+                    setUser={setUser}
+                    nowUser={nowUser}
+                  />
                 }
               />
             </>
