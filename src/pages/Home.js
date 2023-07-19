@@ -1,16 +1,10 @@
 import FeedForm from "../components/FeedForm";
 import FeedList from "../components/FeedList";
-import { getUser } from "../fireUtil";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const Home = ({ nowUser, setNowUser }) => {
+const Home = ({ nowUser }) => {
   const [feedList, setFeedList] = useState([]);
-  const [fileUrl, setFileUrl] = useState(null);
-
-  useEffect(() => {
-    getUser(setNowUser);
-  }, [setNowUser]);
-  console.log("home rander");
+  const [fileUrl, setFileUrl] = useState("");
 
   return (
     <div>
@@ -23,6 +17,7 @@ const Home = ({ nowUser, setNowUser }) => {
         setFileUrl={setFileUrl}
       />
       <FeedList
+        nowUser={nowUser}
         feedList={feedList}
         setFeedList={setFeedList}
         fileUrl={fileUrl}

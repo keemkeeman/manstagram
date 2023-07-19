@@ -32,11 +32,11 @@ const FeedForm = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
     try {
       const newFeed = await createFeed(nowUser, feedText, fileUrl);
       setFeedList([newFeed, ...feedList]);
-      setFileUrl(null);
-      setFeedText("");
     } catch (err) {
       console.error(err);
     }
+    setFileUrl("");
+    setFeedText("");
   };
 
   return (

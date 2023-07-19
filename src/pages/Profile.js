@@ -4,7 +4,7 @@ import { logOut, updateUser, deleteAccount } from "../fireUtil";
 import { useNavigate } from "react-router-dom";
 
 const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
-  const [nic, setNic] = useState(nowUser.displayName);
+  const [nic, setNic] = useState(nowUser.nickName);
   const [phoneNumber, setPhoneNumber] = useState(nowUser.phoneNumber);
   const [profilePicUrl, setProfilePicUrl] = useState(nowUser.profilePicUrl);
   const [introduction, setIntroduction] = useState(nowUser.introduction);
@@ -18,6 +18,10 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
 
   const handleNic = (e) => {
     setNic(e.target.value);
+  };
+
+  const handleIntroduction = (e) => {
+    setIntroduction(e.target.value);
   };
 
   const handleOpenEdit = () => {
@@ -34,7 +38,11 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
       profilePicUrl,
       introduction
     );
-    setNowUser((prev) => ({ ...prev, nickName: nic }));
+    setNowUser((prev) => ({
+      ...prev,
+      nickName: nic,
+      introduction: introduction,
+    }));
     setIsEditOpen(false);
   };
 
@@ -70,7 +78,7 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
                 type="text"
                 maxLength={100}
                 placeholder="100자 이내 작성"
-                onChange={null}
+                onChange={handleIntroduction}
               />
             </div>
             <div>

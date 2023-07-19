@@ -36,21 +36,15 @@ const Feed = ({ feed, validUser, feedList, setFeedList, fileUrl }) => {
   };
 
   /* 수정 */
-  const submitEditText = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
     try {
-      const updatedList = await updateFeed(
-        feed,
-        newText,
-        feedList,
-        fileUrl,
-        newFileUrl
-      );
+      const updatedList = await updateFeed(feed, newText, feedList, newFileUrl);
       setFeedList(updatedList);
-      setIsEditOpen(false);
     } catch (err) {
       console.error(err);
     }
+    setIsEditOpen(false);
   };
 
   /* 삭제 */
@@ -78,7 +72,7 @@ const Feed = ({ feed, validUser, feedList, setFeedList, fileUrl }) => {
       </div>
       <div>comments</div>
       {isEditOpen && (
-        <form className="editForm" onSubmit={submitEditText}>
+        <form className="editForm" onSubmit={handleEdit}>
           <h3>change your Feed</h3>
           <input type="file" accept="image/*" onChange={handleFile} />
           <input

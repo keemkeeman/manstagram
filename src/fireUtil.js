@@ -32,25 +32,27 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
   if (fileUrl === null) {
     window.alert("사진은 필수입니다!");
   } else {
-    /* 이미지 */
-    const fileRef = ref(storage, `${auth.currentUser.uid}/${uuidv4()}`);
+    /* storage 추가 */
+    const fileRef = ref(storage, `${nowUser.id}/${uuidv4()}`);
     const response = await uploadString(fileRef, fileUrl, "data_url");
     const imgUrl = await getDownloadURL(response.ref);
 
-    /* 텍스트 */
+    /* firestore 추가 */
     const docRef = await addDoc(collection(db, "feeds"), {
       createdAt: Timestamp.now(),
-      creatorId: auth.currentUser.uid,
+      creatorId: nowUser.id,
       feedText: feedText,
       imgUrl: imgUrl,
+      nickName: nowUser.nickName,
     });
 
     return {
       id: docRef.id,
       createdAt: Timestamp.now(),
-      creatorId: auth.currentUser.uid,
+      creatorId: nowUser.id,
       feedText: feedText,
       imgUrl: imgUrl,
+      nickName: nowUser.nickName,
     };
   }
 };
@@ -71,14 +73,15 @@ export const getFeeds = async (setFeedList) => {
 /* 3. 피드 수정 */
 export const updateFeed = async (feed, newText, feedList, newFileUrl) => {
   const updatedFeedData = {
-    createdAt: Timestamp.now(),
     feedText: newText,
   };
 
   if (newFileUrl) {
     /* Storage 업데이트 */
-    /* 이전꺼 삭제하고 */
-    await deleteObject(ref(storage, feed.imgUrl));
+    /* 이전 사진 있다면 삭제하고 근데 등록에서 필수라 괜춘*/
+    if (feed.imgUrl) {
+      await deleteObject(ref(storage, feed.imgUrl));
+    }
     /* 새로 등록함 */
     const fileRef = ref(storage, `${feed.creatorId}/${uuidv4()}`);
     const response = await uploadString(fileRef, newFileUrl, "data_url");
@@ -125,7 +128,7 @@ export const deleteFeed = async (feed, feedList, setFeedList) => {
 export const createUser = async (email, pw, setNowUser) => {
   try {
     await createUserWithEmailAndPassword(auth, email, pw);
-    const docRef = await addDoc(collection(db, "users"), {
+    await addDoc(collection(db, "users"), {
       createdAt: Timestamp.now(),
       email: email,
       nickName: "임시 닉네임",
@@ -134,7 +137,6 @@ export const createUser = async (email, pw, setNowUser) => {
       introduction: "",
     });
     setNowUser({
-      id: docRef.id,
       createdAt: Timestamp.now(),
       email: email,
       nickName: "임시 닉네임",
@@ -167,7 +169,7 @@ export const getUser = async (setNowUser) => {
     query(collection(db, "users"), where("email", "==", auth.currentUser.email))
   );
   const users = userSnap.docs.map((user) => ({
-    // id: item.id,
+    id: user.id,
     ...user.data(),
   }));
   setNowUser(users[0]);
@@ -186,7 +188,19 @@ export const updateUser = async (
   const updatedFields = {}; // 빈 객체를 만들어 변경할 프로퍼티를 수집합니다.
 
   // 값이 새로 들어온 경우에만 업데이트할 프로퍼티를 추가합니다.
-  if (nic) updatedFields.nickName = nic;
+  if (nic) {
+    updatedFields.nickName = nic;
+    /* Firestore 업데이트 */
+    const feedsQuery = query(
+      collection(db, "feeds"),
+      where("creatorId", "==", nowUser.id)
+    );
+    const feedsSnap = await getDocs(feedsQuery);
+    const updatePromises = feedsSnap.docs.map((doc) =>
+      updateDoc(doc.ref, { nickName: nic })
+    );
+    await Promise.all(updatePromises);
+  }
   if (phoneNumber) updatedFields.phoneNumber = phoneNumber;
   if (profilePicUrl) updatedFields.profilePicUrl = profilePicUrl;
   if (introduction) updatedFields.introduction = introduction;

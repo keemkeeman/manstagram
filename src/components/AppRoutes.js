@@ -15,10 +15,7 @@ const AppRoutes = ({ isLoggedIn, setIsLoggedIn, nowUser, setNowUser }) => {
             <Route path="/" element={<Login setNowUser={setNowUser} />} />
           ) : (
             <>
-              <Route
-                path="/"
-                element={<Home nowUser={nowUser} setNowUser={setNowUser} />}
-              />
+              <Route path="/" element={<Home nowUser={nowUser} />} />
               <Route
                 path="/profile"
                 element={
