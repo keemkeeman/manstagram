@@ -189,6 +189,8 @@ export const updateUser = async (
   const updatedFields = {}; // 빈 객체를 만들어 변경할 프로퍼티를 수집합니다.
 
   // 값이 새로 들어온 경우에만 업데이트할 프로퍼티를 추가합니다.
+  // 닉네임은 해당 계정이 작성한 모든 피드를 가져와야해서
+  // getDocs로 다 가져오고 updateDoc으로 업데이트
   if (nic) {
     updatedFields.nickName = nic;
     /* Firestore 업데이트 */
@@ -198,10 +200,7 @@ export const updateUser = async (
     );
     if (feedsQuery) {
       const feedsSnap = await getDocs(feedsQuery);
-      const updatePromises = feedsSnap.docs.map((doc) =>
-        updateDoc(doc.ref, { nickName: nic })
-      );
-      await Promise.all(updatePromises);
+      feedsSnap.docs.map((doc) => updateDoc(doc.ref, { nickName: nic }));
     }
   }
   if (phoneNumber) updatedFields.phoneNumber = phoneNumber;

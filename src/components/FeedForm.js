@@ -42,14 +42,15 @@ const FeedForm = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        name="feedText"
         type="text"
         value={feedText}
         onChange={handleFeedText}
         placeholder="What's on your mind?"
         maxLength={100}
       />
-      <input type="file" accept="image/*" onChange={handleFile} />
-      <input type="submit" value="go" />
+      <input name="image" type="file" accept="image/*" onChange={handleFile} />
+      <input name="submitButton" type="submit" value="go" />
     </form>
   );
 };

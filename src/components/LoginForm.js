@@ -57,6 +57,7 @@ const LoginForm = ({ setNowUser }) => {
     <>
       <form onSubmit={haveAccount ? handleLogin : handleSubmit}>
         <input
+          name="email"
           onChange={handleValidEmail}
           value={email}
           placeholder="email"
@@ -64,13 +65,18 @@ const LoginForm = ({ setNowUser }) => {
         />
         {!validEmail && <p>올바른 이메일을 입력해주세요.</p>}
         <input
+          name="password"
           onChange={handleValidPw}
           value={pw}
           placeholder="password"
           type="password"
         />
         {!validPw && <p>영문, 숫자 조합 8자리 이상 입력해주세요.</p>}
-        <input type="submit" value={haveAccount ? "로그인" : "계정 생성"} />
+        <input
+          name="loginButton"
+          type="submit"
+          value={haveAccount ? "로그인" : "계정 생성"}
+        />
       </form>
       <p onClick={handleLoginPage}>
         {haveAccount ? "새로운 계정 만들기" : "로그인하러 가기"}

@@ -74,14 +74,20 @@ const Feed = ({ feed, validUser, feedList, setFeedList, fileUrl }) => {
       {isEditOpen && (
         <form className="editForm" onSubmit={handleEdit}>
           <h3>change your Feed</h3>
-          <input type="file" accept="image/*" onChange={handleFile} />
           <input
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleFile}
+          />
+          <input
+            name="feedText"
             type="text"
             maxLength={100}
             value={newText}
             onChange={handleNewText}
           />
-          <input type="submit" value="바꿔!" />
+          <input name="submitButton" type="submit" value="바꿔!" />
           <button onClick={handleDelete}>삭제</button>
           <button onClick={handleEditClose}>취소</button>
         </form>
