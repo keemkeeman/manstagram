@@ -23,8 +23,7 @@ function App() {
     });
   }, []);
 
-  console.log("home rander");
-  console.log(nowUser.id);
+  console.log("app rander");
 
   return (
     <div className="App">

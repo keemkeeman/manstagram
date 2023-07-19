@@ -128,7 +128,7 @@ export const deleteFeed = async (feed, feedList, setFeedList) => {
 export const createUser = async (email, pw, setNowUser) => {
   try {
     await createUserWithEmailAndPassword(auth, email, pw);
-    await addDoc(collection(db, "users"), {
+    const docRef = await addDoc(collection(db, "users"), {
       createdAt: Timestamp.now(),
       email: email,
       nickName: "임시 닉네임",
@@ -137,6 +137,7 @@ export const createUser = async (email, pw, setNowUser) => {
       introduction: "",
     });
     setNowUser({
+      id: docRef.id,
       createdAt: Timestamp.now(),
       email: email,
       nickName: "임시 닉네임",
@@ -195,11 +196,13 @@ export const updateUser = async (
       collection(db, "feeds"),
       where("creatorId", "==", nowUser.id)
     );
-    const feedsSnap = await getDocs(feedsQuery);
-    const updatePromises = feedsSnap.docs.map((doc) =>
-      updateDoc(doc.ref, { nickName: nic })
-    );
-    await Promise.all(updatePromises);
+    if (feedsQuery) {
+      const feedsSnap = await getDocs(feedsQuery);
+      const updatePromises = feedsSnap.docs.map((doc) =>
+        updateDoc(doc.ref, { nickName: nic })
+      );
+      await Promise.all(updatePromises);
+    }
   }
   if (phoneNumber) updatedFields.phoneNumber = phoneNumber;
   if (profilePicUrl) updatedFields.profilePicUrl = profilePicUrl;
