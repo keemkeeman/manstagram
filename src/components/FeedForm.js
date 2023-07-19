@@ -1,14 +1,7 @@
 import { useState } from "react";
 import { createFeed } from "../fireUtil";
 
-const FeedForm = ({
-  user,
-  nowUser,
-  feedList,
-  setFeedList,
-  fileUrl,
-  setFileUrl,
-}) => {
+const FeedForm = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
   const [feedText, setFeedText] = useState("");
 
   const handleFeedText = (e) => {
@@ -37,7 +30,7 @@ const FeedForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newFeed = await createFeed(user, nowUser, feedText, fileUrl);
+      const newFeed = await createFeed(nowUser, feedText, fileUrl);
       setFeedList([newFeed, ...feedList]);
       setFileUrl(null);
       setFeedText("");

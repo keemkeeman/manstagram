@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import Feed from "./Feed";
 import { getFeeds } from "../fireUtil";
+import { auth } from "../firebase";
 
-const FeedList = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
+const FeedList = ({ feedList, setFeedList, fileUrl, setFileUrl }) => {
   /* 피드 읽기 */
   useEffect(() => {
     getFeeds(setFeedList);
@@ -12,7 +13,7 @@ const FeedList = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
   const list = feedList.map((feed) => (
     <li key={feed.id}>
       <Feed
-        validUser={nowUser.uid === feed.creatorId}
+        validUser={auth.currentUser.uid === feed.creatorId}
         feedList={feedList}
         setFeedList={setFeedList}
         feed={feed}

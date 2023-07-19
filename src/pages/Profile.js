@@ -3,12 +3,13 @@ import { useState } from "react";
 import { logOut, updateUser, deleteAccount } from "../fireUtil";
 import { useNavigate } from "react-router-dom";
 
-const Profile = ({ setIsLoggedIn, user, setUser, nowUser }) => {
-  const [nic, setNic] = useState(user.nickName);
+const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
+  const [nic, setNic] = useState(nowUser.displayName);
+  const [phoneNumber, setPhoneNumber] = useState(nowUser.phoneNumber);
+  const [profilePicUrl, setProfilePicUrl] = useState(nowUser.profilePicUrl);
+  const [introduction, setIntroduction] = useState(nowUser.introduction);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const navigate = useNavigate();
-
-  console.log("유저아이디" + user.id);
 
   const handleLogout = () => {
     logOut();
@@ -25,31 +26,57 @@ const Profile = ({ setIsLoggedIn, user, setUser, nowUser }) => {
 
   const handleEditProfile = (e) => {
     e.preventDefault();
-    updateUser(user, nic);
-    setUser((prev) => ({ ...prev, nickName: nic }));
+    updateUser(
+      nowUser,
+      setNowUser,
+      nic,
+      phoneNumber,
+      profilePicUrl,
+      introduction
+    );
+    setNowUser((prev) => ({ ...prev, nickName: nic }));
     setIsEditOpen(false);
   };
 
   const handleDeleteAccount = () => {
-    deleteAccount(user);
+    deleteAccount();
     navigate("/");
   };
 
   return (
     <div>
       <h2>Profile</h2>
-      <span>{`welcome ${user.nickName}`}</span>
+      <span>{`welcome ${nowUser.nickName}`}</span>
       {!isEditOpen && <button onClick={handleOpenEdit}>회원정보 수정</button>}
       {isEditOpen && (
         <>
           <form onSubmit={handleEditProfile}>
-            <label>닉네임 수정</label>
-            <input
-              type="text"
-              maxLength={10}
-              placeholder="10자 이내 작성"
-              onChange={handleNic}
-            />
+            <div>
+              <label className="edit-title">닉네임 수정</label>
+              <input
+                type="text"
+                maxLength={10}
+                placeholder="10자 이내 작성"
+                onChange={handleNic}
+              />
+            </div>
+            <div>
+              <label className="edit-title">프로필 사진 수정</label>
+              <input type="file" onChange={null} />
+            </div>
+            <div>
+              <label className="edit-title">소개글 수정</label>
+              <input
+                type="text"
+                maxLength={100}
+                placeholder="100자 이내 작성"
+                onChange={null}
+              />
+            </div>
+            <div>
+              <label className="edit-title">휴대폰 번호 수정</label>
+              <input type="text" onChange={null} />
+            </div>
             <input type="submit" value="수정" />
           </form>
           <button onClick={handleOpenEdit}>취소</button>

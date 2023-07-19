@@ -2,7 +2,7 @@ import LoginForm from "../components/LoginForm";
 import { auth } from "../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-const Login = () => {
+const Login = ({ setNowUser }) => {
   const googleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -14,7 +14,7 @@ const Login = () => {
   return (
     <div>
       <h2>Manstagram</h2>
-      <LoginForm />
+      <LoginForm setNowUser={setNowUser} />
       <button onClick={googleLogin}>구글 로그인</button>
     </div>
   );

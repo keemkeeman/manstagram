@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createUser, signInUser } from "../fireUtil";
 
-const LoginForm = () => {
+const LoginForm = ({ setNowUser }) => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [validEmail, setValidEmail] = useState(false);
@@ -35,7 +35,7 @@ const LoginForm = () => {
     if (!validEmail || !validPw) {
       window.alert("이메일 또는 비밀번호가 올바르지 않습니다.");
     } else {
-      createUser(email, pw);
+      createUser(email, pw, setNowUser);
       setEmail("");
       setPw("");
     }

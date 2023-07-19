@@ -5,21 +5,24 @@ import { auth } from "./firebase";
 function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [nowUser, setNowUser] = useState([]);
+  const [nowUser, setNowUser] = useState(null);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     auth.onAuthStateChanged((loggedUser) => {
       if (loggedUser) {
         console.log("login");
         setIsLoggedIn(true);
+        setNowUser(loggedUser);
       } else {
         console.log("logout");
         setIsLoggedIn(false);
+        setNowUser(null);
       }
       setInit(true);
     });
   }, []);
-  console.log("로그인 유저" + auth.currentUser);
+  console.log(auth.currentUser)
 
   return (
     <div className="App">
@@ -28,7 +31,8 @@ function App() {
           isLoggedIn={isLoggedIn}
           setIsLoggedIn={setIsLoggedIn}
           nowUser={nowUser}
-          setNowUser={setNowUser}
+          user={user}
+          setUser={setUser}
         />
       ) : (
         <p>Loading...</p>
