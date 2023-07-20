@@ -4,34 +4,53 @@ import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 import Header from "./Header";
 import Footer from "./Footer";
+import styles from "./AppRoutes.module.css";
 
-const AppRoutes = ({ isLoggedIn, setIsLoggedIn, nowUser, setNowUser }) => {
+const AppRoutes = ({
+  isLoggedIn,
+  setIsLoggedIn,
+  nowUser,
+  setNowUser,
+  openForm,
+  setOpenForm,
+}) => {
   return (
-    <>
+    <div className={styles.wrap}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         {isLoggedIn && <Header />}
-        <Routes>
-          {!isLoggedIn ? (
-            <Route path="/" element={<Login setNowUser={setNowUser} />} />
-          ) : (
-            <>
-              <Route path="/" element={<Home nowUser={nowUser} />} />
-              <Route
-                path="/profile"
-                element={
-                  <Profile
-                    setIsLoggedIn={setIsLoggedIn}
-                    nowUser={nowUser}
-                    setNowUser={setNowUser}
-                  />
-                }
-              />
-            </>
-          )}
-        </Routes>
-        {isLoggedIn && <Footer />}
+        <div className={styles.contentsWrap}>
+          <Routes>
+            {!isLoggedIn ? (
+              <Route path="/" element={<Login setNowUser={setNowUser} />} />
+            ) : (
+              <>
+                <Route
+                  path="/"
+                  element={
+                    <Home
+                      nowUser={nowUser}
+                      openForm={openForm}
+                      setOpenForm={setOpenForm}
+                    />
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <Profile
+                      setIsLoggedIn={setIsLoggedIn}
+                      nowUser={nowUser}
+                      setNowUser={setNowUser}
+                    />
+                  }
+                />
+              </>
+            )}
+          </Routes>
+        </div>
+        {isLoggedIn && <Footer setOpenForm={setOpenForm} />}
       </BrowserRouter>
-    </>
+    </div>
   );
 };
 

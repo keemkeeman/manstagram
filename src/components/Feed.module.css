@@ -2,23 +2,15 @@
   list-style: none;
 }
 
-.feedWrap {
-  width: 500px;
-  background-color: rgb(223, 213, 213);
-  margin: 1rem 0;
-}
-
-.top {
-  display: flex;
-  flex-direction: row;
-}
-
-.top span {
-  margin: 0 0.5rem;
-  flex: 1;
+.wrap {
+  width: 470px;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid grey;
 }
 
 .img {
+  border-radius: 10px;
+  border-radius: 1px solid grey;
   width: 100%;
-  height: 500px;
 }

@@ -1,0 +1,67 @@
+.headerWrap {
+  top: 0;
+  position: fixed;
+  width: 630px;
+  height: 60px;
+  border-top: 1px solid rgb(108, 108, 108);
+  border-bottom: 1px solid rgb(108, 108, 108);
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  background-color: white;
+  z-index: 1;
+}
+.headerInnerWrap {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 16px;
+}
+.logo {
+  flex: 1;
+  font-size: 28px;
+}
+.actionWrap {
+  width: 312px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.searchWrap {
+  width: 268px;
+}
+.searchMainWrap {
+  width: 100%;
+  height: 36px;
+  background-color: rgb(232, 232, 232);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.searchInnerWrap {
+  width: 236px;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.searchIcon {
+  margin: 0 5px;
+}
+.searchBar {
+  margin-left: 10px;
+  width: 100%;
+  display: flex;
+}
+.searchBar input {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+.notice {
+  font-size: 24px;
+}

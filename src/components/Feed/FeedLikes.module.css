@@ -1,0 +1,10 @@
+.wrap {
+  padding: 0px 3px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+.likes {
+  font-size: 14px;
+  font-weight: 900;
+}

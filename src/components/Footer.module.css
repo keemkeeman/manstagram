@@ -1,0 +1,18 @@
+.footerWrap {
+  bottom: 0;
+  position: fixed;
+  width: 630px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid rgb(108, 108, 108);
+  border-bottom: 1px solid rgb(108, 108, 108);
+  background-color: white;
+}
+.icon {
+  padding: 0 24px;
+  font-size: 24px;
+  color: black;
+  cursor: pointer;
+}

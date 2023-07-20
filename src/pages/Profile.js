@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { logOut, updateUser, deleteAccount } from "../fireUtil";
 import { useNavigate } from "react-router-dom";
+import styles from "./Profile.module.css";
 
 const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   const [nic, setNic] = useState(nowUser.nickName);
@@ -46,13 +47,14 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
     setIsEditOpen(false);
   };
 
+  /* 유저 삭제 */
   const handleDeleteAccount = () => {
     deleteAccount();
     navigate("/");
   };
 
   return (
-    <div>
+    <div className={styles.wrap}>
       <h2>Profile</h2>
       <span>{`welcome ${nowUser.nickName}`}</span>
       {!isEditOpen && <button onClick={handleOpenEdit}>회원정보 수정</button>}

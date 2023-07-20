@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { createFeed } from "../fireUtil";
+import styles from "./FeedForm.module.css";
 
-const FeedForm = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
+const FeedForm = ({
+  nowUser,
+  feedList,
+  setFeedList,
+  fileUrl,
+  setFileUrl,
+  setOpenForm,
+}) => {
   const [feedText, setFeedText] = useState("");
 
   const handleFeedText = (e) => {
@@ -40,18 +48,32 @@ const FeedForm = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        name="feedText"
-        type="text"
-        value={feedText}
-        onChange={handleFeedText}
-        placeholder="What's on your mind?"
-        maxLength={100}
-      />
-      <input name="image" type="file" accept="image/*" onChange={handleFile} />
-      <input name="submitButton" type="submit" value="go" />
-    </form>
+    <div className={styles.wrap}>
+      <form onSubmit={handleSubmit}>
+        <input
+          name="feedText"
+          type="text"
+          value={feedText}
+          onChange={handleFeedText}
+          placeholder="What's on your mind?"
+          maxLength={100}
+        />
+        <input
+          name="image"
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+        />
+        <input name="submitButton" type="submit" value="go" />
+        <button
+          onClick={() => {
+            setOpenForm(false);
+          }}
+        >
+          취소
+        </button>
+      </form>
+    </div>
   );
 };
 
