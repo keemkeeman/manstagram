@@ -1,0 +1,18 @@
+.wrap {
+  padding: 0 3px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.commentInput {
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.commentEmoji {
+    font-size: 13px;
+}
