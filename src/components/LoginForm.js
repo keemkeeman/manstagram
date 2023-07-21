@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { createUser, signInUser } from "../fireUtil";
+import styles from "./LoginForm.module.css";
 
-const LoginForm = ({ setNowUser }) => {
+const LoginForm = ({ setNowUser, haveAccount }) => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-  const [validPw, setValidPw] = useState(false);
-  const [haveAccount, setHaveAccount] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPw, setValidPw] = useState(true);
 
   const handleValidEmail = (e) => {
     setEmail(e.target.value);
@@ -47,41 +47,41 @@ const LoginForm = ({ setNowUser }) => {
     signInUser(email, pw);
   };
 
-  const handleLoginPage = () => {
-    setHaveAccount((prev) => !prev);
-    setEmail("");
-    setPw("");
-  };
-
   return (
-    <>
+    <div className={styles.wrap}>
       <form onSubmit={haveAccount ? handleLogin : handleSubmit}>
         <input
+          className={styles.infoInput}
           name="email"
           onChange={handleValidEmail}
           value={email}
-          placeholder="email"
+          placeholder="이메일"
           type="email"
         />
-        {!validEmail && <p>올바른 이메일을 입력해주세요.</p>}
+        {!validEmail && (
+          <span className={styles.alert}>올바른 이메일을 입력해주세요.</span>
+        )}
         <input
+          className={styles.infoInput}
           name="password"
           onChange={handleValidPw}
           value={pw}
-          placeholder="password"
+          placeholder="비밀번호"
           type="password"
         />
-        {!validPw && <p>영문, 숫자 조합 8자리 이상 입력해주세요.</p>}
+        {!validPw && (
+          <span className={styles.alert}>
+            영문, 숫자 조합 8자리 이상 입력해주세요.
+          </span>
+        )}
         <input
-          name="loginButton"
+          className={haveAccount ? styles.login : styles.signup}
+          id={styles.submit}
           type="submit"
           value={haveAccount ? "로그인" : "계정 생성"}
         />
       </form>
-      <p onClick={handleLoginPage}>
-        {haveAccount ? "새로운 계정 만들기" : "로그인하러 가기"}
-      </p>
-    </>
+    </div>
   );
 };
 

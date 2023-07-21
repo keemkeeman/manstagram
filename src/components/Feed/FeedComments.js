@@ -1,6 +1,6 @@
-import styles from "./FeedComment.module.css";
+import styles from "./FeedComments.module.css";
 
-const FeedComment = () => {
+const FeedComments = () => {
   /* 댓글 뿌려줘야 함 */
   const n = 10;
   return (
@@ -14,4 +14,4 @@ const FeedComment = () => {
   );
 };
 
-export default FeedComment;
+export default FeedComments;

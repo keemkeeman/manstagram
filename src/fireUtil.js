@@ -30,32 +30,28 @@ import { v4 as uuidv4 } from "uuid";
 /* 1. 피드 생성 */
 export const createFeed = async (nowUser, feedText, fileUrl) => {
   try {
-    if (fileUrl === null) {
-      window.alert("사진은 필수입니다!");
-    } else {
-      /* storage 추가 */
-      const fileRef = ref(storage, `${nowUser.id}/${uuidv4()}`);
-      const response = await uploadString(fileRef, fileUrl, "data_url");
-      const imgUrl = await getDownloadURL(response.ref);
+    /* storage 추가 */
+    const fileRef = ref(storage, `${nowUser.id}/${uuidv4()}`);
+    const response = await uploadString(fileRef, fileUrl, "data_url");
+    const imgUrl = await getDownloadURL(response.ref);
 
-      /* firestore 추가 */
-      const docRef = await addDoc(collection(db, "feeds"), {
-        createdAt: Timestamp.now(),
-        creatorId: nowUser.id,
-        feedText: feedText,
-        imgUrl: imgUrl,
-        nickName: nowUser.nickName,
-      });
+    /* firestore 추가 */
+    const docRef = await addDoc(collection(db, "feeds"), {
+      createdAt: Timestamp.now(),
+      creatorId: nowUser.id,
+      feedText: feedText,
+      imgUrl: imgUrl,
+      nickName: nowUser.nickName,
+    });
 
-      return {
-        id: docRef.id,
-        createdAt: Timestamp.now(),
-        creatorId: nowUser.id,
-        feedText: feedText,
-        imgUrl: imgUrl,
-        nickName: nowUser.nickName,
-      };
-    }
+    return {
+      id: docRef.id,
+      createdAt: Timestamp.now(),
+      creatorId: nowUser.id,
+      feedText: feedText,
+      imgUrl: imgUrl,
+      nickName: nowUser.nickName,
+    };
   } catch (err) {
     console.error(`Feed Create error: ${err.error}`);
   }

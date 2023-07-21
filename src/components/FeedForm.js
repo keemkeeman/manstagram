@@ -37,11 +37,15 @@ const FeedForm = ({
   /* 피드 생성 */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const newFeed = await createFeed(nowUser, feedText, fileUrl);
-      setFeedList([newFeed, ...feedList]);
-    } catch (err) {
-      console.error(err);
+    if (feedText.trim().length === 0 || fileUrl.length === 0) {
+      window.alert("1자 이상의 글과 사진은 필수입니다.");
+    } else {
+      try {
+        const newFeed = await createFeed(nowUser, feedText, fileUrl);
+        setFeedList([newFeed, ...feedList]);
+      } catch (err) {
+        console.error(err);
+      }
     }
     setFileUrl("");
     setFeedText("");

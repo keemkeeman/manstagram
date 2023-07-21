@@ -5,7 +5,7 @@ import FeedTop from "./Feed/FeedTop";
 import FeedActions from "./Feed/FeedActions";
 import FeedLikes from "./Feed/FeedLikes";
 import FeedDescription from "./Feed/FeedDescription";
-import FeedComment from "./Feed/FeedComment";
+import FeedComments from "./Feed/FeedComments";
 import FeedCommentInput from "./Feed/FeedCommentInput";
 
 const Feed = ({ feed, validUser, feedList, setFeedList }) => {
@@ -22,7 +22,7 @@ const Feed = ({ feed, validUser, feedList, setFeedList }) => {
       <FeedActions />
       <FeedLikes />
       <FeedDescription feed={feed} />
-      <FeedComment />
+      <FeedComments />
       <FeedCommentInput />
       {isEditOpen && (
         <FeedEditForm
