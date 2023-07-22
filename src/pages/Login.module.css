@@ -29,10 +29,6 @@
   color: #737373;
   font-size: 14px;
 }
-.wrap i {
-  font-size: 25px;
-  cursor: pointer;
-}
 .wrap p {
   height: 40px;
   display: flex;
@@ -60,5 +56,9 @@
   padding-left: 10px;
   color: rgb(90, 187, 248);
   font-weight: 700;
+  cursor: pointer;
+}
+.googleIcon {
+  font-size: 25px;
   cursor: pointer;
 }

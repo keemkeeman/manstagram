@@ -49,33 +49,42 @@ const FeedForm = ({
     }
     setFileUrl("");
     setFeedText("");
+    setOpenForm(false);
   };
 
   return (
     <div className={styles.wrap}>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="feedText"
-          type="text"
-          value={feedText}
-          onChange={handleFeedText}
-          placeholder="What's on your mind?"
-          maxLength={100}
-        />
-        <input
-          name="image"
-          type="file"
-          accept="image/*"
-          onChange={handleFile}
-        />
-        <input name="submitButton" type="submit" value="go" />
-        <button
-          onClick={() => {
-            setOpenForm(false);
-          }}
-        >
-          취소
-        </button>
+      <h2>Upload</h2>
+      <form onSubmit={handleSubmit} className={styles.innerWrap}>
+        <div className={styles.contentWrap}>
+          <input
+            className={styles.feedText}
+            name="feedText"
+            type="text"
+            value={feedText}
+            onChange={handleFeedText}
+            placeholder="What's on your mind?"
+            maxLength={100}
+          />
+        </div>
+        <div className={styles.contentWrap}>
+          <input
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleFile}
+          />
+        </div>
+        <div className={styles.buttons}>
+          <input name="submitButton" type="submit" value="업로드" />
+          <button
+            onClick={() => {
+              setOpenForm(false);
+            }}
+          >
+            취소
+          </button>
+        </div>
       </form>
     </div>
   );

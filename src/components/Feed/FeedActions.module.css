@@ -11,6 +11,7 @@
 }
 
 .likesWrap {
+  display: flex;
   flex: 1;
 }
 

@@ -26,10 +26,12 @@ const Login = ({ setNowUser }) => {
         <h1 className={styles.title}>Manstagram</h1>
         <LoginForm setNowUser={setNowUser} haveAccount={haveAccount} />
         <div className={styles.and}>
-          <div name="선"></div>
+          <div name="line"></div>
           <span>또는</span>
         </div>
-        <i onClick={googleLogin} class="fa-brands fa-google"></i>
+        <div className={styles.googleIcon}>
+          <i onClick={googleLogin} class="fa-brands fa-google"></i>
+        </div>
       </div>
       <div className={styles.bottomWrap}>
         {haveAccount ? (
