@@ -43,6 +43,7 @@ const AppRoutes = ({
                   path="/profile"
                   element={
                     <Profile
+                      feedList={feedList}
                       setIsLoggedIn={setIsLoggedIn}
                       nowUser={nowUser}
                       setNowUser={setNowUser}
