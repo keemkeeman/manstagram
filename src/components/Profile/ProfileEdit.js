@@ -56,7 +56,7 @@ const ProfileEdit = ({
     navigate("/");
   };
   return (
-    <>
+    <div className={styles.wrap}>
       <form onSubmit={handleEditProfile}>
         <div>
           <label className="edit-title">닉네임 수정</label>
@@ -91,7 +91,7 @@ const ProfileEdit = ({
       <Link to="/" onClick={handleLogout}>
         Logout
       </Link>
-    </>
+    </div>
   );
 };
 

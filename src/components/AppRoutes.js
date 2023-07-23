@@ -11,8 +11,11 @@ const AppRoutes = ({
   setIsLoggedIn,
   nowUser,
   setNowUser,
-  openForm,
   setOpenForm,
+  feedList,
+  setFeedList,
+  fileUrl,
+  setFileUrl,
 }) => {
   return (
     <div className={styles.wrap}>
@@ -29,8 +32,10 @@ const AppRoutes = ({
                   element={
                     <Home
                       nowUser={nowUser}
-                      openForm={openForm}
-                      setOpenForm={setOpenForm}
+                      feedList={feedList}
+                      setFeedList={setFeedList}
+                      fileUrl={fileUrl}
+                      setFileUrl={setFileUrl}
                     />
                   }
                 />

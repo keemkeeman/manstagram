@@ -1,0 +1,15 @@
+.wrap {
+  height: 270px;
+  width: 400px;
+  position: fixed;
+  top: 30%;
+  left: 25%;
+  background-color: white;
+  border: 3px solid gray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
