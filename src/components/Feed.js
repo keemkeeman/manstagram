@@ -10,6 +10,7 @@ import FeedCommentInput from "./Feed/FeedCommentInput";
 
 const Feed = ({ feed, validUser, feedList, setFeedList }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [feedLikes, setFeedLikes] = useState(0);
 
   return (
     <div className={styles.wrap}>
@@ -19,7 +20,11 @@ const Feed = ({ feed, validUser, feedList, setFeedList }) => {
         setIsEditOpen={setIsEditOpen}
       />
       <img className={styles.img} src={feed.imgUrl} alt="feedImg" />
-      <FeedActions />
+      <FeedActions
+        feed={feed}
+        feedLikes={feedLikes}
+        setFeedLikes={setFeedLikes}
+      />
       <FeedLikes />
       <FeedDescription feed={feed} />
       <FeedComments />

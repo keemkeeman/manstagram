@@ -16,6 +16,7 @@ import {
   orderBy,
   query,
   where,
+  getDoc,
 } from "firebase/firestore";
 import {
   deleteObject,
@@ -42,6 +43,11 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
       feedText: feedText,
       imgUrl: imgUrl,
       nickName: nowUser.nickName,
+      likes: {
+        likeUsers: [],
+        likeCount: 0,
+      },
+      comments: [],
     });
 
     return {
@@ -51,6 +57,7 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
       feedText: feedText,
       imgUrl: imgUrl,
       nickName: nowUser.nickName,
+      likes: 0,
     };
   } catch (err) {
     console.error(`Feed Create error: ${err.error}`);
@@ -59,11 +66,11 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
 
 /* 2. 피드 읽기 */
 export const getFeeds = async (setFeedList) => {
+  const feedRef = collection(db, "feeds");
   try {
     const feedSnap = await getDocs(
-      query(collection(db, "feeds"), orderBy("createdAt", "desc"))
+      query(feedRef, orderBy("createdAt", "desc"))
     );
-
     const newfeeds = feedSnap.docs.map((item) => ({
       id: item.id,
       ...item.data(),
@@ -132,6 +139,42 @@ export const deleteFeed = async (feed, feedList, setFeedList) => {
   } catch (err) {
     console.error(`Feed Delete error: ${err.error}`);
   }
+};
+
+/* 피드 좋아요 on/off */
+export const likeFeed = async (feed) => {
+  const feedRef = doc(db, "feeds", feed.id);
+
+  // Firestore에서 현재 문서 데이터를 가져옵니다.
+  const docSnapshot = await getDoc(feedRef);
+
+  // 기존 'likeCount'와 'likeUsers' 필드 값 가져오기
+  const currentLikeCount = docSnapshot.data().likes.likeCount;
+  const currentLikeUsers = docSnapshot.data().likes.likeUsers || [];
+
+  // 좋아요 여부 확인
+  const isLiked = currentLikeUsers.includes(feed.creatorId);
+
+  // 'likeCount'와 'likeUsers' 필드 업데이트
+  const updatedLikeField = {
+    likes: {
+      likeCount: isLiked ? currentLikeCount - 1 : currentLikeCount + 1,
+      likeUsers: isLiked
+        ? currentLikeUsers.filter((userId) => userId !== feed.creatorId)
+        : [...currentLikeUsers, feed.creatorId],
+    },
+  };
+
+  // 업데이트된 'likeCount'와 'likeUsers' 필드를 문서에 저장
+  await updateDoc(feedRef, updatedLikeField);
+};
+
+/* 좋아요 했는지 안했는지 가져오기 */
+export const isLikedUser = async (feed) => {
+  const feedRef = doc(db, "feeds", feed.id);
+  const docSnapshot = await getDoc(feedRef);
+  const users = docSnapshot.data().likes.likeUsers;
+  return users.includes(feed.creatorId); // true/false?
 };
 
 /* 유저 CRUD */

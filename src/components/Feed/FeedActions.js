@@ -1,18 +1,22 @@
 import { useState } from "react";
 import styles from "./FeedActions.module.css";
+import { likeFeed, isLikedUser } from "../../fireUtil";
 
-const FeedActions = () => {
-  const [isLiked, setIsLiked] = useState(false);
+const FeedActions = ({ feed, feedLikes, setFeedLikes }) => {
+  const [isLiked, setIsLiked] = useState(isLikedUser(feed));
   const [isMarked, setIsMarked] = useState(false);
+
+  const handleLike = async () => {
+    // const newLikes = isLiked ? feedLikes - 1 : feedLikes + 1;
+    // setFeedLikes(newLikes);
+    await likeFeed(feed);
+    setIsLiked((prev) => !prev);
+  };
+  console.log(isLikedUser(feed));
   return (
     <div className={styles.wrap}>
       <div className={styles.likesWrap}>
-        <div
-          className={styles.buttons}
-          onClick={() => {
-            setIsLiked((prev) => !prev);
-          }}
-        >
+        <div id="like" className={styles.buttons} onClick={handleLike}>
           {isLiked ? (
             <i class="fa-solid fa-heart"></i>
           ) : (

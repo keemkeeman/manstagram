@@ -2,7 +2,6 @@ import FeedList from "../components/FeedList";
 import styles from "./Home.module.css";
 
 const Home = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
-
   return (
     <div className={styles.wrap}>
       <FeedList
