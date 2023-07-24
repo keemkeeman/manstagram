@@ -142,7 +142,7 @@ export const deleteFeed = async (feed, feedList, setFeedList) => {
 };
 
 /* 피드 좋아요 on/off */
-export const likeFeed = async (feed) => {
+export const likeFeed = async (feed, isLiked) => {
   const feedRef = doc(db, "feeds", feed.id);
 
   // Firestore에서 현재 문서 데이터를 가져옵니다.
@@ -150,10 +150,7 @@ export const likeFeed = async (feed) => {
 
   // 기존 'likeCount'와 'likeUsers' 필드 값 가져오기
   const currentLikeCount = docSnapshot.data().likes.likeCount;
-  const currentLikeUsers = docSnapshot.data().likes.likeUsers || [];
-
-  // 좋아요 여부 확인
-  const isLiked = currentLikeUsers.includes(feed.creatorId);
+  const currentLikeUsers = docSnapshot.data().likes.likeUsers;
 
   // 'likeCount'와 'likeUsers' 필드 업데이트
   const updatedLikeField = {
@@ -174,7 +171,8 @@ export const isLikedUser = async (feed) => {
   const feedRef = doc(db, "feeds", feed.id);
   const docSnapshot = await getDoc(feedRef);
   const users = docSnapshot.data().likes.likeUsers;
-  return users.includes(feed.creatorId); // true/false?
+  const likedUser = users.includes(feed.creatorId);
+  return likedUser; // true/false?
 };
 
 /* 유저 CRUD */

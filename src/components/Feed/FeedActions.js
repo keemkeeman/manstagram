@@ -9,10 +9,10 @@ const FeedActions = ({ feed, feedLikes, setFeedLikes }) => {
   const handleLike = async () => {
     // const newLikes = isLiked ? feedLikes - 1 : feedLikes + 1;
     // setFeedLikes(newLikes);
-    await likeFeed(feed);
+    await likeFeed(feed, isLiked);
     setIsLiked((prev) => !prev);
   };
-  console.log(isLikedUser(feed));
+
   return (
     <div className={styles.wrap}>
       <div className={styles.likesWrap}>
