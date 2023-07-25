@@ -88,13 +88,14 @@ export const updateFeed = async (feed, newText, feedList, newFileUrl) => {
       feedText: newText,
     };
 
+    /* 이미지 처리 */
     if (newFileUrl) {
       /* Storage 업데이트 */
-      /* 이전 사진 있다면 삭제하고 근데 등록에서 필수라 괜춘*/
+      /* 이전 사진 삭제하고*/
       if (feed.imgUrl) {
         await deleteObject(ref(storage, feed.imgUrl));
       }
-      /* 새로 등록함 */
+      /* 새로운 사진 등록 */
       const fileRef = ref(storage, `${feed.creatorId}/${uuidv4()}`);
       const response = await uploadString(fileRef, newFileUrl, "data_url");
       const newImgUrl = await getDownloadURL(response.ref);
@@ -142,7 +143,8 @@ export const deleteFeed = async (feed, feedList, setFeedList) => {
 };
 
 /* 피드 좋아요 on/off */
-export const likeFeed = async (feed, isLiked) => {
+export const likeFeed = async (feed, isLiked, nowUser) => {
+  // 문서 위치
   const feedRef = doc(db, "feeds", feed.id);
 
   // Firestore에서 현재 문서 데이터를 가져옵니다.
@@ -157,8 +159,8 @@ export const likeFeed = async (feed, isLiked) => {
     likes: {
       likeCount: isLiked ? currentLikeCount - 1 : currentLikeCount + 1,
       likeUsers: isLiked
-        ? currentLikeUsers.filter((userId) => userId !== feed.creatorId)
-        : [...currentLikeUsers, feed.creatorId],
+        ? currentLikeUsers.filter((userId) => userId !== nowUser.id)
+        : [...currentLikeUsers, nowUser.id],
     },
   };
 
@@ -167,12 +169,28 @@ export const likeFeed = async (feed, isLiked) => {
 };
 
 /* 좋아요 했는지 안했는지 가져오기 */
-export const isLikedUser = async (feed) => {
+export const isLikedUser = async (feed, setIsLiked, nowUser) => {
+  // 가져올 문서 위치 ref 지정
+  const feedRef = doc(db, "feeds", feed.id);
+
+  // 가져오기
+  const docSnapshot = await getDoc(feedRef);
+
+  // 가져온 문서 안의 좋아요한 유저 데이터 가져오기
+  const users = docSnapshot.data().likes.likeUsers;
+
+  // 스위치에 담아주기
+  setIsLiked(users.includes(nowUser.id));
+};
+
+/* 좋아요 개수 읽기 */
+export const countLikes = async (feed, setLikesCount) => {
+  /* 문서 가져오기 */
   const feedRef = doc(db, "feeds", feed.id);
   const docSnapshot = await getDoc(feedRef);
-  const users = docSnapshot.data().likes.likeUsers;
-  const likedUser = users.includes(feed.creatorId);
-  return likedUser; // true/false?
+
+  // 개수 state에 담아주기
+  setLikesCount(docSnapshot.data().likes.likeCount);
 };
 
 /* 유저 CRUD */

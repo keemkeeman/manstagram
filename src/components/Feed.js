@@ -8,9 +8,8 @@ import FeedDescription from "./Feed/FeedDescription";
 import FeedComments from "./Feed/FeedComments";
 import FeedCommentInput from "./Feed/FeedCommentInput";
 
-const Feed = ({ feed, validUser, feedList, setFeedList }) => {
+const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [feedLikes, setFeedLikes] = useState(0);
 
   return (
     <div className={styles.wrap}>
@@ -20,12 +19,8 @@ const Feed = ({ feed, validUser, feedList, setFeedList }) => {
         setIsEditOpen={setIsEditOpen}
       />
       <img className={styles.img} src={feed.imgUrl} alt="feedImg" />
-      <FeedActions
-        feed={feed}
-        feedLikes={feedLikes}
-        setFeedLikes={setFeedLikes}
-      />
-      <FeedLikes />
+      <FeedActions feed={feed} nowUser={nowUser} />
+      <FeedLikes feed={feed} />
       <FeedDescription feed={feed} />
       <FeedComments />
       <FeedCommentInput />

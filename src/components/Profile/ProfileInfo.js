@@ -8,6 +8,7 @@ const ProfileInfo = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   const handleOpenEdit = () => {
     setIsEditOpen((prev) => !prev);
   };
+  
   const n = 10;
   return (
     <div className={styles.wrap}>

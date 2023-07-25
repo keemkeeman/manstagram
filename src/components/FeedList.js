@@ -9,19 +9,22 @@ const FeedList = ({ feedList, setFeedList, fileUrl, setFileUrl, nowUser }) => {
   }, [setFeedList]);
 
   /* 리스트 뿌려주기 */
-  const list = feedList.map((feed) => (
-    <li key={feed.id}>
-      <Feed
-        nowUser={nowUser}
-        validUser={nowUser.id === feed.creatorId}
-        feedList={feedList}
-        setFeedList={setFeedList}
-        feed={feed}
-        fileUrl={fileUrl}
-        setFileUrl={setFileUrl}
-      />
-    </li>
-  ));
+  let list;
+  if (!feedList || feedList.length === 0) {
+    list = <div>What's going on?</div>;
+  } else {
+    list = feedList.map((feed) => (
+      <li key={feed.id}>
+        <Feed
+          nowUser={nowUser}
+          validUser={nowUser.id === feed.creatorId}
+          feedList={feedList}
+          setFeedList={setFeedList}
+          feed={feed}
+        />
+      </li>
+    ));
+  }
 
   return <ul>{list}</ul>;
 };

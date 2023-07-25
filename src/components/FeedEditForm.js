@@ -4,9 +4,11 @@ import { deleteFeed, updateFeed } from "../fireUtil";
 const FeedEditForm = ({ feed, feedList, setFeedList, setIsEditOpen }) => {
   const [newFileUrl, setNewFileUrl] = useState("");
   const [newText, setNewText] = useState(feed.feedText);
+
   const handleEditClose = () => {
     setIsEditOpen(false);
   };
+
   const handleNewText = (e) => {
     setNewText(e.target.value);
   };
@@ -29,28 +31,20 @@ const FeedEditForm = ({ feed, feedList, setFeedList, setIsEditOpen }) => {
     }
   };
 
-  /* 수정 */
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    try {
-      const updatedList = await updateFeed(feed, newText, feedList, newFileUrl);
-      setFeedList(updatedList);
-    } catch (err) {
-      console.error(err);
-    }
+  /* 피드 수정 */
+  const handleEdit = async () => {
+    const updatedList = await updateFeed(feed, newText, feedList, newFileUrl);
+    setFeedList(updatedList);
     setIsEditOpen(false);
   };
 
-  /* 삭제 */
+  /* 피드 삭제 */
   const handleDelete = async () => {
-    try {
-      await deleteFeed(feed, feedList, setFeedList);
-    } catch (err) {
-      console.error(err);
-    }
+    await deleteFeed(feed, feedList, setFeedList);
   };
+
   return (
-    <form className="editForm" onSubmit={handleEdit}>
+    <div className="editForm">
       <h3>change your Feed</h3>
       <input name="image" type="file" accept="image/*" onChange={handleFile} />
       <input
@@ -60,10 +54,15 @@ const FeedEditForm = ({ feed, feedList, setFeedList, setIsEditOpen }) => {
         value={newText}
         onChange={handleNewText}
       />
-      <input name="submitButton" type="submit" value="바꿔!" />
+      <button
+        onClick={handleEdit}
+        name="submitButton"
+        type="submit"
+        value="바꿔!"
+      />
       <button onClick={handleDelete}>삭제</button>
       <button onClick={handleEditClose}>취소</button>
-    </form>
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@ const ProfileFeedList = ({ nowUser, feedList }) => {
       <ProfileFeed feed={feed} />
     </div>
   ));
-  console.log(feedList);
+  
   return <div className={styles.wrap}>{newList}</div>;
 };
 

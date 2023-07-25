@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./FeedActions.module.css";
 import { likeFeed, isLikedUser } from "../../fireUtil";
 
-const FeedActions = ({ feed, feedLikes, setFeedLikes }) => {
-  const [isLiked, setIsLiked] = useState(isLikedUser(feed));
+const FeedActions = ({ feed, nowUser }) => {
+  const [isLiked, setIsLiked] = useState(false);
   const [isMarked, setIsMarked] = useState(false);
 
+  /* 좋아요 on/off */
   const handleLike = async () => {
-    // const newLikes = isLiked ? feedLikes - 1 : feedLikes + 1;
-    // setFeedLikes(newLikes);
-    await likeFeed(feed, isLiked);
+    await likeFeed(feed, isLiked, nowUser);
     setIsLiked((prev) => !prev);
   };
+
+  /* 좋아요 여부 가져오기 */
+  useEffect(() => {
+    isLikedUser(feed, setIsLiked, nowUser);
+  }, [feed, nowUser]);
 
   return (
     <div className={styles.wrap}>
