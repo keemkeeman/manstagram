@@ -142,7 +142,7 @@ export const deleteFeed = async (feed, feedList, setFeedList) => {
   }
 };
 
-/* 5. 피드 좋아요 on/off 및 개수 업데이트 */
+/* 5. 피드 좋아요 on/off 및 좋아요 수 업데이트 */
 export const likeFeed = async (feed, isLiked, nowUser, setLikesCount) => {
   // 문서 위치
   const feedRef = doc(db, "feeds", feed.id);

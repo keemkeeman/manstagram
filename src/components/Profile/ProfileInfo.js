@@ -8,7 +8,7 @@ const ProfileInfo = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   const handleOpenEdit = () => {
     setIsEditOpen((prev) => !prev);
   };
-  
+
   const n = 10;
   return (
     <div className={styles.wrap}>
@@ -19,7 +19,7 @@ const ProfileInfo = ({ setIsLoggedIn, nowUser, setNowUser }) => {
         <div className={styles.nicWrap}>
           <div className={styles.nickName}>{nowUser.nickName}</div>
           <div onClick={handleOpenEdit} className={styles.editIcon}>
-            <i class="fa-solid fa-gear"></i>
+            <i className="fa-solid fa-gear"></i>
           </div>
         </div>
         <div className={styles.followWrap}>

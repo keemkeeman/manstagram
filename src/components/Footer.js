@@ -6,7 +6,7 @@ const Footer = ({ setOpenForm }) => {
     <div className={styles.footerWrap}>
       <Link to="/">
         <div className={styles.icon}>
-          <i class="fa-solid fa-house"></i>
+          <i className="fa-solid fa-house"></i>
         </div>
       </Link>
       <div
@@ -15,11 +15,11 @@ const Footer = ({ setOpenForm }) => {
         }}
         className={styles.icon}
       >
-        <i class="fa-solid fa-circle-plus"></i>
+        <i className="fa-solid fa-circle-plus"></i>
       </div>
       <Link to="/profile">
         <div className={styles.icon}>
-          <i class="fa-solid fa-user-large"></i>
+          <i className="fa-solid fa-user-large"></i>
         </div>
       </Link>
     </div>

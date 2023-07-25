@@ -16,7 +16,7 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
       </div>
       {validUser ? (
         <div className={styles.editIcon} onClick={handleEditOpen}>
-          <i class="fa-solid fa-ellipsis"></i>
+          <i className="fa-solid fa-ellipsis"></i>
         </div>
       ) : (
         ""

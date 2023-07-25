@@ -5,7 +5,7 @@ const FeedCommentInput = () => {
     <div className={styles.wrap}>
       <input className={styles.commentInput} placeholder="댓글 달기..." />
       <div className={styles.commentEmoji}>
-        <i class="fa-regular fa-face-smile"></i>
+        <i className="fa-regular fa-face-smile"></i>
       </div>
     </div>
   );

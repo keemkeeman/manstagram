@@ -30,7 +30,7 @@ const Login = ({ setNowUser }) => {
           <span>또는</span>
         </div>
         <div className={styles.googleIcon}>
-          <i onClick={googleLogin} class="fa-brands fa-google"></i>
+          <i onClick={googleLogin} className="fa-brands fa-google"></i>
         </div>
       </div>
       <div className={styles.bottomWrap}>
