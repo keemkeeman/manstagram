@@ -7,15 +7,3 @@
   color: grey;
   cursor: pointer;
 }
-.commentsWrap {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-}
-.nickName {
-  font-weight: 700;
-}
-
-.comment {
-  margin-left: 5px;
-}

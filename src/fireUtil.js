@@ -197,6 +197,45 @@ export const countLikes = async (feed) => {
   return docSnapshot.data().likes.likeCount;
 };
 
+/* 댓글 */
+/* 댓글 생성 */
+export const createComment = async (commentText, nowUser, feed) => {
+  try {
+    const docRef = await addDoc(collection(db, "comments"), {
+      feedId: feed.id,
+      createdAt: Timestamp.now(),
+      creatorId: nowUser.id,
+      nickName: nowUser.nickName,
+      commentText: commentText,
+    });
+    return {
+      id: docRef.id,
+      feedId: feed.id,
+      creatorId: nowUser.id,
+      nickName: nowUser.nickName,
+      commentText: commentText,
+    };
+  } catch (err) {
+    console.err(err);
+  }
+};
+
+/* 댓글 불러오기 */
+export const getComments = async (feed) => {
+  const commentRef = collection(db, "comments");
+  try {
+    const commentSnapshot = await getDocs(
+      query(commentRef, where("feedId", "==", feed.id))
+    );
+    return commentSnapshot.docs.map((item) => ({
+      id: item.id,
+      ...item.data(),
+    }));
+  } catch (err) {
+    console.error(`Comment Get error: ${err.error}`);
+  }
+};
+
 /* 유저 CRUD */
 
 /* 유저 생성 */

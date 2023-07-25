@@ -43,13 +43,13 @@ const FeedForm = ({
       try {
         const newFeed = await createFeed(nowUser, feedText, fileUrl);
         setFeedList([newFeed, ...feedList]);
+        setFileUrl("");
+        setFeedText("");
+        setOpenForm(false);
       } catch (err) {
         console.error(err);
       }
     }
-    setFileUrl("");
-    setFeedText("");
-    setOpenForm(false);
   };
 
   return (
@@ -57,7 +57,7 @@ const FeedForm = ({
       <h2>Upload</h2>
       <form onSubmit={handleSubmit} className={styles.innerWrap}>
         <div className={styles.contentWrap}>
-          <input
+          <textarea
             className={styles.feedText}
             name="feedText"
             type="text"

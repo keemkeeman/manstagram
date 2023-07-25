@@ -1,14 +1,19 @@
 .wrap {
-  padding: 0 3px;
   margin-top: 10px;
   display: flex;
   align-items: center;
   font-size: 14px;
 }
+.wrap span {
+  max-width: 464px;
+  word-break: normal;
+}
 .nickName {
   font-weight: 700;
   cursor: pointer;
 }
-.feedText {
+
+.commentText {
   margin-left: 5px;
+  word-wrap: break-word;
 }

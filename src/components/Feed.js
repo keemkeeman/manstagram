@@ -5,7 +5,6 @@ import FeedTop from "./Feed/FeedTop";
 import FeedActions from "./Feed/FeedActions";
 import FeedDescription from "./Feed/FeedDescription";
 import FeedComments from "./Feed/FeedComments";
-import FeedCommentInput from "./Feed/FeedCommentInput";
 
 const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -20,8 +19,7 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
       <img className={styles.img} src={feed.imgUrl} alt="feedImg" />
       <FeedActions feed={feed} nowUser={nowUser} />
       <FeedDescription feed={feed} />
-      <FeedComments />
-      <FeedCommentInput />
+      <FeedComments feed={feed} nowUser={nowUser} />
       {isEditOpen && (
         <FeedEditForm
           feed={feed}

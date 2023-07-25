@@ -14,5 +14,6 @@
 }
 
 .commentEmoji {
-    font-size: 13px;
+  cursor: pointer;
+  font-size: 16px;
 }
