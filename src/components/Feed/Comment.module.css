@@ -4,8 +4,11 @@
   align-items: center;
   font-size: 14px;
 }
+.innerWrap {
+  flex: 1;
+}
 .wrap span {
-  max-width: 464px;
+  width: 440px;
   word-break: normal;
 }
 .nickName {
@@ -16,4 +19,8 @@
 .commentText {
   margin-left: 5px;
   word-wrap: break-word;
+}
+.editIcon {
+  margin: 5px;
+  font-size: 14px;
 }
