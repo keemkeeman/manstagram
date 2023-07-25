@@ -5,8 +5,12 @@ import { getFeeds } from "../fireUtil";
 const FeedList = ({ feedList, setFeedList, nowUser }) => {
   /* 피드 읽기 */
   useEffect(() => {
-    getFeeds(setFeedList);
-  }, [setFeedList]);
+    const fetchFeedList = async () => {
+      const newFeeds = await getFeeds(nowUser);
+      setFeedList(newFeeds);
+    };
+    fetchFeedList();
+  }, [nowUser, setFeedList]);
 
   /* 리스트 뿌려주기 */
   let list;

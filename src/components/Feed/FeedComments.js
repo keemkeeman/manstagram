@@ -9,13 +9,12 @@ const FeedComments = ({ feed, nowUser }) => {
 
   useEffect(() => {
     const fetchComments = async () => {
-      const newComments = await getComments(feed);
+      const newComments = await getComments(feed, nowUser);
       setComments(newComments);
     };
     fetchComments();
-  }, [feed]);
+  }, [feed, nowUser]);
 
-  console.log(comments);
   return (
     <div className={styles.wrap}>
       <span className={styles.commentOpen}>

@@ -65,7 +65,7 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
 };
 
 /* 2. 피드 읽기 */
-export const getFeeds = async (setFeedList) => {
+export const getFeeds = async (nowUser) => {
   const feedRef = collection(db, "feeds");
   try {
     const feedSnap = await getDocs(
@@ -75,7 +75,16 @@ export const getFeeds = async (setFeedList) => {
       id: item.id,
       ...item.data(),
     }));
-    setFeedList(newfeeds);
+
+    // 가져온 피드 중에 닉네임 바뀐건 업데이트 함
+    newfeeds.map(async (feed) => {
+      if (feed.creatorId === nowUser.id && feed.nickName !== nowUser.nickName) {
+        const feedDocRef = doc(db, "feeds", feed.id);
+        await updateDoc(feedDocRef, { nickName: nowUser.nickName });
+      }
+    });
+
+    return newfeeds;
   } catch (err) {
     console.error(`Feed Get error: ${err.error}`);
   }
@@ -221,16 +230,29 @@ export const createComment = async (commentText, nowUser, feed) => {
 };
 
 /* 댓글 불러오기 */
-export const getComments = async (feed) => {
+export const getComments = async (feed, nowUser) => {
   const commentRef = collection(db, "comments");
   try {
+    // 피드별 댓글 리스트 가져옴
     const commentSnapshot = await getDocs(
       query(commentRef, where("feedId", "==", feed.id))
     );
-    return commentSnapshot.docs.map((item) => ({
+    const comments = commentSnapshot.docs.map((item) => ({
       id: item.id,
       ...item.data(),
     }));
+
+    // 가져온 댓글리스트 중에 닉네임 바뀐건 업데이트 함
+    comments.map(async (comment) => {
+      if (
+        comment.creatorId === nowUser.id &&
+        comment.nickName !== nowUser.nickName
+      ) {
+        const commentDocRef = doc(db, "comments", comment.id);
+        await updateDoc(commentDocRef, { nickName: nowUser.nickName });
+      }
+    });
+    return comments;
   } catch (err) {
     console.error(`Comment Get error: ${err.error}`);
   }
@@ -307,24 +329,13 @@ export const updateUser = async (
   introduction
 ) => {
   try {
-    const userRef = doc(db, "users", `${nowUser.id}`);
+    const userRef = doc(db, "users", nowUser.id);
     const updatedFields = {}; // 빈 객체를 만들어 변경할 프로퍼티를 수집합니다.
 
     // 값이 새로 들어온 경우에만 업데이트할 프로퍼티를 추가합니다.
     // 닉네임은 해당 계정이 작성한 모든 피드를 가져와야해서
     // getDocs로 다 가져오고 updateDoc으로 업데이트
-    if (nic) {
-      updatedFields.nickName = nic;
-      /* Firestore 업데이트 */
-      const feedsQuery = query(
-        collection(db, "feeds"),
-        where("creatorId", "==", nowUser.id)
-      );
-      if (feedsQuery) {
-        const feedsSnap = await getDocs(feedsQuery);
-        feedsSnap.docs.map((doc) => updateDoc(doc.ref, { nickName: nic }));
-      }
-    }
+    if (nic) updatedFields.nickName = nic;
     if (phoneNumber) updatedFields.phoneNumber = phoneNumber;
     if (profilePicUrl) updatedFields.profilePicUrl = profilePicUrl;
     if (introduction) updatedFields.introduction = introduction;
