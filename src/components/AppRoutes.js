@@ -17,42 +17,42 @@ const AppRoutes = ({
   fileUrl,
   setFileUrl,
 }) => {
+  const homeRoutes = !isLoggedIn ? (
+    <Route path="/" element={<Login setNowUser={setNowUser} />} />
+  ) : (
+    <>
+      <Route
+        path="/"
+        element={
+          <Home
+            nowUser={nowUser}
+            feedList={feedList}
+            setFeedList={setFeedList}
+            fileUrl={fileUrl}
+            setFileUrl={setFileUrl}
+          />
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <Profile
+            feedList={feedList}
+            setIsLoggedIn={setIsLoggedIn}
+            nowUser={nowUser}
+            setNowUser={setNowUser}
+          />
+        }
+      />
+    </>
+  );
+
   return (
     <div className={styles.wrap}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         {isLoggedIn && <Header />}
         <div className={styles.contentsWrap}>
-          <Routes>
-            {!isLoggedIn ? (
-              <Route path="/" element={<Login setNowUser={setNowUser} />} />
-            ) : (
-              <>
-                <Route
-                  path="/"
-                  element={
-                    <Home
-                      nowUser={nowUser}
-                      feedList={feedList}
-                      setFeedList={setFeedList}
-                      fileUrl={fileUrl}
-                      setFileUrl={setFileUrl}
-                    />
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <Profile
-                      feedList={feedList}
-                      setIsLoggedIn={setIsLoggedIn}
-                      nowUser={nowUser}
-                      setNowUser={setNowUser}
-                    />
-                  }
-                />
-              </>
-            )}
-          </Routes>
+          <Routes>{homeRoutes}</Routes>
         </div>
         {isLoggedIn && <Footer setOpenForm={setOpenForm} />}
       </BrowserRouter>

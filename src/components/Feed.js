@@ -3,7 +3,6 @@ import styles from "./Feed.module.css";
 import FeedEditForm from "./FeedEditForm";
 import FeedTop from "./Feed/FeedTop";
 import FeedActions from "./Feed/FeedActions";
-import FeedLikes from "./Feed/FeedLikes";
 import FeedDescription from "./Feed/FeedDescription";
 import FeedComments from "./Feed/FeedComments";
 import FeedCommentInput from "./Feed/FeedCommentInput";
@@ -20,7 +19,6 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
       />
       <img className={styles.img} src={feed.imgUrl} alt="feedImg" />
       <FeedActions feed={feed} nowUser={nowUser} />
-      <FeedLikes feed={feed} />
       <FeedDescription feed={feed} />
       <FeedComments />
       <FeedCommentInput />

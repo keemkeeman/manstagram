@@ -142,8 +142,8 @@ export const deleteFeed = async (feed, feedList, setFeedList) => {
   }
 };
 
-/* 피드 좋아요 on/off */
-export const likeFeed = async (feed, isLiked, nowUser) => {
+/* 5. 피드 좋아요 on/off 및 개수 업데이트 */
+export const likeFeed = async (feed, isLiked, nowUser, setLikesCount) => {
   // 문서 위치
   const feedRef = doc(db, "feeds", feed.id);
 
@@ -153,11 +153,14 @@ export const likeFeed = async (feed, isLiked, nowUser) => {
   // 기존 'likeCount'와 'likeUsers' 필드 값 가져오기
   const currentLikeCount = docSnapshot.data().likes.likeCount;
   const currentLikeUsers = docSnapshot.data().likes.likeUsers;
+  const updatedLikeCount = isLiked
+    ? currentLikeCount - 1
+    : currentLikeCount + 1;
 
   // 'likeCount'와 'likeUsers' 필드 업데이트
   const updatedLikeField = {
     likes: {
-      likeCount: isLiked ? currentLikeCount - 1 : currentLikeCount + 1,
+      likeCount: updatedLikeCount,
       likeUsers: isLiked
         ? currentLikeUsers.filter((userId) => userId !== nowUser.id)
         : [...currentLikeUsers, nowUser.id],
@@ -166,31 +169,32 @@ export const likeFeed = async (feed, isLiked, nowUser) => {
 
   // 업데이트된 'likeCount'와 'likeUsers' 필드를 문서에 저장
   await updateDoc(feedRef, updatedLikeField);
+
+  /* 좋아요 개수 업데이트 */
+  setLikesCount(updatedLikeCount);
 };
 
-/* 좋아요 했는지 안했는지 가져오기 */
+/* 6. 좋아요 여부 가져오기 */
 export const isLikedUser = async (feed, setIsLiked, nowUser) => {
-  // 가져올 문서 위치 ref 지정
+  // 문서 가져오기
   const feedRef = doc(db, "feeds", feed.id);
-
-  // 가져오기
   const docSnapshot = await getDoc(feedRef);
 
-  // 가져온 문서 안의 좋아요한 유저 데이터 가져오기
+  // 해당 피드에 좋아요한 유저 id 가져오기
   const users = docSnapshot.data().likes.likeUsers;
 
-  // 스위치에 담아주기
+  // 그 중 현재 접속 유저의 id가 있는지 true/false 담아주기
   setIsLiked(users.includes(nowUser.id));
 };
 
-/* 좋아요 개수 읽기 */
-export const countLikes = async (feed, setLikesCount) => {
+/* 7. 좋아요 개수 읽기 */
+export const countLikes = async (feed) => {
   /* 문서 가져오기 */
   const feedRef = doc(db, "feeds", feed.id);
   const docSnapshot = await getDoc(feedRef);
 
-  // 개수 state에 담아주기
-  setLikesCount(docSnapshot.data().likes.likeCount);
+  // 개수 리턴하기
+  return docSnapshot.data().likes.likeCount;
 };
 
 /* 유저 CRUD */

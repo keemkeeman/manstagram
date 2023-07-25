@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Feed from "./Feed";
 import { getFeeds } from "../fireUtil";
 
-const FeedList = ({ feedList, setFeedList, fileUrl, setFileUrl, nowUser }) => {
+const FeedList = ({ feedList, setFeedList, nowUser }) => {
   /* 피드 읽기 */
   useEffect(() => {
     getFeeds(setFeedList);
