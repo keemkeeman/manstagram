@@ -1,9 +1,14 @@
-import { useState } from "react";
 import styles from "./FeedCommentInput.module.css";
 import { createComment } from "../../fireUtil";
 
-const FeedCommentInput = ({ feed, comments, setComments, nowUser }) => {
-  const [commentText, setCommentText] = useState("");
+const FeedCommentInput = ({
+  feed,
+  comments,
+  setComments,
+  nowUser,
+  commentText,
+  setCommentText,
+}) => {
   const handleComment = (e) => {
     setCommentText(e.target.value);
   };

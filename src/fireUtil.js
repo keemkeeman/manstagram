@@ -66,23 +66,28 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
 
 /* 2. 피드 읽기 */
 export const getFeeds = async (nowUser) => {
-  const feedRef = collection(db, "feeds");
   try {
     const feedSnap = await getDocs(
-      query(feedRef, orderBy("createdAt", "desc"))
+      query(collection(db, "feeds"), orderBy("createdAt", "desc"))
     );
+
     const newfeeds = feedSnap.docs.map((item) => ({
       id: item.id,
       ...item.data(),
     }));
 
-    // 가져온 피드 중에 닉네임 바뀐건 업데이트 함
-    newfeeds.map(async (feed) => {
-      if (feed.creatorId === nowUser.id && feed.nickName !== nowUser.nickName) {
+    // 변경 사항 업데이트
+    const findChange = newfeeds.filter(
+      (feed) =>
+        feed.creatorId === nowUser.id && feed.nickName !== nowUser.nickName
+    );
+
+    if (findChange.length > 0) {
+      findChange.map(async (feed) => {
         const feedDocRef = doc(db, "feeds", feed.id);
         await updateDoc(feedDocRef, { nickName: nowUser.nickName });
-      }
-    });
+      });
+    }
 
     return newfeeds;
   } catch (err) {
@@ -134,7 +139,7 @@ export const updateFeed = async (feed, newText, feedList, newFileUrl) => {
 /* 4. 피드 삭제 */
 export const deleteFeed = async (feed, feedList, setFeedList) => {
   try {
-    const ok = window.confirm("are you sure?");
+    const ok = window.confirm("게시물을 삭제하시겠습니까?");
     if (ok) {
       if (feed.id) {
         await deleteDoc(doc(db, "feeds", feed.id));
@@ -207,7 +212,8 @@ export const countLikes = async (feed) => {
 };
 
 /* 댓글 */
-/* 댓글 생성 */
+
+/* 1. 댓글 생성 */
 export const createComment = async (commentText, nowUser, feed) => {
   try {
     const docRef = await addDoc(collection(db, "comments"), {
@@ -229,39 +235,81 @@ export const createComment = async (commentText, nowUser, feed) => {
   }
 };
 
-/* 댓글 불러오기 */
+/* 2. 댓글 읽기 */
 export const getComments = async (feed, nowUser) => {
-  const commentRef = collection(db, "comments");
   try {
     // 피드별 댓글 리스트 가져옴
+    const commentRef = collection(db, "comments");
     const commentSnapshot = await getDocs(
       query(commentRef, where("feedId", "==", feed.id))
     );
-    const comments = commentSnapshot.docs.map((item) => ({
-      id: item.id,
-      ...item.data(),
+
+    const comments = commentSnapshot.docs.map((comment) => ({
+      id: comment.id,
+      ...comment.data(),
     }));
 
-    // 가져온 댓글리스트 중에 닉네임 바뀐건 업데이트 함
-    comments.map(async (comment) => {
-      if (
+    const commentList = comments.sort((a, b) => b.createdAt - a.createdAt);
+
+    // 변경사항 업데이트
+    const findChange = commentList.filter(
+      (comment) =>
         comment.creatorId === nowUser.id &&
         comment.nickName !== nowUser.nickName
-      ) {
+    );
+
+    if (findChange.length > 0) {
+      findChange.map(async (comment) => {
         const commentDocRef = doc(db, "comments", comment.id);
         await updateDoc(commentDocRef, { nickName: nowUser.nickName });
-      }
-    });
-    return comments;
+      });
+    }
+
+    return commentList;
   } catch (err) {
     console.error(`Comment Get error: ${err.error}`);
   }
 };
 
+/* 3. 댓글 수정 */
+export const editComment = async (comment, comments, editedCommentText) => {
+  const docRef = doc(db, "comments", comment.id);
+  await updateDoc(docRef, {
+    commentText: editedCommentText,
+  });
+
+  /* 댓글 순서 맞춰 반환 */
+  const commnetIndex = comments.findIndex((item) => item.id === comment.id);
+  const updatedCommnet = {
+    ...comments[commnetIndex],
+    commentText: editedCommentText,
+  };
+  const prevList = comments.slice(0, commnetIndex);
+  const nextList = comments.slice(commnetIndex + 1);
+  const newList = [...prevList, updatedCommnet, ...nextList];
+  return newList;
+};
+
+/* 4. 댓글 삭제 */
+export const deleteComment = async (comment, comments, setComments) => {
+  try {
+    console.log(comments);
+    const ok = window.confirm("댓글을 삭제하시겠습니까?");
+    if (ok) {
+      await deleteDoc(doc(db, "comments", comment.id));
+      const newList = await comments.filter((item) => item.id !== comment.id);
+      setComments(newList);
+    }
+    return comments;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 /* 유저 CRUD */
 
-/* 유저 생성 */
-export const createUser = async (email, pw, setNowUser) => {
+/* 1. 유저 생성 */
+export const createUser = async (email, pw) => {
   try {
     await createUserWithEmailAndPassword(auth, email, pw);
     await addDoc(collection(db, "users"), {

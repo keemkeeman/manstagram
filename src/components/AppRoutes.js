@@ -18,7 +18,7 @@ const AppRoutes = ({
   setFileUrl,
 }) => {
   const homeRoutes = !isLoggedIn ? (
-    <Route path="/" element={<Login setNowUser={setNowUser} />} />
+    <Route path="/" element={<Login />} />
   ) : (
     <>
       <Route

@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import styles from "./Login.module.css";
 
-const Login = ({ setNowUser }) => {
+const Login = () => {
   const [haveAccount, setHaveAccount] = useState(true);
 
   const googleLogin = async () => {
@@ -24,7 +24,7 @@ const Login = ({ setNowUser }) => {
     <>
       <div className={styles.wrap}>
         <h1 className={styles.title}>Manstagram</h1>
-        <LoginForm setNowUser={setNowUser} haveAccount={haveAccount} />
+        <LoginForm haveAccount={haveAccount} />
         <div className={styles.and}>
           <div name="line"></div>
           <span>또는</span>
