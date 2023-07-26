@@ -264,16 +264,7 @@ export const getComments = async (feed, nowUser) => {
 export const createUser = async (email, pw, setNowUser) => {
   try {
     await createUserWithEmailAndPassword(auth, email, pw);
-    const docRef = await addDoc(collection(db, "users"), {
-      createdAt: Timestamp.now(),
-      email: email,
-      nickName: "임시 닉네임",
-      phoneNumber: "",
-      profilePicUrl: "",
-      introduction: "",
-    });
-    setNowUser({
-      id: docRef.id,
+    await addDoc(collection(db, "users"), {
       createdAt: Timestamp.now(),
       email: email,
       nickName: "임시 닉네임",
@@ -309,11 +300,31 @@ export const getUser = async (setNowUser) => {
         where("email", "==", auth.currentUser.email)
       )
     );
-    const users = userSnap.docs.map((user) => ({
-      id: user.id,
-      ...user.data(),
-    }));
-    setNowUser(users[0]);
+    if (userSnap.empty) {
+      const docRef = await addDoc(collection(db, "users"), {
+        createdAt: Timestamp.now(),
+        email: auth.currentUser.email,
+        nickName: "임시 닉네임",
+        phoneNumber: "",
+        profilePicUrl: "",
+        introduction: "",
+      });
+      setNowUser({
+        id: docRef.id,
+        createdAt: Timestamp.now(),
+        email: auth.currentUser.email,
+        nickName: "임시 닉네임",
+        phoneNumber: "",
+        profilePicUrl: "",
+        introduction: "",
+      });
+    } else {
+      const users = userSnap.docs.map((user) => ({
+        id: user.id,
+        ...user.data(),
+      }));
+      setNowUser(users[0]);
+    }
   } catch (err) {
     console.error(`User Get error: ${err.error}`);
   }

@@ -29,7 +29,7 @@ function App() {
   }, []);
 
   console.log("app rander");
-
+  
   return (
     <div className={styles.app}>
       {init ? (
