@@ -273,21 +273,25 @@ export const getComments = async (feed, nowUser) => {
 
 /* 3. 댓글 수정 */
 export const editComment = async (comment, comments, editedCommentText) => {
-  const docRef = doc(db, "comments", comment.id);
-  await updateDoc(docRef, {
-    commentText: editedCommentText,
-  });
+  try {
+    const docRef = doc(db, "comments", comment.id);
+    await updateDoc(docRef, {
+      commentText: editedCommentText,
+    });
 
-  /* 댓글 순서 맞춰 반환 */
-  const commnetIndex = comments.findIndex((item) => item.id === comment.id);
-  const updatedCommnet = {
-    ...comments[commnetIndex],
-    commentText: editedCommentText,
-  };
-  const prevList = comments.slice(0, commnetIndex);
-  const nextList = comments.slice(commnetIndex + 1);
-  const newList = [...prevList, updatedCommnet, ...nextList];
-  return newList;
+    /* 댓글 순서 맞춰 반환 */
+    const commnetIndex = comments.findIndex((item) => item.id === comment.id);
+    const updatedCommnet = {
+      ...comments[commnetIndex],
+      commentText: editedCommentText,
+    };
+    const prevList = comments.slice(0, commnetIndex);
+    const nextList = comments.slice(commnetIndex + 1);
+    const newList = [...prevList, updatedCommnet, ...nextList];
+    return newList;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 /* 4. 댓글 삭제 */
