@@ -18,31 +18,46 @@ const FeedComments = ({ feed, nowUser }) => {
     fetchComments();
   }, [feed, nowUser]);
 
+  const wannaShowAll =
+    comments.length === 0 ? (
+      <span className={styles.commentOpen}>첫 댓글을 남겨보세요!</span>
+    ) : (
+      <span
+        className={styles.commentOpen}
+        onClick={() => {
+          setOpenAllComments(true);
+        }}
+      >
+        댓글 {comments.length}개 모두 보기
+      </span>
+    );
+
+  const currentTwoComments = comments.slice(0, 2);
+  const currentComments = currentTwoComments.map((comment) => (
+    <Comment
+      key={comment.id}
+      comment={comment}
+      comments={comments}
+      setComments={setComments}
+      commentText={commentText}
+      nowUser={nowUser}
+    />
+  ));
+  const allComments = comments.map((comment) => (
+    <Comment
+      key={comment.id}
+      comment={comment}
+      comments={comments}
+      setComments={setComments}
+      commentText={commentText}
+      nowUser={nowUser}
+    />
+  ));
+
   return (
     <div className={styles.wrap}>
-      {comments.length === 0 ? (
-        <span className={styles.commentOpen}>첫 댓글을 남겨보세요!</span>
-      ) : (
-        <span
-          className={styles.commentOpen}
-          onClick={() => {
-            setOpenAllComments(true);
-          }}
-        >
-          댓글 {comments.length}개 모두 보기
-        </span>
-      )}
-      {/* 댓글 최신 2개만 보기 + 접기 펼치기 추가 */}
-      {comments.map((comment) => (
-        <Comment
-          key={comment.id}
-          comment={comment}
-          comments={comments}
-          setComments={setComments}
-          commentText={commentText}
-          nowUser={nowUser}
-        />
-      ))}
+      {wannaShowAll}
+      {openAllComments ? allComments : currentComments}
       <FeedCommentInput
         feed={feed}
         comments={comments}
