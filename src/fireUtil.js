@@ -294,10 +294,9 @@ export const editComment = async (comment, comments, editedCommentText) => {
   }
 };
 
-/* 4. 댓글 삭제 */
+/* 4. 댓글 개별 삭제 */
 export const deleteComment = async (comment, comments, setComments) => {
   try {
-    console.log(comments);
     const ok = window.confirm("댓글을 삭제하시겠습니까?");
     if (ok) {
       await deleteDoc(doc(db, "comments", comment.id));
@@ -305,6 +304,21 @@ export const deleteComment = async (comment, comments, setComments) => {
       setComments(newList);
     }
     return comments;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+/* 5. 댓글 피드별 삭제 */
+export const deleteFeedComments = async (feed) => {
+  try {
+    const commentsSnap = await getDocs(
+      query(collection(db, "comments"), where("feedId", "==", feed.id))
+    );
+    /* snap.docs는 배열이라 map, snap은 객체라 forEach, doc.ref는 각 doc의 위치  */
+    commentsSnap.docs.map(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
   } catch (err) {
     console.error(err);
   }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteFeed, updateFeed } from "../fireUtil";
+import { deleteFeed, updateFeed, deleteFeedComments } from "../fireUtil";
 import styles from "./FeedEditForm.module.css";
 
 const FeedEditForm = ({ feed, feedList, setFeedList, setIsEditOpen }) => {
@@ -42,6 +42,7 @@ const FeedEditForm = ({ feed, feedList, setFeedList, setIsEditOpen }) => {
   /* 피드 삭제 */
   const handleDelete = async () => {
     await deleteFeed(feed, feedList, setFeedList);
+    await deleteFeedComments(feed);
   };
 
   return (

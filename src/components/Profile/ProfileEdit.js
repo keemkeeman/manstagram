@@ -60,7 +60,7 @@ const ProfileEdit = ({
       <div className={styles.topWrap}>
         <span onClick={handleOpenEdit}>취소</span>
         <h3>프로필 편집</h3>
-        <span onSubmit={handleEditProfile}>완료</span>
+        <span onClick={handleEditProfile}>완료</span>
       </div>
       <div className={styles.formWrap}>
         <div className={styles.innerWrap}>
