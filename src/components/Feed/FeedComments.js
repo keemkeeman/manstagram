@@ -7,6 +7,7 @@ import { getComments } from "../../fireUtil";
 const FeedComments = ({ feed, nowUser }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
+  const [openAllComments, setOpenAllComments] = useState(false);
 
   /* 댓글 읽기 (불러오기) */
   useEffect(() => {
@@ -19,9 +20,18 @@ const FeedComments = ({ feed, nowUser }) => {
 
   return (
     <div className={styles.wrap}>
-      <span className={styles.commentOpen}>
-        댓글 {comments.length}개 모두 보기
-      </span>
+      {comments.length === 0 ? (
+        <span className={styles.commentOpen}>첫 댓글을 남겨보세요!</span>
+      ) : (
+        <span
+          className={styles.commentOpen}
+          onClick={() => {
+            setOpenAllComments(true);
+          }}
+        >
+          댓글 {comments.length}개 모두 보기
+        </span>
+      )}
       {/* 댓글 최신 2개만 보기 + 접기 펼치기 추가 */}
       {comments.map((comment) => (
         <Comment
