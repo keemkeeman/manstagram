@@ -37,7 +37,6 @@ const AppRoutes = ({
         path="/profile/:userId"
         element={
           <Profile
-            feedList={feedList}
             setIsLoggedIn={setIsLoggedIn}
             nowUser={nowUser}
             setNowUser={setNowUser}

@@ -8,6 +8,7 @@ const ProfileInfo = ({
   setNowUser,
   profileUser,
   isMyProfile,
+  profileFeedList,
 }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
@@ -20,12 +21,14 @@ const ProfileInfo = ({
     <div className={styles.wrap}>
       <div className={styles.profilePicWrap}>
         <div className={styles.profilePic}>
-          <img src={profileUser.profilePicUrl} alt="profilePic" />
+          <img src={nowUser.profilePicUrl} alt="profilePic" />
         </div>
       </div>
       <div className={styles.infoWrap}>
         <div className={styles.nicWrap}>
-          <div className={styles.nickName}>{profileUser.nickName}</div>
+          <div className={styles.nickName}>
+            {isMyProfile ? nowUser.nickName : profileUser.nickName}
+          </div>
           {isMyProfile && (
             <div onClick={handleOpenEdit} className={styles.editIcon}>
               <i className="fa-solid fa-gear"></i>
@@ -35,7 +38,7 @@ const ProfileInfo = ({
         <div className={styles.followWrap}>
           <div className={styles.followInnerWrap}>
             <span>게시물</span>
-            <span className={styles.number}>{n}</span>
+            <span className={styles.number}>{profileFeedList.length}</span>
           </div>
           <div className={styles.followInnerWrap}>
             <span>팔로워</span>

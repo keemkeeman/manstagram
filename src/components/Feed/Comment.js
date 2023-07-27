@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Comment.module.css";
 import { editComment, deleteComment } from "../../fireUtil";
+import { Link } from "react-router-dom";
 
 const Comment = ({ comment, comments, setComments, nowUser }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -30,9 +31,9 @@ const Comment = ({ comment, comments, setComments, nowUser }) => {
   return (
     <div className={styles.wrap}>
       <span className={styles.innerWrap}>
-        <span onClick={null} className={styles.nickName}>
+        <Link to={`/profile/${comment.creatorId}`} className={styles.nickName}>
           {comment.nickName}
-        </span>
+        </Link>
         {isEditOpen ? (
           <input
             className={styles.commentTextInput}

@@ -12,6 +12,7 @@
   word-break: normal;
 }
 .nickName {
+  color: black;
   font-weight: 700;
   cursor: pointer;
 }

@@ -5,21 +5,27 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProfileUser } from "../fireUtil";
 
-const Profile = ({ setIsLoggedIn, nowUser, setNowUser, feedList }) => {
+const Profile = ({
+  setIsLoggedIn,
+  nowUser,
+  setNowUser,
+  fileUrl,
+  setFileUrl,
+}) => {
   const { userId } = useParams();
   const [profileUser, setProfileUser] = useState({});
   const [isMyProfile, setIsMyProfile] = useState(false);
+  const [profileFeedList, setProfileFeedList] = useState([]);
 
   useEffect(() => {
     const fetchProfileUser = async () => {
-      setProfileUser(await getProfileUser(userId));
+      setProfileUser(await getProfileUser(userId, setProfileFeedList));
     };
     fetchProfileUser();
     if (profileUser.id === nowUser.id) {
       setIsMyProfile(true);
     }
   }, [nowUser.id, profileUser.id, userId]);
-
   return (
     <div className={styles.wrap}>
       <ProfileInfo
@@ -28,8 +34,9 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser, feedList }) => {
         nowUser={nowUser}
         setIsLoggedIn={setIsLoggedIn}
         setNowUser={setNowUser}
+        profileFeedList={profileFeedList}
       />
-      <ProfileFeedList nowUser={nowUser} feedList={feedList} />
+      <ProfileFeedList profileFeedList={profileFeedList} />
     </div>
   );
 };

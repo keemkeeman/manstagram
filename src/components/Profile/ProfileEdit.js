@@ -17,6 +17,24 @@ const ProfileEdit = ({
   const [introduction, setIntroduction] = useState(nowUser.introduction);
   const navigate = useNavigate();
 
+  /* 이미지 불러오기 */
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith("image/")) {
+      window.alert("올바른 이미지 파일을 선택해주세요!");
+      return;
+    } else {
+      const reader = new FileReader();
+      reader.onloadend = (e) => {
+        setProfilePicUrl(e.currentTarget.result);
+      };
+      reader.onerror = () => {
+        window.alert("이미지를 읽는 도중 오류가 발생했습니다!");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   /* 로그아웃 */
   const handleLogout = () => {
     logOut();
@@ -32,9 +50,9 @@ const ProfileEdit = ({
   };
 
   /* 유저 수정 */
-  const handleEditProfile = (e) => {
+  const handleEditProfile = async (e) => {
     e.preventDefault();
-    updateUser(
+    await updateUser(
       nowUser,
       setNowUser,
       nic,
@@ -46,6 +64,7 @@ const ProfileEdit = ({
       ...prev,
       nickName: nic,
       introduction: introduction,
+      profilePicUrl: profilePicUrl,
     }));
     setIsEditOpen(false);
   };
@@ -55,6 +74,7 @@ const ProfileEdit = ({
     deleteAccount();
     navigate("/");
   };
+
   return (
     <div className={styles.wrap}>
       <div className={styles.topWrap}>
@@ -74,7 +94,7 @@ const ProfileEdit = ({
         </div>
         <div className={styles.innerWrap}>
           <label className="edit-title">프로필 사진</label>
-          <input type="file" onChange={null} />
+          <input type="file" onChange={handleFile} />
         </div>
         <div className={styles.innerWrap}>
           <label className="edit-title">소개</label>

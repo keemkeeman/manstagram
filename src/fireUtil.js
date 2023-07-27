@@ -442,9 +442,27 @@ export const deleteAccount = async () => {
 };
 
 /* 프로필 유저 가져오기 */
-export const getProfileUser = async (userId) => {
-  const userRef = doc(db, "users", userId);
-  const userSnap = await getDoc(userRef);
-  const user = userSnap.data();
-  return user;
+export const getProfileUser = async (userId, setProfileFeedList) => {
+  try {
+    /* 프로필 가져오기 */
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+    const user = {
+      id: userSnap.id,
+      ...userSnap.data(),
+    };
+    /* 본인 피드 불러오기 */
+    const feedRef = collection(db, "feeds");
+    const feedSnap = await getDocs(
+      query(feedRef, where("creatorId", "==", userId))
+    );
+    const profileFeeds = feedSnap.docs.map((feed) => ({
+      id: feed.id,
+      ...feed.data(),
+    }));
+    setProfileFeedList(profileFeeds);
+    return user;
+  } catch (err) {
+    console.error(err);
+  }
 };
