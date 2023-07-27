@@ -2,7 +2,13 @@ import styles from "./ProfileInfo.module.css";
 import ProfileEdit from "./ProfileEdit";
 import { useState } from "react";
 
-const ProfileInfo = ({ setIsLoggedIn, nowUser, setNowUser }) => {
+const ProfileInfo = ({
+  setIsLoggedIn,
+  nowUser,
+  setNowUser,
+  profileUser,
+  isMyProfile,
+}) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const handleOpenEdit = () => {
@@ -13,14 +19,18 @@ const ProfileInfo = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   return (
     <div className={styles.wrap}>
       <div className={styles.profilePicWrap}>
-        <div className={styles.profilePic}>사진</div>
+        <div className={styles.profilePic}>
+          <img src={profileUser.profilePicUrl} alt="profilePic" />
+        </div>
       </div>
       <div className={styles.infoWrap}>
         <div className={styles.nicWrap}>
-          <div className={styles.nickName}>{nowUser.nickName}</div>
-          <div onClick={handleOpenEdit} className={styles.editIcon}>
-            <i className="fa-solid fa-gear"></i>
-          </div>
+          <div className={styles.nickName}>{profileUser.nickName}</div>
+          {isMyProfile && (
+            <div onClick={handleOpenEdit} className={styles.editIcon}>
+              <i className="fa-solid fa-gear"></i>
+            </div>
+          )}
         </div>
         <div className={styles.followWrap}>
           <div className={styles.followInnerWrap}>
@@ -36,7 +46,9 @@ const ProfileInfo = ({ setIsLoggedIn, nowUser, setNowUser }) => {
             <span className={styles.number}>{n}</span>
           </div>
         </div>
-        <div className={styles.introductionWrap}>소개글</div>
+        <div className={styles.introductionWrap}>
+          {profileUser.introduction}
+        </div>
       </div>
       <div>
         {isEditOpen && (

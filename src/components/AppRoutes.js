@@ -34,7 +34,7 @@ const AppRoutes = ({
         }
       />
       <Route
-        path="/profile/:nickName"
+        path="/profile/:userId"
         element={
           <Profile
             feedList={feedList}

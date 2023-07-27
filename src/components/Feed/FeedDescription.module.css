@@ -8,6 +8,7 @@
 .nickName {
   font-weight: 700;
   cursor: pointer;
+  color: black;
 }
 .feedText {
   margin-left: 5px;

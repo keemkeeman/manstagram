@@ -7,11 +7,13 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   };
   return (
     <div className={styles.top}>
-      <Link to={`/profile/${feed.nickName}`} className={styles.profilePic}>
+      <Link to={`/profile/${feed.creatorId}`} className={styles.profilePic}>
         <img src={feed.imgUrl} alt="profilePic" />
       </Link>
       <div className={styles.nicWrap}>
-        <div className={styles.nickName}>{feed.nickName}</div>
+        <Link to={`/profile/${feed.creatorId}`} className={styles.nickName}>
+          {feed.nickName}
+        </Link>
         <span>•</span>
         <span>2시간</span>
       </div>

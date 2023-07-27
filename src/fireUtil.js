@@ -440,3 +440,11 @@ export const deleteAccount = async () => {
     console.error(`User Delete Error: ${err.error}`);
   }
 };
+
+/* 프로필 유저 가져오기 */
+export const getProfileUser = async (userId) => {
+  const userRef = doc(db, "users", userId);
+  const userSnap = await getDoc(userRef);
+  const user = userSnap.data();
+  return user;
+};

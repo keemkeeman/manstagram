@@ -17,7 +17,7 @@ const Footer = ({ setOpenForm, nowUser }) => {
       >
         <i className="fa-solid fa-circle-plus"></i>
       </div>
-      <Link to={`/profile/${nowUser.nickName}`}>
+      <Link to={`/profile/${nowUser.id}`}>
         <div className={styles.icon}>
           <i className="fa-solid fa-user-large"></i>
         </div>
