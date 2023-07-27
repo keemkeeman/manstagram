@@ -1,4 +1,5 @@
 import styles from "./FeedTop.module.css";
+import { Link } from "react-router-dom";
 
 const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   const handleEditOpen = () => {
@@ -6,9 +7,9 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   };
   return (
     <div className={styles.top}>
-      <div className={styles.profilePic}>
+      <Link to={`/profile/${feed.nickName}`} className={styles.profilePic}>
         <img src={feed.imgUrl} alt="profilePic" />
-      </div>
+      </Link>
       <div className={styles.nicWrap}>
         <div className={styles.nickName}>{feed.nickName}</div>
         <span>•</span>

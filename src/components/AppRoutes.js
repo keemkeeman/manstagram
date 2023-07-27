@@ -34,7 +34,7 @@ const AppRoutes = ({
         }
       />
       <Route
-        path="/profile"
+        path="/profile/:nickName"
         element={
           <Profile
             feedList={feedList}
@@ -54,7 +54,7 @@ const AppRoutes = ({
         <div className={styles.contentsWrap}>
           <Routes>{homeRoutes}</Routes>
         </div>
-        {isLoggedIn && <Footer setOpenForm={setOpenForm} />}
+        {isLoggedIn && <Footer setOpenForm={setOpenForm} nowUser={nowUser} />}
       </BrowserRouter>
     </div>
   );

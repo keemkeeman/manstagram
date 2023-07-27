@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
 
-const Footer = ({ setOpenForm }) => {
+const Footer = ({ setOpenForm, nowUser }) => {
   return (
     <div className={styles.footerWrap}>
       <Link to="/">
@@ -17,7 +17,7 @@ const Footer = ({ setOpenForm }) => {
       >
         <i className="fa-solid fa-circle-plus"></i>
       </div>
-      <Link to="/profile">
+      <Link to={`/profile/${nowUser.nickName}`}>
         <div className={styles.icon}>
           <i className="fa-solid fa-user-large"></i>
         </div>
