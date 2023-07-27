@@ -57,8 +57,13 @@ const ProfileEdit = ({
   };
   return (
     <div className={styles.wrap}>
-      <form onSubmit={handleEditProfile}>
-        <div>
+      <div className={styles.topWrap}>
+        <span onClick={handleOpenEdit}>취소</span>
+        <h3>프로필 편집</h3>
+        <span onSubmit={handleEditProfile}>완료</span>
+      </div>
+      <div className={styles.formWrap}>
+        <div className={styles.innerWrap}>
           <label className="edit-title">닉네임 수정</label>
           <input
             type="text"
@@ -67,29 +72,29 @@ const ProfileEdit = ({
             onChange={handleNic}
           />
         </div>
-        <div>
-          <label className="edit-title">프로필 사진 수정</label>
+        <div className={styles.innerWrap}>
+          <label className="edit-title">프로필 사진</label>
           <input type="file" onChange={null} />
         </div>
-        <div>
-          <label className="edit-title">소개글 수정</label>
-          <input
+        <div className={styles.innerWrap}>
+          <label className="edit-title">소개</label>
+          <textarea
             type="text"
             maxLength={100}
             placeholder="100자 이내 작성"
             onChange={handleIntroduction}
           />
         </div>
-        <div>
-          <label className="edit-title">휴대폰 번호 수정</label>
+        <div className={styles.innerWrap}>
+          <label className="edit-title">휴대폰 번호</label>
           <input type="text" onChange={null} />
         </div>
-        <input type="submit" value="수정" />
-      </form>
-      <button onClick={handleOpenEdit}>취소</button>
-      <button onClick={handleDeleteAccount}>회원탈퇴</button>
-      <Link to="/" onClick={handleLogout}>
-        Logout
+      </div>
+      <Link to="/" onClick={handleLogout} className={styles.logout}>
+        로그아웃
+      </Link>
+      <Link to="/" onClick={handleDeleteAccount} className={styles.logout}>
+        회원탈퇴
       </Link>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { deleteFeed, updateFeed } from "../fireUtil";
+import styles from "./FeedEditForm.module.css";
 
 const FeedEditForm = ({ feed, feedList, setFeedList, setIsEditOpen }) => {
   const [newFileUrl, setNewFileUrl] = useState("");
@@ -44,24 +45,34 @@ const FeedEditForm = ({ feed, feedList, setFeedList, setIsEditOpen }) => {
   };
 
   return (
-    <div className="editForm">
-      <h3>change your Feed</h3>
-      <input name="image" type="file" accept="image/*" onChange={handleFile} />
-      <input
-        name="feedText"
-        type="text"
-        maxLength={100}
-        value={newText}
-        onChange={handleNewText}
-      />
-      <button
-        onClick={handleEdit}
-        name="submitButton"
-        type="submit"
-        value="바꿔!"
-      />
-      <button onClick={handleDelete}>삭제</button>
-      <button onClick={handleEditClose}>취소</button>
+    <div className={styles.wrap}>
+      <div className={styles.topWrap}>
+        <h3>change your Feed</h3>
+        <i onClick={handleDelete} className="fa-solid fa-trash"></i>
+      </div>
+      <div className={styles.contentWrap}>
+        <textarea
+          name="feedText"
+          type="text"
+          maxLength={100}
+          value={newText}
+          onChange={handleNewText}
+        />
+        <input
+          name="image"
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+        />
+        <div className={styles.buttons}>
+          <button onClick={handleEdit} className={styles.changeButton}>
+            바꿔!
+          </button>
+          <button onClick={handleEditClose} className={styles.cancelButton}>
+            취소
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
