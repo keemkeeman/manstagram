@@ -288,21 +288,60 @@ export const editComment = async (comment, comments, editedCommentText) => {
   }
 };
 
-/* 대댓글시, 부모 댓글에 자식id 추가 */
-export const updateReplyComment = async (momComment, id) => {
-  const docRef = doc(db, "comments", momComment.id);
-  const commentSnapShot = await getDoc(docRef);
-  const currentReplies = commentSnapShot.data().replies;
-  await updateDoc(docRef, {
-    replies: [
+/* 대댓글 생성 (부모 댓글에 추가) */
+export const updateReplyComment = async (
+  momComment,
+  replyCommentText,
+  nowUser
+) => {
+  try {
+    const docRef = doc(db, "comments", momComment.id);
+    const commentSnapShot = await getDoc(docRef);
+    const currentReplies = commentSnapShot.data().replies;
+    const newReplies = [
       ...currentReplies,
       {
         createdAt: Timestamp.now(),
-        creatorId: id,
+        nickName: nowUser.nickName,
+        creatorId: nowUser.id,
         momId: momComment.id,
+        feedId: momComment.feedId,
+        commentText: replyCommentText,
       },
-    ],
-  });
+    ];
+    await updateDoc(docRef, {
+      replies: newReplies,
+    });
+    return newReplies;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+/* 대댓글 읽기 */
+export const getReplies = async (comment, nowUser) => {
+  const docRef = doc(db, "comments", comment.id);
+  const docSnap = await getDoc(docRef);
+  const commentReplies = docSnap.data().replies;
+
+  const commentRepliesList = commentReplies.sort(
+    (a, b) => b.createdAt - a.createdAt
+  );
+
+  // 변경사항 업데이트
+  const findChange = commentRepliesList.filter(
+    (comment) =>
+      comment.creatorId === nowUser.id && comment.nickName !== nowUser.nickName
+  );
+
+  if (findChange.length > 0) {
+    findChange.map(async (comment) => {
+      const commentDocRef = doc(db, "comments", comment.id);
+      await updateDoc(commentDocRef, { nickName: nowUser.nickName });
+    });
+  }
+
+  return commentRepliesList;
 };
 
 /* 4. 댓글 개별 삭제 */

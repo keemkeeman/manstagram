@@ -1,6 +1,5 @@
 import styles from "./FeedCommentInput.module.css";
-import { createComment, updateReplyComment } from "../../fireUtil";
-import { useEffect, useState } from "react";
+import { createComment } from "../../fireUtil";
 
 const FeedCommentInput = ({
   feed,
@@ -9,48 +8,27 @@ const FeedCommentInput = ({
   nowUser,
   commentText,
   setCommentText,
-  replyInit,
-  momComment,
-  nowComment,
-  setNowComment,
 }) => {
-  const [replyCommentText, setReplyCommentText] = useState("");
   const handleComment = (e) => {
-    replyInit
-      ? setReplyCommentText(e.target.value)
-      : setCommentText(e.target.value);
+    setCommentText(e.target.value);
   };
-  const currentComment = replyInit ? replyCommentText : commentText;
 
   /* 댓글 등록 */
   const handleSubmit = async () => {
-    if (currentComment === "") {
+    if (commentText === "") {
       window.alert("1자 이상은 필수입니다.");
     } else {
-      const newComment = await createComment(currentComment, nowUser, feed);
+      const newComment = await createComment(commentText, nowUser, feed);
       setComments([newComment, ...comments]);
-      if (replyInit) {
-        await updateReplyComment(momComment, newComment.id);
-      }
       setCommentText("");
-      setReplyCommentText("");
     }
   };
-
-  /* 대댓글 버튼 누르면 동작 */
-  useEffect(() => {
-    if (replyInit) {
-      const inputElement = document.getElementById("commentInput");
-      inputElement.focus();
-      setReplyCommentText(`@${momComment.nickName} `);
-    }
-  }, [momComment.nickName, replyInit]);
 
   return (
     <div className={styles.wrap}>
       <input
         id="commentInput"
-        value={currentComment}
+        value={commentText}
         className={styles.commentInput}
         placeholder="댓글 달기..."
         onChange={handleComment}

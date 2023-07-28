@@ -10,7 +10,6 @@ const FeedComments = ({ feed, nowUser }) => {
   const [openAllComments, setOpenAllComments] = useState(false);
   const [replyInit, setReplyInit] = useState(false);
   const [momComment, setMomComment] = useState({});
-  const [nowComment, setNowComment] = useState({});
 
   /* 댓글 읽기 (불러오기) */
   useEffect(() => {
@@ -43,9 +42,10 @@ const FeedComments = ({ feed, nowUser }) => {
       comment={comment}
       comments={comments}
       setComments={setComments}
-      commentText={commentText}
       nowUser={nowUser}
+      replyInit={replyInit}
       setReplyInit={setReplyInit}
+      momComment={momComment}
       setMomComment={setMomComment}
     />
   ));
@@ -63,8 +63,6 @@ const FeedComments = ({ feed, nowUser }) => {
         setCommentText={setCommentText}
         replyInit={replyInit}
         momComment={momComment}
-        nowComment={nowComment}
-        setNowComment={setNowComment}
       />
     </div>
   );
