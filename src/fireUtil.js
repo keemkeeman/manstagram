@@ -35,9 +35,7 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
     const fileRef = ref(storage, `${nowUser.id}/${uuidv4()}`);
     const response = await uploadString(fileRef, fileUrl, "data_url");
     const imgUrl = await getDownloadURL(response.ref);
-
-    /* firestore 추가 */
-    const docRef = await addDoc(collection(db, "feeds"), {
+    const feedObj = {
       createdAt: Timestamp.now(),
       creatorId: nowUser.id,
       feedText: feedText,
@@ -48,16 +46,13 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
         likeCount: 0,
       },
       comments: [],
-    });
+    };
 
+    /* firestore 추가 */
+    const docRef = await addDoc(collection(db, "feeds"), feedObj);
     return {
       id: docRef.id,
-      createdAt: Timestamp.now(),
-      creatorId: nowUser.id,
-      feedText: feedText,
-      imgUrl: imgUrl,
-      nickName: nowUser.nickName,
-      likes: 0,
+      ...feedObj,
     };
   } catch (err) {
     console.error(`Feed Create error: ${err.error}`);
@@ -214,21 +209,20 @@ export const countLikes = async (feed) => {
 /* 댓글 */
 
 /* 1. 댓글 생성 */
-export const createComment = async (commentText, nowUser, feed) => {
+export const createComment = async (currentComment, nowUser, feed) => {
+  const commentDoc = {
+    feedId: feed.id,
+    createdAt: Timestamp.now(),
+    creatorId: nowUser.id,
+    nickName: nowUser.nickName,
+    commentText: currentComment,
+    replies: [],
+  };
   try {
-    const docRef = await addDoc(collection(db, "comments"), {
-      feedId: feed.id,
-      createdAt: Timestamp.now(),
-      creatorId: nowUser.id,
-      nickName: nowUser.nickName,
-      commentText: commentText,
-    });
+    const docRef = await addDoc(collection(db, "comments"), commentDoc);
     return {
       id: docRef.id,
-      feedId: feed.id,
-      creatorId: nowUser.id,
-      nickName: nowUser.nickName,
-      commentText: commentText,
+      ...commentDoc,
     };
   } catch (err) {
     console.err(err);
@@ -292,6 +286,23 @@ export const editComment = async (comment, comments, editedCommentText) => {
   } catch (err) {
     console.error(err);
   }
+};
+
+/* 대댓글시, 부모 댓글에 자식id 추가 */
+export const updateReplyComment = async (momComment, id) => {
+  const docRef = doc(db, "comments", momComment.id);
+  const commentSnapShot = await getDoc(docRef);
+  const currentReplies = commentSnapShot.data().replies;
+  await updateDoc(docRef, {
+    replies: [
+      ...currentReplies,
+      {
+        createdAt: Timestamp.now(),
+        creatorId: id,
+        momId: momComment.id,
+      },
+    ],
+  });
 };
 
 /* 4. 댓글 개별 삭제 */

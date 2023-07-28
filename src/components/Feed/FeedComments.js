@@ -8,6 +8,9 @@ const FeedComments = ({ feed, nowUser }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [openAllComments, setOpenAllComments] = useState(false);
+  const [replyInit, setReplyInit] = useState(false);
+  const [momComment, setMomComment] = useState({});
+  const [nowComment, setNowComment] = useState({});
 
   /* 댓글 읽기 (불러오기) */
   useEffect(() => {
@@ -33,7 +36,8 @@ const FeedComments = ({ feed, nowUser }) => {
     );
 
   const currentTwoComments = comments.slice(0, 2);
-  const currentComments = currentTwoComments.map((comment) => (
+  const commentListSwitch = openAllComments ? comments : currentTwoComments;
+  const commentList = commentListSwitch.map((comment) => (
     <Comment
       key={comment.id}
       comment={comment}
@@ -41,23 +45,15 @@ const FeedComments = ({ feed, nowUser }) => {
       setComments={setComments}
       commentText={commentText}
       nowUser={nowUser}
-    />
-  ));
-  const allComments = comments.map((comment) => (
-    <Comment
-      key={comment.id}
-      comment={comment}
-      comments={comments}
-      setComments={setComments}
-      commentText={commentText}
-      nowUser={nowUser}
+      setReplyInit={setReplyInit}
+      setMomComment={setMomComment}
     />
   ));
 
   return (
     <div className={styles.wrap}>
       {wannaShowAll}
-      {openAllComments ? allComments : currentComments}
+      {commentList}
       <FeedCommentInput
         feed={feed}
         comments={comments}
@@ -65,6 +61,10 @@ const FeedComments = ({ feed, nowUser }) => {
         nowUser={nowUser}
         commentText={commentText}
         setCommentText={setCommentText}
+        replyInit={replyInit}
+        momComment={momComment}
+        nowComment={nowComment}
+        setNowComment={setNowComment}
       />
     </div>
   );

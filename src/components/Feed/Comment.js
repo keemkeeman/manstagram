@@ -3,16 +3,29 @@ import styles from "./Comment.module.css";
 import { editComment, deleteComment } from "../../fireUtil";
 import { Link } from "react-router-dom";
 
-const Comment = ({ comment, comments, setComments, nowUser }) => {
+const Comment = ({
+  comment,
+  comments,
+  setComments,
+  nowUser,
+  setReplyInit,
+  setMomComment,
+}) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editedCommentText, setEditedCommentText] = useState(
     comment.commentText
   );
+  const [hasReplies, setHasReplies] = useState(false);
   const validUser = comment.creatorId === nowUser.id;
 
   const handleEditSwitch = () => {
     setIsEditOpen((prev) => !prev);
     setEditedCommentText(comment.commentText);
+  };
+
+  const handleReply = () => {
+    setReplyInit(true);
+    setMomComment(comment);
   };
 
   /* 댓글 수정 */
@@ -43,13 +56,22 @@ const Comment = ({ comment, comments, setComments, nowUser }) => {
             }}
           />
         ) : (
-          <span className={styles.commentText}>{comment.commentText}</span>
+          <>
+            <span className={styles.commentText}>{comment.commentText}</span>
+            {hasReplies && <span>댓글</span>}
+          </>
         )}
       </span>
-      {!isEditOpen && validUser && (
-        <div onClick={handleEditSwitch} className={styles.editIcon}>
-          <i className="fa-solid fa-ellipsis"></i>
+      {!validUser ? (
+        <div onClick={handleReply} className={styles.editIcon}>
+          <i className="fa-solid fa-reply"></i>
         </div>
+      ) : (
+        !isEditOpen && (
+          <div onClick={handleEditSwitch} className={styles.editIcon}>
+            <i className="fa-solid fa-ellipsis"></i>
+          </div>
+        )
       )}
       {isEditOpen && (
         <div>

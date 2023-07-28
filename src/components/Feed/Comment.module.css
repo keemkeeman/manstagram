@@ -16,10 +16,12 @@
   font-weight: 700;
   cursor: pointer;
 }
-
 .commentText {
   margin-left: 5px;
   word-wrap: break-word;
+}
+.editWrap {
+  display: flex;
 }
 .editIcon {
   margin: 5px;

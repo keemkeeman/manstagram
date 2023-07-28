@@ -17,6 +17,7 @@ const Profile = ({
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [profileFeedList, setProfileFeedList] = useState([]);
 
+  /* 프로필 정보 가져오기 */
   useEffect(() => {
     const fetchProfileUser = async () => {
       setProfileUser(await getProfileUser(userId, setProfileFeedList));
@@ -26,6 +27,7 @@ const Profile = ({
       setIsMyProfile(true);
     }
   }, [nowUser.id, profileUser.id, userId]);
+  
   return (
     <div className={styles.wrap}>
       <ProfileInfo
