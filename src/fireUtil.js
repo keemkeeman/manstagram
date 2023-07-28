@@ -348,6 +348,9 @@ export const signInUser = async (email, pw) => {
   try {
     await signInWithEmailAndPassword(auth, email, pw);
   } catch (err) {
+    if (err.code === "auth/user-not-found" || "auth/wrong-password") {
+      window.alert("이메일 또는 비밀번호를 확인해주세요.");
+    }
     console.error(`Login error: ${err.error}`);
   }
 };
