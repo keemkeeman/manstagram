@@ -14,10 +14,10 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
   const [editedCommentText, setEditedCommentText] = useState(
     comment.commentText
   );
-  const [hasReplies, setHasReplies] = useState(true);
   const validUser = comment.creatorId === nowUser.id;
   const [replies, setReplies] = useState([]);
   const [replyCommentText, setReplyCommentText] = useState("");
+  const [wannaShowAllReply, setWannaShowAllReply] = useState(false);
   const [replyInit, setReplyInit] = useState(false);
 
   const handleComment = (e) => {
@@ -63,12 +63,11 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
     setIsEditOpen(false);
   };
 
-  // const replyList = replies.map((reply) => ({
-  //   id: reply.id,
-  //   ...reply,
-  // }));
-
-  console.log(replies);
+  const currentTwoReplies = replies.slice(0, 2);
+  const replySwitch = wannaShowAllReply ? replies : currentTwoReplies;
+  const handleShowAllReply = () => {
+    setWannaShowAllReply((prev) => !prev);
+  };
 
   return (
     <div className={styles.wrap}>
@@ -81,7 +80,7 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
             >
               {comment.nickName}
             </Link>
-            {isEditOpen && (
+            {isEditOpen ? (
               <input
                 className={styles.commentTextInput}
                 value={editedCommentText}
@@ -89,14 +88,15 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
                   setEditedCommentText(e.target.value);
                 }}
               />
+            ) : (
+              <span className={styles.commentText}>{comment.commentText}</span>
             )}
-            <span className={styles.commentText}>{comment.commentText}</span>
           </span>
 
           {!validUser ? (
             <div
               onClick={() => {
-                setReplyInit(true);
+                setReplyInit((prev) => !prev);
               }}
               className={styles.editIcon}
             >
@@ -118,37 +118,46 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
             </div>
           )}
         </div>
-        {replies.length > 0 && (
-          <div className={styles.replyWrap}>
-            {replyInit && (
-              <div className={styles.replyInputWrap}>
-                <input
-                  className={styles.replyInput}
-                  value={replyCommentText}
-                  onChange={handleComment}
-                  placeholder="댓글을 작성해주세요."
-                  maxLength={100}
-                />
-                <div onClick={submitReply} className={styles.editIcon}>
-                  <i className="fa-solid fa-circle-arrow-up"></i>
-                </div>
-                <div
-                  onClick={() => {
-                    setReplyInit(false);
-                  }}
-                  className={styles.editIcon}
-                >
-                  <i className="fa-solid fa-xmark"></i>
-                </div>
+        <div className={styles.replyWrap}>
+          {replyInit && (
+            <div className={styles.replyInputWrap}>
+              <input
+                className={styles.replyInput}
+                value={replyCommentText}
+                onChange={handleComment}
+                placeholder="댓글을 작성해주세요."
+                maxLength={100}
+              />
+              <div onClick={submitReply} className={styles.editIcon}>
+                <i className="fa-solid fa-circle-arrow-up"></i>
               </div>
-            )}
+              <div
+                onClick={() => {
+                  setReplyInit(false);
+                }}
+                className={styles.editIcon}
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </div>
+            </div>
+          )}
+          {replies.length > 0 && (
             <div className={styles.sonWrap}>
-              {replies.map((reply) => (
+              {replySwitch.map((reply) => (
                 <ReplyComment key={reply.id} nowUser={nowUser} reply={reply} />
               ))}
+              {
+                <span
+                  className={styles.commentOpen}
+                  onClick={handleShowAllReply}
+                >
+                  {replies.length > 2 &&
+                    (wannaShowAllReply ? "접기" : "모든 댓글 보기")}
+                </span>
+              }
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

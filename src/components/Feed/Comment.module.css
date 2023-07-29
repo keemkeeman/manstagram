@@ -1,5 +1,5 @@
 .wrap {
-  margin-top: 10px;
+  margin: 5px 0;
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -27,10 +27,10 @@
   flex: 1;
 }
 .sonWrap {
-  margin-bottom: 10px;
   margin-left: 15px;
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid rgb(183, 183, 183);
 }
 .wrap span {
   width: 440px;
@@ -51,5 +51,10 @@
 .editIcon {
   margin: 5px;
   font-size: 14px;
+  cursor: pointer;
+}
+.commentOpen {
+  margin: 5px 0;
+  color: grey;
   cursor: pointer;
 }
