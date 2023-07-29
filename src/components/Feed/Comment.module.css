@@ -4,8 +4,33 @@
   align-items: center;
   font-size: 14px;
 }
+.outterWrap {
+  display: flex;
+  flex-direction: column;
+}
 .innerWrap {
   flex: 1;
+}
+.momWrap {
+  display: flex;
+}
+.replyWrap {
+  display: flex;
+  flex-direction: column;
+}
+.replyInputWrap {
+  margin-bottom: 10px;
+  margin-left: 15px;
+  display: flex;
+}
+.replyInputWrap input {
+  flex: 1;
+}
+.sonWrap {
+  margin-bottom: 10px;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
 }
 .wrap span {
   width: 440px;
@@ -26,4 +51,5 @@
 .editIcon {
   margin: 5px;
   font-size: 14px;
+  cursor: pointer;
 }

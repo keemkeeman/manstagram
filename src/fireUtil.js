@@ -209,20 +209,20 @@ export const countLikes = async (feed) => {
 /* 댓글 */
 
 /* 1. 댓글 생성 */
-export const createComment = async (currentComment, nowUser, feed) => {
-  const commentDoc = {
-    feedId: feed.id,
-    createdAt: Timestamp.now(),
-    creatorId: nowUser.id,
-    nickName: nowUser.nickName,
-    commentText: currentComment,
-    replies: [],
-  };
+export const createComment = async (commentText, nowUser, feed) => {
   try {
-    const docRef = await addDoc(collection(db, "comments"), commentDoc);
+    const newComment = {
+      feedId: feed.id,
+      createdAt: Timestamp.now(),
+      creatorId: nowUser.id,
+      nickName: nowUser.nickName,
+      commentText: commentText,
+      momId: "0",
+    };
+    const docRef = await addDoc(collection(db, "comments"), newComment);
     return {
       id: docRef.id,
-      ...commentDoc,
+      ...newComment,
     };
   } catch (err) {
     console.err(err);
@@ -235,7 +235,11 @@ export const getComments = async (feed, nowUser) => {
     // 피드별 댓글 리스트 가져옴
     const commentRef = collection(db, "comments");
     const commentSnapshot = await getDocs(
-      query(commentRef, where("feedId", "==", feed.id))
+      query(
+        commentRef,
+        where("feedId", "==", feed.id),
+        where("momId", "==", "0")
+      )
     );
 
     const comments = commentSnapshot.docs.map((comment) => ({
@@ -258,7 +262,6 @@ export const getComments = async (feed, nowUser) => {
         await updateDoc(commentDocRef, { nickName: nowUser.nickName });
       });
     }
-
     return commentList;
   } catch (err) {
     console.error(`Comment Get error: ${err.error}`);
@@ -288,60 +291,64 @@ export const editComment = async (comment, comments, editedCommentText) => {
   }
 };
 
-/* 대댓글 생성 (부모 댓글에 추가) */
-export const updateReplyComment = async (
-  momComment,
-  replyCommentText,
-  nowUser
-) => {
+/* 대댓글 생성 */
+export const createReply = async (comment, replyCommentText, nowUser, feed) => {
   try {
-    const docRef = doc(db, "comments", momComment.id);
-    const commentSnapShot = await getDoc(docRef);
-    const currentReplies = commentSnapShot.data().replies;
-    const newReplies = [
-      ...currentReplies,
-      {
-        createdAt: Timestamp.now(),
-        nickName: nowUser.nickName,
-        creatorId: nowUser.id,
-        momId: momComment.id,
-        feedId: momComment.feedId,
-        commentText: replyCommentText,
-      },
-    ];
-    await updateDoc(docRef, {
-      replies: newReplies,
-    });
-    return newReplies;
+    const newReply = {
+      momId: comment.id,
+      feedId: feed.id,
+      createdAt: Timestamp.now(),
+      creatorId: nowUser.id,
+      nickName: nowUser.nickName,
+      commentText: replyCommentText,
+    };
+    const docRef = await addDoc(collection(db, "comments"), newReply);
+    return {
+      id: docRef.id,
+      ...newReply,
+    };
   } catch (err) {
-    console.error(err);
+    console.err(err);
   }
 };
 
 /* 대댓글 읽기 */
-export const getReplies = async (comment, nowUser) => {
-  const docRef = doc(db, "comments", comment.id);
-  const docSnap = await getDoc(docRef);
-  const commentReplies = docSnap.data().replies;
+export const getReplies = async (nowUser, feed, comment) => {
+  try {
+    // 피드별 댓글 리스트 가져옴
+    const commentRef = collection(db, "comments");
+    const commentSnapshot = await getDocs(
+      query(
+        commentRef,
+        where("feedId", "==", feed.id),
+        where("momId", "==", comment.id)
+      )
+    );
+    const comments = commentSnapshot.docs.map((comment) => ({
+      id: comment.id,
+      ...comment.data(),
+    }));
 
-  const commentRepliesList = commentReplies.sort(
-    (a, b) => b.createdAt - a.createdAt
-  );
+    const commentList = comments.sort((a, b) => b.createdAt - a.createdAt);
 
-  // 변경사항 업데이트
-  const findChange = commentRepliesList.filter(
-    (comment) =>
-      comment.creatorId === nowUser.id && comment.nickName !== nowUser.nickName
-  );
+    // 변경사항 업데이트
+    const findChange = commentList.filter(
+      (comment) =>
+        comment.creatorId === nowUser.id &&
+        comment.nickName !== nowUser.nickName
+    );
 
-  if (findChange.length > 0) {
-    findChange.map(async (comment) => {
-      const commentDocRef = doc(db, "comments", comment.id);
-      await updateDoc(commentDocRef, { nickName: nowUser.nickName });
-    });
+    if (findChange.length > 0) {
+      findChange.map(async (comment) => {
+        const commentDocRef = doc(db, "comments", comment.id);
+        await updateDoc(commentDocRef, { nickName: nowUser.nickName });
+      });
+    }
+
+    return commentList;
+  } catch (err) {
+    console.error(`Reply Get error: ${err.error}`);
   }
-
-  return commentRepliesList;
 };
 
 /* 4. 댓글 개별 삭제 */
