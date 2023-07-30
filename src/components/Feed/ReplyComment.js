@@ -1,6 +1,7 @@
 import styles from "./ReplyComment.module.css";
 import { useState } from "react";
 import { editComment } from "../../fireUtil";
+import { Link } from "react-router-dom";
 
 const ReplyComment = ({
   reply,
@@ -25,22 +26,45 @@ const ReplyComment = ({
   };
 
   return (
-    <div key={reply.id} className={styles.wrap}>
-      <div className={styles.innerWrap}>
-        {/* 닉네임 */}
-        <span className={styles.nickName}>{reply.nickName}</span>
-        {/* 텍스트 */}
-        {isEditOpen ? (
-          <input
-            className={styles.commentTextInput}
-            value={editedReplyText}
-            onChange={(e) => {
-              setEditedReplyText(e.target.value);
+    <div className={styles.wrap}>
+      <div className={styles.outterWrap}>
+        <div className={styles.innerWrap}>
+          {/* 닉네임 */}
+          <Link to={`/profile/${reply.creatorId}`} className={styles.nickName}>
+            {reply.nickName}
+          </Link>
+          {/* 텍스트 수정 */}
+          {isEditOpen ? (
+            <input
+              className={styles.commentTextInput}
+              value={editedReplyText}
+              onChange={(e) => {
+                setEditedReplyText(e.target.value);
+              }}
+            />
+          ) : (
+            <span className={styles.commentText}>{reply.commentText}</span>
+          )}
+        </div>
+
+        {/* 수정 or 댓글 버튼 */}
+        {!validUser ? (
+          <div
+            onClick={() => {
+              setReplyInit((prev) => !prev);
             }}
-          />
+            className={styles.editIcon}
+          >
+            <i className="fa-solid fa-reply"></i>
+          </div>
         ) : (
-          <span className={styles.commentText}>{reply.commentText}</span>
+          !isEditOpen && (
+            <div onClick={handleEditSwitch} className={styles.editIcon}>
+              <i className="fa-solid fa-ellipsis"></i>
+            </div>
+          )
         )}
+
         {/* 수정 내부 버튼 */}
         {isEditOpen && (
           <div>
@@ -49,29 +73,6 @@ const ReplyComment = ({
             <button onClick={handleEditSwitch}>취소</button>
           </div>
         )}
-        {/* 수정 or 댓글 버튼 */}
-        {validUser && !isEditOpen && (
-          <div onClick={handleEditSwitch} className={styles.editIcon}>
-            <i className="fa-solid fa-ellipsis"></i>
-          </div>
-        )}
-
-        {/* {!validUser ? (
-        <div
-          onClick={() => {
-            setReplyInit((prev) => !prev);
-          }}
-          className={styles.editIcon}
-        >
-          <i className="fa-solid fa-reply"></i>
-        </div>
-      ) : (
-        !isEditOpen && (
-          <div onClick={handleEditSwitch} className={styles.editIcon}>
-            <i className="fa-solid fa-ellipsis"></i>
-          </div>
-        )
-      )} */}
       </div>
     </div>
   );

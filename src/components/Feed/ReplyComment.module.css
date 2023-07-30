@@ -1,7 +1,13 @@
 .wrap {
   display: flex;
+  flex-direction: column;
 }
-.innerWrap{
+.outterWrap {
+  display: flex;
+  flex-direction: row;
+}
+.innerWrap {
+  flex: 1;
 }
 .nickName {
   color: black;
@@ -12,10 +18,11 @@
   margin-left: 5px;
   word-wrap: break-word;
 }
-.editWrap {
-  display: flex;
+.commentTextInput {
+  flex: 1;
 }
 .editIcon {
   margin: 5px;
   font-size: 14px;
+  cursor: pointer;
 }
