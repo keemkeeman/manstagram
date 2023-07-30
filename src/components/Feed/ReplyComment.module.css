@@ -26,3 +26,10 @@
   font-size: 14px;
   cursor: pointer;
 }
+.replyInputWrap {
+  margin-bottom: 10px;
+  display: flex;
+}
+.replyInputWrap input {
+  flex: 1;
+}

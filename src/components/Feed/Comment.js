@@ -16,7 +16,9 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
   );
   const validUser = comment.creatorId === nowUser.id;
   const [replies, setReplies] = useState([]);
-  const [replyCommentText, setReplyCommentText] = useState("");
+  const [replyCommentText, setReplyCommentText] = useState(
+    comment ? `@${comment.nickName} ` : ""
+  );
   const [wannaShowAllReply, setWannaShowAllReply] = useState(false);
   const [replyInit, setReplyInit] = useState(false);
 
@@ -63,8 +65,8 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
     setIsEditOpen(false);
   };
 
-  const currentTwoReplies = replies.slice(0, 1);
-  const replySwitch = wannaShowAllReply ? replies : currentTwoReplies;
+  const currenReply = replies.slice(0, 1);
+  const replySwitch = wannaShowAllReply ? replies : currenReply;
   const handleShowAllReply = () => {
     setWannaShowAllReply((prev) => !prev);
   };
@@ -151,15 +153,15 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
               <ReplyComment
                 key={reply.id}
                 reply={reply}
-                setReplyInit={setReplyInit}
                 nowUser={nowUser}
                 replies={replies}
                 setReplies={setReplies}
+                feed={feed}
               />
-            ))}
+            ))} 
             <span className={styles.commentOpen} onClick={handleShowAllReply}>
-              {replies.length > 2 &&
-                (wannaShowAllReply ? "접기" : "모든 댓글 보기")}
+              {replies.length > 1 &&
+                (wannaShowAllReply ? "접기" : "댓글 펼치기")}
             </span>
           </div>
         )}

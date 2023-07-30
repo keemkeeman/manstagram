@@ -296,6 +296,7 @@ export const createReply = async (comment, replyCommentText, nowUser, feed) => {
   try {
     const newReply = {
       momId: comment.id,
+      momNickName: comment.nickName,
       feedId: feed.id,
       createdAt: Timestamp.now(),
       creatorId: nowUser.id,
@@ -344,7 +345,6 @@ export const getReplies = async (nowUser, feed, comment) => {
         await updateDoc(commentDocRef, { nickName: nowUser.nickName });
       });
     }
-
     return commentList;
   } catch (err) {
     console.error(`Reply Get error: ${err.error}`);
