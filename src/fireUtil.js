@@ -351,6 +351,16 @@ export const getReplies = async (nowUser, feed, comment) => {
   }
 };
 
+/* 댓글 수 가져오기 */
+export const getCommentCount = async (feed) => {
+  const collectionRef = collection(db, "comments");
+  const comments = await getDocs(
+    query(collectionRef, where("feedId", "==", feed.id))
+  );
+  const commentCount = comments.docs.length;
+  return commentCount;
+};
+
 /* 4. 댓글 개별 삭제 */
 export const deleteComment = async (comment, comments, setComments) => {
   try {
