@@ -144,7 +144,14 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
           {replies.length > 0 && (
             <div className={styles.sonWrap}>
               {replySwitch.map((reply) => (
-                <ReplyComment key={reply.id} nowUser={nowUser} reply={reply} />
+                <ReplyComment
+                  key={reply.id}
+                  reply={reply}
+                  setReplyInit={setReplyInit}
+                  nowUser={nowUser}
+                  replies={replies}
+                  setReplies={setReplies}
+                />
               ))}
               {
                 <span

@@ -1,4 +1,7 @@
 .wrap {
+  display: flex;
+}
+.innerWrap{
 }
 .nickName {
   color: black;
