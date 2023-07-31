@@ -45,6 +45,7 @@ const FeedComments = ({ feed, nowUser }) => {
       setComments={setComments}
       nowUser={nowUser}
       feed={feed}
+      setCommentCounts={setCommentCounts}
     />
   ));
 
@@ -59,6 +60,7 @@ const FeedComments = ({ feed, nowUser }) => {
         nowUser={nowUser}
         commentText={commentText}
         setCommentText={setCommentText}
+        setCommentCounts={setCommentCounts}
       />
     </div>
   );

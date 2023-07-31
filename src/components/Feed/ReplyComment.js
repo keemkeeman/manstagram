@@ -3,7 +3,14 @@ import { useState } from "react";
 import { editComment, createReply, deleteComment } from "../../fireUtil";
 import { Link } from "react-router-dom";
 
-const ReplyComment = ({ reply, nowUser, replies, setReplies, feed }) => {
+const ReplyComment = ({
+  reply,
+  nowUser,
+  replies,
+  setReplies,
+  feed,
+  setCommentCounts,
+}) => {
   const [editedReplyText, setEditedReplyText] = useState(reply.commentText);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const validUser = reply.creatorId === nowUser.id;
@@ -24,6 +31,7 @@ const ReplyComment = ({ reply, nowUser, replies, setReplies, feed }) => {
   /* 댓글 삭제 */
   const handleDelete = async () => {
     await deleteComment(reply, replies, setReplies);
+    setCommentCounts((prev) => prev - 1);
     setIsEditOpen(false);
   };
 
@@ -31,6 +39,7 @@ const ReplyComment = ({ reply, nowUser, replies, setReplies, feed }) => {
   const submitReply = async () => {
     const newRereply = await createReply(reply, rereplyText, nowUser, feed);
     setReplies([newRereply, ...replies]); // 이거 안해도 되지 않나
+    setCommentCounts((prev) => prev + 1);
     setRereplyInit(false);
     setRereplyText(`@${reply.nickName} `);
   };
@@ -43,6 +52,7 @@ const ReplyComment = ({ reply, nowUser, replies, setReplies, feed }) => {
           <Link to={`/profile/${reply.creatorId}`} className={styles.nickName}>
             {reply.nickName}
           </Link>
+
           {/* 텍스트 수정 */}
           {isEditOpen ? (
             <input
@@ -84,6 +94,7 @@ const ReplyComment = ({ reply, nowUser, replies, setReplies, feed }) => {
           </div>
         )}
       </div>
+
       {/* 대댓글 작성란 */}
       {rereplyInit && (
         <div className={styles.replyInputWrap}>

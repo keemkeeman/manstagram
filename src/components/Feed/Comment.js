@@ -9,7 +9,14 @@ import {
 import { Link } from "react-router-dom";
 import ReplyComment from "./ReplyComment";
 
-const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
+const Comment = ({
+  comment,
+  comments,
+  setComments,
+  nowUser,
+  feed,
+  setCommentCounts,
+}) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editedCommentText, setEditedCommentText] = useState(
     comment.commentText
@@ -40,17 +47,18 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
       feed
     );
     setReplies([newReply, ...replies]); // 이거 안해도 되지 않나
+    setCommentCounts((prev) => prev + 1);
     setReplyInit(false);
   };
 
-  /* 대댓글 가져오기 */
+  /* 대댓글 읽기 (불러오기) */
   useEffect(() => {
     const fetchReplyComment = async () => {
       const commentReply = await getReplies(nowUser, feed, comment);
       setReplies(commentReply);
     };
     fetchReplyComment();
-  }, []);
+  }, [comment, feed, nowUser]);
 
   /* 댓글 수정 */
   const handleEditText = async () => {
@@ -62,6 +70,7 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
   /* 댓글 삭제 */
   const handleDelete = async () => {
     await deleteComment(comment, comments, setComments);
+    setCommentCounts((prev) => prev - 1);
     setIsEditOpen(false);
   };
 
@@ -157,8 +166,9 @@ const Comment = ({ comment, comments, setComments, nowUser, feed }) => {
                 replies={replies}
                 setReplies={setReplies}
                 feed={feed}
+                setCommentCounts={setCommentCounts}
               />
-            ))} 
+            ))}
             <span className={styles.commentOpen} onClick={handleShowAllReply}>
               {replies.length > 1 &&
                 (wannaShowAllReply ? "접기" : "댓글 펼치기")}

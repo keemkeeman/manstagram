@@ -8,6 +8,7 @@ const FeedCommentInput = ({
   nowUser,
   commentText,
   setCommentText,
+  setCommentCounts,
 }) => {
   const handleComment = (e) => {
     setCommentText(e.target.value);
@@ -20,6 +21,7 @@ const FeedCommentInput = ({
     } else {
       const newComment = await createComment(commentText, nowUser, feed);
       setComments([newComment, ...comments]);
+      setCommentCounts((prev) => prev + 1);
       setCommentText("");
     }
   };

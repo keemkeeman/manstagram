@@ -17,6 +17,7 @@ import {
   query,
   where,
   getDoc,
+  or,
 } from "firebase/firestore";
 import {
   deleteObject,
@@ -217,7 +218,8 @@ export const createComment = async (commentText, nowUser, feed) => {
       creatorId: nowUser.id,
       nickName: nowUser.nickName,
       commentText: commentText,
-      momId: "0",
+      momId: null,
+      originId: null,
     };
     const docRef = await addDoc(collection(db, "comments"), newComment);
     return {
@@ -225,7 +227,7 @@ export const createComment = async (commentText, nowUser, feed) => {
       ...newComment,
     };
   } catch (err) {
-    console.err(err);
+    console.error(err);
   }
 };
 
@@ -238,7 +240,7 @@ export const getComments = async (feed, nowUser) => {
       query(
         commentRef,
         where("feedId", "==", feed.id),
-        where("momId", "==", "0")
+        where("momId", "==", null)
       )
     );
 
@@ -291,10 +293,11 @@ export const editComment = async (comment, comments, editedCommentText) => {
   }
 };
 
-/* 대댓글 생성 */
+/* 4. 대댓글 생성 */
 export const createReply = async (comment, replyCommentText, nowUser, feed) => {
   try {
     const newReply = {
+      originId: comment.momId ? comment.originId : comment.id,
       momId: comment.id,
       momNickName: comment.nickName,
       feedId: feed.id,
@@ -309,23 +312,23 @@ export const createReply = async (comment, replyCommentText, nowUser, feed) => {
       ...newReply,
     };
   } catch (err) {
-    console.err(err);
+    console.error(err);
   }
 };
 
-/* 대댓글 읽기 */
+/* 5. 대댓글 읽기 */
 export const getReplies = async (nowUser, feed, comment) => {
   try {
     // 피드별 댓글 리스트 가져옴
     const commentRef = collection(db, "comments");
-    const commentSnapshot = await getDocs(
+    const replySnapshot = await getDocs(
       query(
         commentRef,
         where("feedId", "==", feed.id),
-        where("momId", "==", comment.id)
+        where("originId", "==", comment.id)
       )
     );
-    const comments = commentSnapshot.docs.map((comment) => ({
+    const comments = replySnapshot.docs.map((comment) => ({
       id: comment.id,
       ...comment.data(),
     }));
@@ -351,7 +354,7 @@ export const getReplies = async (nowUser, feed, comment) => {
   }
 };
 
-/* 댓글 수 가져오기 */
+/* 6. 댓글 수 가져오기 */
 export const getCommentCount = async (feed) => {
   const collectionRef = collection(db, "comments");
   const comments = await getDocs(
@@ -366,17 +369,28 @@ export const deleteComment = async (comment, comments, setComments) => {
   try {
     const ok = window.confirm("댓글을 삭제하시겠습니까?");
     if (ok) {
-      await deleteDoc(doc(db, "comments", comment.id));
+      /* 부모 댓글 삭제 */
+      const commentRef = doc(db, "comments", comment.id);
+      await deleteDoc(commentRef);
+      /* 자식 댓글 삭제 */
+      const repliesRef = collection(db, "comments");
+      const repliesSnap = await getDocs(
+        query(repliesRef, where("momId", "==", comment.id))
+      );
+      if (repliesSnap) {
+        repliesSnap.docs.map(async (reply) => await deleteDoc(reply.ref));
+      }
+      /* 상태 업데이트 */
       const newList = await comments.filter((item) => item.id !== comment.id);
       setComments(newList);
+      return comments;
     }
-    return comments;
   } catch (err) {
     console.error(err);
   }
 };
 
-/* 5. 댓글 피드별 삭제 */
+/* 5. 댓글 피드별 (전체) 삭제 */
 export const deleteFeedComments = async (feed) => {
   try {
     const commentsSnap = await getDocs(
