@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import AppRoutes from "./components/Approutes";
+import AppRoutes from "./components/AppRoutes";
 import { auth } from "./firebase";
 import { getUser } from "./fireUtil";
 import styles from "./App.module.css";

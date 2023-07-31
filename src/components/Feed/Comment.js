@@ -58,7 +58,7 @@ const Comment = ({
       setReplies(commentReply);
     };
     fetchReplyComment();
-  }, [comment, feed, nowUser]);
+  }, []);
 
   /* 댓글 수정 */
   const handleEditText = async () => {

@@ -17,7 +17,6 @@ import {
   query,
   where,
   getDoc,
-  or,
 } from "firebase/firestore";
 import {
   deleteObject,
