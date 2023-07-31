@@ -14,11 +14,11 @@ const LoginForm = ({ haveAccount }) => {
   const [pw, setPw] = useRecoilState(pwAtom);
   const isValidPw = useRecoilValue(pwValidationAtom);
 
-  const handleValidEmail = (e) => {
+  const handleEmailInput = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleValidPw = (e) => {
+  const handlePwInput = (e) => {
     setPw(e.target.value);
   };
 
@@ -44,31 +44,37 @@ const LoginForm = ({ haveAccount }) => {
 
   return (
     <div className={styles.wrap}>
+      {/* 로그인 폼 */}
       <form onSubmit={haveAccount ? handleLogin : handleSubmit}>
+        {/* 이메일 */}
         <input
           className={styles.infoInput}
           name="email"
-          onChange={handleValidEmail}
+          onChange={handleEmailInput}
           value={email}
           placeholder="이메일"
           type="email"
         />
-        {!isValidEmail && (
+        {!isValidEmail && email.length > 1 && (
           <span className={styles.alert}>올바른 이메일을 입력해주세요.</span>
         )}
+
+        {/* 패스워드 */}
         <input
           className={styles.infoInput}
           name="password"
-          onChange={handleValidPw}
+          onChange={handlePwInput}
           value={pw}
           placeholder="비밀번호"
           type="password"
         />
-        {!isValidPw && (
+        {!isValidPw && pw.length > 1 && (
           <span className={styles.alert}>
             영문, 숫자 조합 8자리 이상 입력해주세요.
           </span>
         )}
+
+        {/* 제출 버튼 */}
         <input
           className={haveAccount ? styles.login : styles.signup}
           id={styles.submit}
