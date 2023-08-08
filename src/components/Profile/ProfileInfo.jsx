@@ -21,7 +21,10 @@ const ProfileInfo = ({
     <div className={styles.wrap}>
       <div className={styles.profilePicWrap}>
         <div className={styles.profilePic}>
-          <img src={nowUser.profilePicUrl} alt="profilePic" />
+          <img
+            src={isMyProfile ? nowUser.nickName : profileUser.nickName}
+            alt="profilePic"
+          />
         </div>
       </div>
       <div className={styles.infoWrap}>

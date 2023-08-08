@@ -1,10 +1,17 @@
 ## Stacks
-React.js, Firebase 
+
+React.js, Firebase
 
 ## Deploy
+
 Vercel
 
 ## Features
+
+Firebase Auth,
+Firebase Stoage,
+Firestore Database,
+Google authentication,
 사용자 CRUD,
 게시물 CRUD,
 댓글 CRUD,
