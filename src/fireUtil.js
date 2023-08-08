@@ -90,6 +90,18 @@ export const getFeeds = async (nowUser) => {
   }
 };
 
+/* 피드 프로필 사진 읽기 */
+
+export const getProfilePic = async (feed) => {
+  try {
+    const userSnap = await getDoc(doc(db, "users", `${feed.creatorId}`));
+    const picUrl = userSnap.data().profilePicUrl;
+    return picUrl;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 /* 3. 피드 수정 */
 export const updateFeed = async (feed, newText, feedList, newFileUrl) => {
   try {

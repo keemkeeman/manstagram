@@ -22,7 +22,9 @@ const ProfileInfo = ({
       <div className={styles.profilePicWrap}>
         <div className={styles.profilePic}>
           <img
-            src={isMyProfile ? nowUser.nickName : profileUser.nickName}
+            src={
+              isMyProfile ? nowUser.profilePicUrl : profileUser.profilePicUrl
+            }
             alt="profilePic"
           />
         </div>
