@@ -30,6 +30,7 @@
   align-items: center;
 }
 .searchWrap {
+  position: relative;
   width: 268px;
 }
 .searchMainWrap {

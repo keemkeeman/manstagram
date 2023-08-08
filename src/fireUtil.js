@@ -511,6 +511,27 @@ export const updateUser = async (
   }
 };
 
+/* 유저 검색 */
+export const findUser = async (searchInput, setSearchResult) => {
+  try {
+    const userSnap = await getDocs(
+      query(collection(db, "users"), where("nickName", "==", searchInput))
+    );
+
+    if (userSnap.docs.length === 0) {
+      return setSearchResult([]);
+    }
+
+    const searchResult = userSnap.docs.map((user) => ({
+      id: user.id,
+      ...user.data(),
+    }));
+    setSearchResult(searchResult);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 /* 유저 탈퇴 */
 export const deleteAccount = async () => {
   try {
