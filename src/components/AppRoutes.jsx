@@ -47,12 +47,10 @@ const AppRoutes = ({
   );
 
   return (
-    <div className="w-100 relative flex">
+    <div className="w-full relative">
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         {isLoggedIn && <Header />}
-        <div className="sm:w-[50vh] lg:w-[100vh]">
           <Routes>{homeRoutes}</Routes>
-        </div>
         {isLoggedIn && <Footer setOpenForm={setOpenForm} nowUser={nowUser} />}
       </BrowserRouter>
     </div>

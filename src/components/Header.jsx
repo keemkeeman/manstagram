@@ -18,24 +18,24 @@ const Header = () => {
   }, [searchInput]);
 
   return (
-    <div className="bg-green-500 w-full fixed h-[8vh] flex items-center justify-between">
+    <div className="bg-neutral-50 w-full shadow-md top-0 fixed h-[10vh] flex items-center z-100">
       <div
         onClick={() => {
           navigate("/");
         }}
-        className="font-bold text-5xl flex-1 ml-3"
+        className="text-4xl flex-1 m-8 cursor-pointer lg:text-5xl"
       >
         <i className="fa-brands fa-instagram"></i>
       </div>
 
-      <div className="bg-red-500 flex items-center mr-3">
+      <div className="flex items-center mr-5">
         <div className="flex flex-col">
-          <div className="flex flex-row items-center w-[30vh]">
-            <div className="font-semibold text-2xl">
+          <div className="flex flex-row p-2 mr-3 shadow-md items-center w-[30vh] lg:w-[70vh] rounded-md bg-neutral-200">
+            <div className="text-xl ml-2">
               <i className="fa-solid fa-magnifying-glass"></i>
             </div>
             <input
-              className="bg-transparent"
+              className="bg-transparent text-md m-2 flex-1"
               onChange={(e) => {
                 setSearchInput(e.target.value);
               }}
@@ -53,7 +53,7 @@ const Header = () => {
             />
           )}
         </div>
-        <div className="bg-blue-500">
+        <div className="text-3xl m-3 cursor-pointer ">
           <i className="fa-regular fa-heart"></i>
         </div>
       </div>
