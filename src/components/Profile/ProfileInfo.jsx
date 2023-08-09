@@ -18,7 +18,7 @@ const ProfileInfo = ({
 
   const n = 10;
   return (
-    <div className="flex flex-row">
+    <div className="bg-red-500 flex flex-row p-10">
       <div className={styles.profilePicWrap}>
         <div className={styles.profilePic}>
           <img
@@ -58,17 +58,15 @@ const ProfileInfo = ({
           {profileUser.introduction}
         </div>
       </div>
-      <div>
-        {isEditOpen && (
-          <ProfileEdit
-            setIsLoggedIn={setIsLoggedIn}
-            nowUser={nowUser}
-            setNowUser={setNowUser}
-            setIsEditOpen={setIsEditOpen}
-            handleOpenEdit={handleOpenEdit}
-          />
-        )}
-      </div>
+      {isEditOpen && (
+        <ProfileEdit
+          setIsLoggedIn={setIsLoggedIn}
+          nowUser={nowUser}
+          setNowUser={setNowUser}
+          setIsEditOpen={setIsEditOpen}
+          handleOpenEdit={handleOpenEdit}
+        />
+      )}
     </div>
   );
 };

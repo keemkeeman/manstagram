@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styles from "./Header.module.css";
 import { useEffect } from "react";
 import { findUser } from "../fireUtil";
 import SearchResult from "./SearchResult";
@@ -18,7 +17,7 @@ const Header = () => {
   }, [searchInput]);
 
   return (
-    <div className="bg-neutral-50 w-full shadow-md top-0 fixed h-[10vh] flex items-center z-100">
+    <div className="bg-neutral-50 w-full shadow-sm top-0 fixed h-[10vh] flex items-center">
       <div
         onClick={() => {
           navigate("/");

@@ -1,5 +1,4 @@
 import ProfileFeed from "./ProfileFeed";
-import styles from "./ProfileFeedList.module.css";
 
 const ProfileFeedList = ({ profileFeedList }) => {
   const newList = profileFeedList.map((feed) => (
@@ -8,7 +7,7 @@ const ProfileFeedList = ({ profileFeedList }) => {
     </div>
   ));
 
-  return <div className={styles.wrap}>{newList}</div>;
+  return <div className="bg-green-500 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-10">{newList}</div>;
 };
 
 export default ProfileFeedList;

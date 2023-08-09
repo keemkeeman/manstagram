@@ -4,7 +4,6 @@ import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 import Header from "./Header";
 import Footer from "./Footer";
-import styles from "./AppRoutes.module.css";
 
 const AppRoutes = ({
   isLoggedIn,
@@ -47,13 +46,17 @@ const AppRoutes = ({
   );
 
   return (
-    <div className="w-full relative">
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        {isLoggedIn && <Header />}
-          <Routes>{homeRoutes}</Routes>
-        {isLoggedIn && <Footer setOpenForm={setOpenForm} nowUser={nowUser} />}
-      </BrowserRouter>
-    </div>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <div className="relative flex flex-col items-center bg-neutral-200">
+        <Routes>{homeRoutes}</Routes>
+        {isLoggedIn && (
+          <>
+            <Header />
+            <Footer setOpenForm={setOpenForm} nowUser={nowUser} />
+          </>
+        )}
+      </div>
+    </BrowserRouter>
   );
 };
 

@@ -19,27 +19,27 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   }, [feed]);
 
   return (
-    <div className="bg-red">
+    <div className="flex py-2 mx-5 items-center">
       <Link
         to={`/profile/${feed.creatorId}`}
-        className="w-4 h-4 overflow-hidden rounded-full relative bg-red-500"
+        className="w-12 h-12 overflow-hidden rounded-full relative mr-3"
       >
         <img
-          className="w-4 h-4 m-0 p-0 absolute"
+          className="w-12 h-12 m-0 p-0 absolute"
           src={profilePicUrl}
           alt="profilePic"
         />
       </Link>
-      <div className={styles.nicWrap}>
-        <Link to={`/profile/${feed.creatorId}`} className={styles.nickName}>
+      <div className="flex flex-1 items-center">
+        <Link to={`/profile/${feed.creatorId}`} className="text-lg font-bold">
           {feed.nickName}
         </Link>
-        <span>•</span>
-        <span>2시간</span>
+        <span className="mx-2 text-md">•</span>
+        <span className="text-md">2시간</span>
         {/* 현재 시간에서 작성일자 빼기  */}
       </div>
       {validUser ? (
-        <div className={styles.editIcon} onClick={handleEditOpen}>
+        <div className="text-2xl cursor-pointer" onClick={handleEditOpen}>
           <i className="fa-solid fa-ellipsis"></i>
         </div>
       ) : (

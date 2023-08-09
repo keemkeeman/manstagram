@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import AppRoutes from "./components/AppRoutes";
 import { auth } from "./firebase";
 import { getUser } from "./fireUtil";
-import styles from "./App.module.css";
 import FeedForm from "./components/FeedForm";
-import "./index.css"; // 임포트 꼭 하자! 
+import "./index.css"; // 임포트 꼭 하자!
 
 function App() {
   const [init, setInit] = useState(false);
@@ -32,7 +31,7 @@ function App() {
   console.log("app rander");
 
   return (
-    <div>
+    <>
       {init ? (
         <>
           <AppRoutes
@@ -60,7 +59,7 @@ function App() {
       ) : (
         <p>Loading...</p>
       )}
-    </div>
+    </>
   );
 }
 

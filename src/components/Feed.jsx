@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styles from "./Feed.module.css";
 import FeedEditForm from "./FeedEditForm";
 import FeedTop from "./Feed/FeedTop";
 import FeedActions from "./Feed/FeedActions";
@@ -10,13 +9,17 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <div className={styles.wrap}>
+    <div className="bg-neutral-50 shadow-md mb-10 rounded-md pb-5 w-[670px]">
       <FeedTop
         feed={feed}
         validUser={validUser}
         setIsEditOpen={setIsEditOpen}
       />
-      <img className={styles.img} src={feed.imgUrl} alt="feedImg" />
+      <img
+        className="max-h-[800px] w-[670px] object-fit:cover"
+        src={feed.imgUrl}
+        alt="feedImg"
+      />
       <FeedActions feed={feed} nowUser={nowUser} />
       <FeedDescription feed={feed} />
       <FeedComments feed={feed} nowUser={nowUser} />

@@ -30,7 +30,11 @@ const FeedList = ({ feedList, setFeedList, nowUser }) => {
     ));
   }
 
-  return <ul>{list}</ul>;
+  return (
+    <ul className="w-[80vh] flex flex-col justify-center items-center relative top-[10vh]">
+      {list}
+    </ul>
+  );
 };
 
 export default FeedList;

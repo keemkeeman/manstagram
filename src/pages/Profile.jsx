@@ -1,17 +1,10 @@
-import styles from "./Profile.module.css";
 import ProfileInfo from "../components/Profile/ProfileInfo";
 import ProfileFeedList from "../components/Profile/ProfileFeedList";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProfileUser } from "../fireUtil";
 
-const Profile = ({
-  setIsLoggedIn,
-  nowUser,
-  setNowUser,
-  fileUrl,
-  setFileUrl,
-}) => {
+const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   const { userId } = useParams();
   const [profileUser, setProfileUser] = useState({});
   const [isMyProfile, setIsMyProfile] = useState(false);
@@ -27,9 +20,9 @@ const Profile = ({
       setIsMyProfile(true);
     }
   }, [nowUser.id, profileUser.id, userId]);
-  
+
   return (
-    <div className="flex flex-col absolute h-full w-full">
+    <div className="flex w-[80vh] flex-col relative top-[10vh]">
       <ProfileInfo
         isMyProfile={isMyProfile}
         profileUser={profileUser}
