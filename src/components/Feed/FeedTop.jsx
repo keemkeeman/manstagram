@@ -19,9 +19,16 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   }, [feed]);
 
   return (
-    <div className={styles.top}>
-      <Link to={`/profile/${feed.creatorId}`} className={styles.profilePic}>
-        <img src={profilePicUrl} alt="profilePic" />
+    <div className="bg-red">
+      <Link
+        to={`/profile/${feed.creatorId}`}
+        className="w-4 h-4 overflow-hidden rounded-full relative bg-red-500"
+      >
+        <img
+          className="w-4 h-4 m-0 p-0 absolute"
+          src={profilePicUrl}
+          alt="profilePic"
+        />
       </Link>
       <div className={styles.nicWrap}>
         <Link to={`/profile/${feed.creatorId}`} className={styles.nickName}>

@@ -3,7 +3,7 @@ import styles from "./Home.module.css";
 
 const Home = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
   return (
-    <div className={styles.wrap}>
+    <div className="bg-red-500 w-full">
       <FeedList
         nowUser={nowUser}
         feedList={feedList}

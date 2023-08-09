@@ -18,47 +18,43 @@ const Header = () => {
   }, [searchInput]);
 
   return (
-    <div className={styles.headerWrap}>
-      <div className={styles.headerInnerWrap}>
-        <div
-          onClick={() => {
-            navigate("/");
-          }}
-          className={styles.logo}
-        >
-          <i className="fa-brands fa-instagram"></i>
-        </div>
-        <div className={styles.actionWrap}>
-          <div className={styles.searchWrap}>
-            <div className={styles.searchMainWrap}>
-              <div className={styles.searchInnerWrap}>
-                <div className={styles.searchIcon}>
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                </div>
-                <div className={styles.searchBar}>
-                  <input
-                    onChange={(e) => {
-                      setSearchInput(e.target.value);
-                    }}
-                    value={searchInput}
-                    name="search"
-                    type="text"
-                    placeholder="검색"
-                  />
-                </div>
-              </div>
+    <div className="bg-green-500 w-full fixed h-[8vh] flex items-center justify-between">
+      <div
+        onClick={() => {
+          navigate("/");
+        }}
+        className="font-bold text-5xl flex-1 ml-3"
+      >
+        <i className="fa-brands fa-instagram"></i>
+      </div>
+
+      <div className="bg-red-500 flex items-center mr-3">
+        <div className="flex flex-col">
+          <div className="flex flex-row items-center w-[30vh]">
+            <div className="font-semibold text-2xl">
+              <i className="fa-solid fa-magnifying-glass"></i>
             </div>
-            {searchResult.length > 0 && (
-              <SearchResult
-                searchResult={searchResult}
-                setSearchResult={setSearchResult}
-                setSearchInput={setSearchInput}
-              />
-            )}
+            <input
+              className="bg-transparent"
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+              }}
+              value={searchInput}
+              name="search"
+              type="text"
+              placeholder="검색"
+            />
           </div>
-          <div className={styles.notice}>
-            <i className="fa-regular fa-heart"></i>
-          </div>
+          {searchResult.length > 0 && (
+            <SearchResult
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+              setSearchInput={setSearchInput}
+            />
+          )}
+        </div>
+        <div className="bg-blue-500">
+          <i className="fa-regular fa-heart"></i>
         </div>
       </div>
     </div>

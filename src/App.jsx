@@ -4,6 +4,7 @@ import { auth } from "./firebase";
 import { getUser } from "./fireUtil";
 import styles from "./App.module.css";
 import FeedForm from "./components/FeedForm";
+import "./index.css"; // 임포트 꼭 하자! 
 
 function App() {
   const [init, setInit] = useState(false);
@@ -31,7 +32,7 @@ function App() {
   console.log("app rander");
 
   return (
-    <div className={styles.app}>
+    <div>
       {init ? (
         <>
           <AppRoutes

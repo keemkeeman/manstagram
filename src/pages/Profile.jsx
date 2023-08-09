@@ -29,7 +29,7 @@ const Profile = ({
   }, [nowUser.id, profileUser.id, userId]);
   
   return (
-    <div className={styles.wrap}>
+    <div className="flex flex-col absolute h-full w-full">
       <ProfileInfo
         isMyProfile={isMyProfile}
         profileUser={profileUser}

@@ -18,7 +18,7 @@ const ProfileInfo = ({
 
   const n = 10;
   return (
-    <div className={styles.wrap}>
+    <div className="flex flex-row">
       <div className={styles.profilePicWrap}>
         <div className={styles.profilePic}>
           <img
