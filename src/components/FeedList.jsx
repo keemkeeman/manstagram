@@ -18,22 +18,21 @@ const FeedList = ({ feedList, setFeedList, nowUser }) => {
     list = <div>What's going on?</div>;
   } else {
     list = feedList.map((feed) => (
-      <li key={feed.id}>
-        <Feed
-          nowUser={nowUser}
-          validUser={nowUser.id === feed.creatorId}
-          feedList={feedList}
-          setFeedList={setFeedList}
-          feed={feed}
-        />
-      </li>
+      <Feed
+        key={feed.id}
+        nowUser={nowUser}
+        validUser={nowUser.id === feed.creatorId}
+        feedList={feedList}
+        setFeedList={setFeedList}
+        feed={feed}
+      />
     ));
   }
 
   return (
-    <ul className="min-h-[calc(100vh - 160px)] flex flex-col justify-center items-center relative top-[10vh] my-3 pb-[80px]">
+    <div className="min-h-[calc(100vh - 160px)] w-full relative flex flex-col justify-center items-center top-[10vh] my-3 pb-[80px]">
       {list}
-    </ul>
+    </div>
   );
 };
 

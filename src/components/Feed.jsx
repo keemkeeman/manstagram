@@ -9,7 +9,7 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <div className="flex flex-col justify-center w-[670px] relative">
+    <div className="flex relative flex-col justify-center w-full lg:w-[670px]">
       <div className="bg-neutral-50 mb-10 pb-5 rounded-md shadow-lg z-0">
         <FeedTop
           feed={feed}
@@ -17,7 +17,7 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
           setIsEditOpen={setIsEditOpen}
         />
         <img
-          className="max-h-[800px] w-[670px] object-fit:cover shadow-sm"
+          className="max-h-[1000px] w-full lg:w-[670px] object-fit:cover shadow-sm"
           src={feed.imgUrl}
           alt="feedImg"
         />
@@ -29,7 +29,7 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
         <div className="flex justify-center">
           <div
             id="modal-bg"
-            className={`absolute bg-black opacity-50 inset-0 mb-10 rounded-lg`}
+            className={`absolute top-0 w-full h-full bg-black opacity-50 inset-0 rounded-lg`}
           ></div>
           <FeedEditForm
             imgSrc={feed.imgUrl}

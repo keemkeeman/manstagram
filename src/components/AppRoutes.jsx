@@ -4,17 +4,15 @@ import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 import Header from "./Header";
 import Footer from "./Footer";
+import FeedForm from "./FeedForm";
 
 const AppRoutes = ({
   isLoggedIn,
   setIsLoggedIn,
   nowUser,
   setNowUser,
-  setOpenForm,
   feedList,
   setFeedList,
-  fileUrl,
-  setFileUrl,
 }) => {
   const homeRoutes = !isLoggedIn ? (
     <Route path="/" element={<Login />} />
@@ -27,8 +25,16 @@ const AppRoutes = ({
             nowUser={nowUser}
             feedList={feedList}
             setFeedList={setFeedList}
-            fileUrl={fileUrl}
-            setFileUrl={setFileUrl}
+          />
+        }
+      />
+      <Route
+        path="/upload"
+        element={
+          <FeedForm
+            nowUser={nowUser}
+            feedList={feedList}
+            setFeedList={setFeedList}
           />
         }
       />
@@ -47,12 +53,12 @@ const AppRoutes = ({
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <div className="relative flex flex-col items-center bg-neutral-100">
+      <div className="relative flex flex-col items-center w-full bg-neutral-100">
         <Routes>{homeRoutes}</Routes>
         {isLoggedIn && (
           <>
             <Header />
-            <Footer setOpenForm={setOpenForm} nowUser={nowUser} />
+            <Footer nowUser={nowUser} />
           </>
         )}
       </div>

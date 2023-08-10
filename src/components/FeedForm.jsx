@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { createFeed } from "../fireUtil";
-import styles from "./FeedForm.module.css";
+import { useNavigate } from "react-router-dom";
 
-const FeedForm = ({
-  nowUser,
-  feedList,
-  setFeedList,
-  fileUrl,
-  setFileUrl,
-  setOpenForm,
-}) => {
+const FeedForm = ({ nowUser, feedList, setFeedList }) => {
+  const defaultImgUrl =
+    "https://firebasestorage.googleapis.com/v0/b/manstagram-77636.appspot.com/o/38bEHAI7i494M9oxAHWG%2F126477.png?alt=media&token=931c054b-e9f7-4fbd-9f41-60515b6ec680";
+  const navigate = useNavigate();
   const [feedText, setFeedText] = useState("");
+  const [fileUrl, setFileUrl] = useState(defaultImgUrl);
 
   const handleFeedText = (e) => {
     setFeedText(e.target.value);
@@ -41,11 +38,16 @@ const FeedForm = ({
       window.alert("1자 이상의 글과 사진은 필수입니다.");
     } else {
       try {
-        const newFeed = await createFeed(nowUser, feedText, fileUrl);
+        const newFeed = await createFeed(
+          nowUser,
+          feedText,
+          fileUrl,
+          setFileUrl
+        );
         setFeedList([newFeed, ...feedList]);
-        setFileUrl("");
+        setFileUrl(defaultImgUrl);
         setFeedText("");
-        setOpenForm(false);
+        navigate("/");
       } catch (err) {
         console.error(err);
       }
@@ -53,39 +55,35 @@ const FeedForm = ({
   };
 
   return (
-    <div className={styles.wrap}>
-      <h2>Upload</h2>
-      <form onSubmit={handleSubmit} className={styles.innerWrap}>
-        <div className={styles.contentWrap}>
-          <textarea
-            className={styles.feedText}
-            name="feedText"
-            type="text"
-            value={feedText}
-            onChange={handleFeedText}
-            placeholder="What's on your mind?"
-            maxLength={100}
-          />
-        </div>
-        <div className={styles.contentWrap}>
-          <input
-            name="image"
-            type="file"
-            accept="image/*"
-            onChange={handleFile}
-          />
-        </div>
-        <div className={styles.buttons}>
-          <input name="submitButton" type="submit" value="업로드" />
-          <button
-            onClick={() => {
-              setOpenForm(false);
-            }}
-          >
-            취소
-          </button>
-        </div>
-      </form>
+    <div className="flex w-full min-h-[calc(100vh - 160px)] flex-col items-center py-[80px] ">
+      <div className="text-2xl my-10">Share everything </div>
+      <div className="relative flex flex-col items-center">
+        <img src={fileUrl} alt="uploadImg" className="w-[400px] shadow-md" />
+
+        <textarea
+          className="w-full my-5 h-[100px] shadow-md p-3"
+          name="feedText"
+          type="text"
+          value={feedText}
+          onChange={handleFeedText}
+          placeholder="최대 100자까지 작성"
+          maxLength={100}
+        />
+        <input
+          className="w-full"
+          name="image"
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+        />
+
+        <button
+          className="bg-green-500 w-full my-5 py-2 font-bold"
+          onClick={handleSubmit}
+        >
+          완료
+        </button>
+      </div>
     </div>
   );
 };

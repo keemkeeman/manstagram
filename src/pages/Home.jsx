@@ -1,14 +1,8 @@
 import FeedList from "../components/FeedList";
 
-const Home = ({ nowUser, feedList, setFeedList, fileUrl, setFileUrl }) => {
+const Home = ({ nowUser, feedList, setFeedList }) => {
   return (
-    <FeedList
-      nowUser={nowUser}
-      feedList={feedList}
-      setFeedList={setFeedList}
-      fileUrl={fileUrl}
-      setFileUrl={setFileUrl}
-    />
+    <FeedList nowUser={nowUser} feedList={feedList} setFeedList={setFeedList} />
   );
 };
 

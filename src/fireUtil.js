@@ -29,7 +29,7 @@ import { v4 as uuidv4 } from "uuid";
 /* 피드 CRUD */
 
 /* 1. 피드 생성 */
-export const createFeed = async (nowUser, feedText, fileUrl) => {
+export const createFeed = async (nowUser, feedText, fileUrl, setFileUrl) => {
   try {
     /* storage 추가 */
     const fileRef = ref(storage, `${nowUser.id}/${uuidv4()}`);
@@ -47,6 +47,7 @@ export const createFeed = async (nowUser, feedText, fileUrl) => {
       },
       comments: [],
     };
+    setFileUrl(imgUrl);
 
     /* firestore 추가 */
     const docRef = await addDoc(collection(db, "feeds"), feedObj);
