@@ -89,7 +89,7 @@ const Comment = ({
           </Link>
           {isEditOpen ? (
             <input
-              className="ml-2"
+              className="ml-2 relative w-[400px]"
               value={editedCommentText}
               onChange={(e) => {
                 setEditedCommentText(e.target.value);

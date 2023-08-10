@@ -55,7 +55,7 @@ const ReplyComment = ({
           {/* 텍스트 수정 */}
           {isEditOpen ? (
             <input
-              className="ml-2"
+              className="ml-2 w-[350px]"
               value={editedReplyText}
               onChange={(e) => {
                 setEditedReplyText(e.target.value);

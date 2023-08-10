@@ -9,27 +9,37 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <div className="bg-neutral-50 shadow-md mb-10 rounded-md pb-5 w-[670px]">
-      <FeedTop
-        feed={feed}
-        validUser={validUser}
-        setIsEditOpen={setIsEditOpen}
-      />
-      <img
-        className="max-h-[800px] w-[670px] object-fit:cover shadow-sm"
-        src={feed.imgUrl}
-        alt="feedImg"
-      />
-      <FeedActions feed={feed} nowUser={nowUser} />
-      <FeedDescription feed={feed} />
-      <FeedComments feed={feed} nowUser={nowUser} />
-      {isEditOpen && (
-        <FeedEditForm
+    <div className="flex flex-col justify-center w-[670px] relative">
+      <div className="bg-neutral-50 mb-10 pb-5 rounded-md shadow-lg z-0">
+        <FeedTop
           feed={feed}
-          feedList={feedList}
-          setFeedList={setFeedList}
+          validUser={validUser}
           setIsEditOpen={setIsEditOpen}
         />
+        <img
+          className="max-h-[800px] w-[670px] object-fit:cover shadow-sm"
+          src={feed.imgUrl}
+          alt="feedImg"
+        />
+        <FeedActions feed={feed} nowUser={nowUser} />
+        <FeedDescription feed={feed} />
+        <FeedComments feed={feed} nowUser={nowUser} />
+      </div>
+      {isEditOpen && (
+        <div className="flex justify-center">
+          <div
+            id="modal-bg"
+            className={`absolute bg-black opacity-50 inset-0 mb-10 rounded-lg`}
+          ></div>
+          <FeedEditForm
+            imgSrc={feed.imgUrl}
+            feed={feed}
+            feedList={feedList}
+            setFeedList={setFeedList}
+            isEditOpen={isEditOpen}
+            setIsEditOpen={setIsEditOpen}
+          />
+        </div>
       )}
     </div>
   );
