@@ -6,7 +6,7 @@ const ProfileFeedList = ({ profileFeedList }) => {
   ));
 
   return (
-    <div className="relative shadow-md grid grid-cols-3 gap-1 w-full min-h-[600px]">
+    <div className="relative shadow-md grid grid-cols-3 gap-1 w-full min-h-[300px]">
       {newList}
     </div>
   );

@@ -53,7 +53,7 @@ const AppRoutes = ({
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <div className="relative flex flex-col items-center w-full bg-neutral-100">
+      <div className="relative flex justify-center bg-neutral-100  max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4">
         <Routes>{homeRoutes}</Routes>
         {isLoggedIn && (
           <>

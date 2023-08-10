@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Footer = ({ setOpenForm, nowUser }) => {
+const Footer = ({ nowUser }) => {
   return (
     <div className="bg-neutral-50 w-full fixed h-[80px] shadow-md bottom-0 flex items-center justify-center">
       <Link className="text-3xl m-10" to="/">
