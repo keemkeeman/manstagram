@@ -1,4 +1,3 @@
-import styles from "./ReplyComment.module.css";
 import { useState } from "react";
 import { editComment, createReply, deleteComment } from "../../fireUtil";
 import { Link } from "react-router-dom";
@@ -45,25 +44,25 @@ const ReplyComment = ({
   };
 
   return (
-    <div className={styles.wrap}>
-      <div className={styles.outterWrap}>
-        <div className={styles.innerWrap}>
+    <>
+      <div className="flex">
+        <div className="flex-1 mb-2 mr-3">
           {/* 닉네임 */}
-          <Link to={`/profile/${reply.creatorId}`} className={styles.nickName}>
+          <Link to={`/profile/${reply.creatorId}`} className="font-bold">
             {reply.nickName}
           </Link>
 
           {/* 텍스트 수정 */}
           {isEditOpen ? (
             <input
-              className={styles.commentTextInput}
+              className="ml-2"
               value={editedReplyText}
               onChange={(e) => {
                 setEditedReplyText(e.target.value);
               }}
             />
           ) : (
-            <span className={styles.commentText}>{reply.commentText}</span>
+            <span className="text-lg ml-2">{reply.commentText}</span>
           )}
         </div>
 
@@ -73,13 +72,16 @@ const ReplyComment = ({
             onClick={() => {
               setRereplyInit((prev) => !prev);
             }}
-            className={styles.editIcon}
+            className="text-xl text-neutral-500"
           >
             <i className="fa-solid fa-reply"></i>
           </div>
         ) : (
           !isEditOpen && (
-            <div onClick={handleEditSwitch} className={styles.editIcon}>
+            <div
+              onClick={handleEditSwitch}
+              className="text-xl text-neutral-500"
+            >
               <i className="fa-solid fa-ellipsis"></i>
             </div>
           )
@@ -87,19 +89,25 @@ const ReplyComment = ({
 
         {/* 수정 내부 버튼 */}
         {isEditOpen && (
-          <div>
-            <button onClick={handleEditReplyText}>수정</button>
-            <button onClick={handleDelete}>삭제</button>
-            <button onClick={handleEditSwitch}>취소</button>
+          <div className="flex gap-2">
+            <button className="hover:font-bold" onClick={handleEditReplyText}>
+              수정
+            </button>
+            <button className="hover:font-bold" onClick={handleDelete}>
+              삭제
+            </button>
+            <button className="hover:font-bold" onClick={handleEditSwitch}>
+              취소
+            </button>
           </div>
         )}
       </div>
 
       {/* 대댓글 작성란 */}
       {rereplyInit && (
-        <div className={styles.replyInputWrap}>
+        <div className="flex gap-3 ml-5">
           <input
-            className={styles.replyInput}
+            className="flex-1"
             value={rereplyText}
             onChange={(e) => {
               setRereplyText(e.target.value);
@@ -107,20 +115,20 @@ const ReplyComment = ({
             placeholder="댓글을 작성해주세요."
             maxLength={100}
           />
-          <div onClick={submitReply} className={styles.editIcon}>
+          <div onClick={submitReply} className="text-xl">
             <i className="fa-solid fa-circle-arrow-up"></i>
           </div>
           <div
             onClick={() => {
               setRereplyInit(false);
             }}
-            className={styles.editIcon}
+            className="text-xl"
           >
             <i className="fa-solid fa-xmark"></i>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 export default ReplyComment;

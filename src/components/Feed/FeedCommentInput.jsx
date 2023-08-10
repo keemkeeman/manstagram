@@ -1,4 +1,3 @@
-import styles from "./FeedCommentInput.module.css";
 import { createComment } from "../../fireUtil";
 
 const FeedCommentInput = ({
@@ -27,15 +26,15 @@ const FeedCommentInput = ({
   };
 
   return (
-    <div className={styles.wrap}>
+    <div className="mt-5 flex">
       <input
         id="commentInput"
         value={commentText}
-        className={styles.commentInput}
+        className="flex-1 outline-none bg-transparent text-lg text-neutral-500"
         placeholder="댓글 달기..."
         onChange={handleComment}
       />
-      <div onClick={handleSubmit} className={styles.commentEmoji}>
+      <div onClick={handleSubmit} className="text-xl cursor-pointer">
         <i className="fa-solid fa-circle-arrow-up"></i>
       </div>
     </div>

@@ -30,11 +30,11 @@ const Header = () => {
       <div className="flex items-center mr-5">
         <div className="flex flex-col">
           <div className="flex flex-row p-2 mr-3 shadow-md items-center w-[30vh] lg:w-[70vh] rounded-md bg-neutral-200">
-            <div className="text-xl ml-2">
+            <div className="text-xl mx-3 font-semibold">
               <i className="fa-solid fa-magnifying-glass"></i>
             </div>
             <input
-              className="bg-transparent text-md m-2 flex-1"
+              className="bg-transparent text-md flex-1"
               onChange={(e) => {
                 setSearchInput(e.target.value);
               }}

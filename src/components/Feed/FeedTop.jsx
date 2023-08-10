@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import styles from "./FeedTop.module.css";
 import { Link } from "react-router-dom";
 import { getProfilePic } from "../../fireUtil";
 import { useState } from "react";
@@ -19,10 +18,10 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   }, [feed]);
 
   return (
-    <div className="flex py-2 mx-5 items-center">
+    <div className="flex py-2 items-center shadow-sm mx-5 gap-2">
       <Link
         to={`/profile/${feed.creatorId}`}
-        className="w-12 h-12 overflow-hidden rounded-full relative mr-3"
+        className="w-12 h-12 overflow-hidden shadow-sm rounded-full relative"
       >
         <img
           className="w-12 h-12 m-0 p-0 absolute"
@@ -30,11 +29,11 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
           alt="profilePic"
         />
       </Link>
-      <div className="flex flex-1 items-center">
+      <div className="flex flex-1 items-center gap-2">
         <Link to={`/profile/${feed.creatorId}`} className="text-lg font-bold">
           {feed.nickName}
         </Link>
-        <span className="mx-2 text-md">•</span>
+        <span className="text-md">•</span>
         <span className="text-md">2시간</span>
         {/* 현재 시간에서 작성일자 빼기  */}
       </div>
@@ -42,9 +41,7 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
         <div className="text-2xl cursor-pointer" onClick={handleEditOpen}>
           <i className="fa-solid fa-ellipsis"></i>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </div>
   );
 };

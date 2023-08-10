@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "./Comment.module.css";
 import {
   editComment,
   deleteComment,
@@ -81,101 +80,101 @@ const Comment = ({
   };
 
   return (
-    <div className={styles.wrap}>
-      <div className={styles.outterWrap}>
-        <div className={styles.momWrap}>
-          {/* 닉네임, 댓글 텍스트 */}
-          <span className={styles.innerWrap}>
-            <Link
-              to={`/profile/${comment.creatorId}`}
-              className={styles.nickName}
-            >
-              {comment.nickName}
-            </Link>
-            {isEditOpen ? (
-              <input
-                className={styles.commentTextInput}
-                value={editedCommentText}
-                onChange={(e) => {
-                  setEditedCommentText(e.target.value);
-                }}
-              />
-            ) : (
-              <span className={styles.commentText}>{comment.commentText}</span>
-            )}
-          </span>
-
-          {/* 에딧 버튼 */}
-          {!validUser ? (
-            <div
-              onClick={() => {
-                setReplyInit((prev) => !prev);
+    <div className="mt-2 flex flex-col relative">
+      <div className="flex">
+        {/* 닉네임, 댓글 텍스트 */}
+        <div className="flex-1 mr-3">
+          <Link to={`/profile/${comment.creatorId}`} className="font-bold">
+            {comment.nickName}
+          </Link>
+          {isEditOpen ? (
+            <input
+              className="ml-2"
+              value={editedCommentText}
+              onChange={(e) => {
+                setEditedCommentText(e.target.value);
               }}
-              className={styles.editIcon}
-            >
-              <i className="fa-solid fa-reply"></i>
-            </div>
+            />
           ) : (
-            !isEditOpen && (
-              <div onClick={handleEditSwitch} className={styles.editIcon}>
-                <i className="fa-solid fa-ellipsis"></i>
-              </div>
-            )
-          )}
-          {isEditOpen && (
-            <div>
-              <button onClick={handleEditText}>수정</button>
-              <button onClick={handleDelete}>삭제</button>
-              <button onClick={handleEditSwitch}>취소</button>
-            </div>
+            <span className="ml-2">{comment.commentText}</span>
           )}
         </div>
 
-        {/* 대댓글 작성란 */}
-        {replyInit && (
-          <div className={styles.replyInputWrap}>
-            <input
-              className={styles.replyInput}
-              value={replyCommentText}
-              onChange={handleComment}
-              placeholder="댓글을 작성해주세요."
-              maxLength={100}
-            />
-            <div onClick={submitReply} className={styles.editIcon}>
-              <i className="fa-solid fa-circle-arrow-up"></i>
-            </div>
-            <div
-              onClick={() => {
-                setReplyInit(false);
-              }}
-              className={styles.editIcon}
-            >
-              <i className="fa-solid fa-xmark"></i>
-            </div>
+        {/* 에딧 버튼 */}
+        {!validUser ? (
+          <div
+            onClick={() => {
+              setReplyInit((prev) => !prev);
+            }}
+            className="text-xl"
+          >
+            <i className="fa-solid fa-reply"></i>
           </div>
-        )}
-
-        {/* 대댓글 리스트 */}
-        {replies.length > 0 && (
-          <div className={styles.sonWrap}>
-            {replySwitch.map((reply) => (
-              <ReplyComment
-                key={reply.id}
-                reply={reply}
-                nowUser={nowUser}
-                replies={replies}
-                setReplies={setReplies}
-                feed={feed}
-                setCommentCounts={setCommentCounts}
-              />
-            ))}
-            <span className={styles.commentOpen} onClick={handleShowAllReply}>
-              {replies.length > 1 &&
-                (wannaShowAllReply ? "접기" : "댓글 펼치기")}
-            </span>
+        ) : !isEditOpen ? (
+          <div onClick={handleEditSwitch} className="text-xl">
+            <i className="fa-solid fa-ellipsis"></i>
+          </div>
+        ) : (
+          <div className="flex flex-row gap-2">
+            <button className="hover:font-bold" onClick={handleEditText}>
+              수정
+            </button>
+            <button className="hover:font-bold" onClick={handleDelete}>
+              삭제
+            </button>
+            <button className="hover:font-bold" onClick={handleEditSwitch}>
+              취소
+            </button>
           </div>
         )}
       </div>
+
+      {/* 대댓글 작성란 */}
+      {replyInit && (
+        <div className="flex ml-5 gap-3">
+          <input
+            className="flex-1"
+            value={replyCommentText}
+            onChange={handleComment}
+            placeholder="댓글을 작성해주세요."
+            maxLength={100}
+          />
+          <div onClick={submitReply} className="text-xl">
+            <i className="fa-solid fa-circle-arrow-up"></i>
+          </div>
+          <div
+            onClick={() => {
+              setReplyInit(false);
+            }}
+            className="text-xl"
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        </div>
+      )}
+
+      {/* 대댓글 리스트 */}
+      {replies.length > 0 && (
+        <div className="mt-2 ml-5 relative">
+          {replySwitch.map((reply) => (
+            <ReplyComment
+              key={reply.id}
+              reply={reply}
+              nowUser={nowUser}
+              replies={replies}
+              setReplies={setReplies}
+              feed={feed}
+              setCommentCounts={setCommentCounts}
+            />
+          ))}
+          <div
+            className="text-neutral-500 text-lg cursor-pointer border-b border-1 border-neutral-300 relative w-full"
+            onClick={handleShowAllReply}
+          >
+            {replies.length > 1 && (wannaShowAllReply ? "접기" : "댓글 펼치기")}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

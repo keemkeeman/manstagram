@@ -1,4 +1,3 @@
-import styles from "./FeedComments.module.css";
 import Comment from "./Comment";
 import FeedCommentInput from "./FeedCommentInput";
 import { useEffect, useState } from "react";
@@ -21,19 +20,21 @@ const FeedComments = ({ feed, nowUser }) => {
     fetchComments();
   }, [feed, nowUser]);
 
-  const wannaShowAll =
-    comments.length === 0 ? (
-      <div className={styles.commentOpen}>첫 댓글을 남겨보세요!</div>
-    ) : (
-      <div
-        className={styles.commentOpen}
-        onClick={() => {
-          setOpenAllComments(true);
-        }}
-      >
-        댓글 {commentCount}개 모두 보기
-      </div>
-    );
+  const wannaShowAll = (
+    <div className=" text-neutral-500 cursor-pointer">
+      {comments.length === 0 ? (
+        <p>첫 댓글을 남겨보세요!</p>
+      ) : (
+        <p
+          onClick={() => {
+            setOpenAllComments(true);
+          }}
+        >
+          댓글 {commentCount}개 모두 보기
+        </p>
+      )}
+    </div>
+  );
 
   const currentComment = comments.slice(0, 1);
   const commentListSwitch = openAllComments ? comments : currentComment;
@@ -50,7 +51,7 @@ const FeedComments = ({ feed, nowUser }) => {
   ));
 
   return (
-    <div className={styles.wrap}>
+    <div className="mx-5 mt-2 text-lg">
       {wannaShowAll}
       {commentList}
       <FeedCommentInput

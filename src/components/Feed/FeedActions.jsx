@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "./FeedActions.module.css";
 import { likeFeed, isLikedUser, countLikes } from "../../fireUtil";
 
 const FeedActions = ({ feed, nowUser }) => {
@@ -26,19 +25,19 @@ const FeedActions = ({ feed, nowUser }) => {
 
   return (
     <>
-      <div className={styles.wrap}>
-        <div className={styles.likesWrap}>
-          <div id="like" className={styles.buttons} onClick={handleLike}>
+      <div className="flex mt-2 mx-5 text-2xl">
+        <div className="flex flex-1 gap-5">
+          <div id="like" className="cursor-pointer" onClick={handleLike}>
             {isLiked ? (
               <i className="fa-solid fa-heart"></i>
             ) : (
               <i className="fa-regular fa-heart"></i>
             )}
           </div>
-          <div>
+          <div id="comment" className="cursor-pointer" onClick={() => {}}>
             <i className="fa-regular fa-comment"></i>
           </div>
-          <div>
+          <div id="share" className="cursor-pointer" onClick={() => {}}>
             <i className="fa-regular fa-paper-plane"></i>
           </div>
         </div>
@@ -54,8 +53,8 @@ const FeedActions = ({ feed, nowUser }) => {
           )}
         </div>
       </div>
-      <div className={styles.countWrap}>
-        <div className={styles.likes}>좋아요 {likesCount}개</div>
+      <div className="text-lg font-semibold mx-5 mt-2">
+        좋아요 {likesCount}개
       </div>
     </>
   );

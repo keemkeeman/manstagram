@@ -16,7 +16,7 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
         setIsEditOpen={setIsEditOpen}
       />
       <img
-        className="max-h-[800px] w-[670px] object-fit:cover"
+        className="max-h-[800px] w-[670px] object-fit:cover shadow-sm"
         src={feed.imgUrl}
         alt="feedImg"
       />

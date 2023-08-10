@@ -1,15 +1,12 @@
-import styles from "./FeedDescription.module.css";
 import { Link } from "react-router-dom";
 
 const FeedDescription = ({ feed }) => {
   return (
-    <div className={styles.wrap}>
-      <span>
-        <Link to={`/profile/${feed.creatorId}`} className={styles.nickName}>
-          {feed.nickName}
-        </Link>
-        <span className={styles.feedText}>{feed.feedText}</span>
-      </span>
+    <div className="flex mx-5 mt-2 text-lg gap-2">
+      <Link to={`/profile/${feed.creatorId}`} className="font-semibold">
+        {feed.nickName}
+      </Link>
+      <span>{feed.feedText}</span>
     </div>
   );
 };
