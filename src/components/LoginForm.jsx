@@ -1,5 +1,4 @@
 import { createUser, signInUser } from "../fireUtil";
-import styles from "./LoginForm.module.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   emailAtom,
@@ -43,46 +42,49 @@ const LoginForm = ({ haveAccount }) => {
   };
 
   return (
-    <div className={styles.wrap}>
-      {/* 로그인 폼 */}
-      <form onSubmit={haveAccount ? handleLogin : handleSubmit}>
-        {/* 이메일 */}
-        <input
-          className={styles.infoInput}
-          name="email"
-          onChange={handleEmailInput}
-          value={email}
-          placeholder="이메일"
-          type="email"
-        />
-        {!isValidEmail && email.length > 1 && (
-          <span className={styles.alert}>올바른 이메일을 입력해주세요.</span>
-        )}
+    <form
+      className="flex flex-col my-5 gap-3 w-full"
+      onSubmit={haveAccount ? handleLogin : handleSubmit}
+    >
+      {/* 이메일 */}
+      <input
+        className="w-full shadow-md rounded-md p-2"
+        name="email"
+        onChange={handleEmailInput}
+        value={email}
+        placeholder="이메일"
+        type="email"
+      />
+      {!isValidEmail && email.length > 1 && (
+        <span className="text-xs text-rose-500">
+          올바른 이메일을 입력해주세요.
+        </span>
+      )}
 
-        {/* 패스워드 */}
-        <input
-          className={styles.infoInput}
-          name="password"
-          onChange={handlePwInput}
-          value={pw}
-          placeholder="비밀번호"
-          type="password"
-        />
-        {!isValidPw && pw.length > 1 && (
-          <span className={styles.alert}>
-            영문, 숫자 조합 8자리 이상 입력해주세요.
-          </span>
-        )}
+      {/* 패스워드 */}
+      <input
+        className="w-full shadow-md rounded-md p-2"
+        name="password"
+        onChange={handlePwInput}
+        value={pw}
+        placeholder="비밀번호"
+        type="password"
+      />
+      {!isValidPw && pw.length > 1 && (
+        <span className="text-xs text-rose-500">
+          영문, 숫자 조합 8자리 이상 입력해주세요.
+        </span>
+      )}
 
-        {/* 제출 버튼 */}
-        <input
-          className={haveAccount ? styles.login : styles.signup}
-          id={styles.submit}
-          type="submit"
-          value={haveAccount ? "로그인" : "계정 생성"}
-        />
-      </form>
-    </div>
+      {/* 제출 버튼 */}
+      <input
+        className={`cursor-pointer rounded-lg text-md shadow-md font-bold text-white py-2 ${
+          haveAccount ? "bg-blue-500" : "bg-green-500"
+        }`}
+        type="submit"
+        value={haveAccount ? "로그인" : "계정 생성"}
+      />
+    </form>
   );
 };
 export default LoginForm;

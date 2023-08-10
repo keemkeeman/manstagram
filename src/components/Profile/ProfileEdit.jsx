@@ -1,4 +1,3 @@
-import styles from "./ProfileEdit.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { logOut, updateUser, deleteAccount } from "../../fireUtil";
@@ -74,48 +73,90 @@ const ProfileEdit = ({
     deleteAccount();
     navigate("/");
   };
+  /* <div className="flex flex-col items-center gap-3 my-5">
+        <img alt="feedImg" src={newFileUrl} className="h-full w-full" />
+        <input
+          name="image"
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+        />
+        <textarea
+          className="w-full h-full"
+          name="feedText"
+          type="text"
+          maxLength={100}
+          value={newText}
+          onChange={handleNewText}
+        />
+        <button
+          onClick={handleDelete}
+          className="border-2 border-neutral-300 text-sm text-neutral-500 my-5"
+        >
+          삭제하기
+        </button>
+      </div> */
 
   return (
-    <div className={styles.wrap}>
-      <div className={styles.topWrap}>
-        <span onClick={handleOpenEdit}>취소</span>
-        <h3>프로필 편집</h3>
-        <span onClick={handleEditProfile}>완료</span>
+    <div className="absolute w-[500px] flex flex-col px-5 rounded-md shadow-lg items-center top-10 py-5 z-10 bg-neutral-100">
+      <div className="flex text-lg justify-between w-full border-b-2 pb-3">
+        <button className="hover:font-bold" onClick={handleOpenEdit}>
+          취소
+        </button>
+        <h3 className="font-bold">프로필 편집</h3>
+        <button
+          className="hover:font-bold text-blue-700"
+          onClick={handleEditProfile}
+        >
+          완료
+        </button>
       </div>
-      <div className={styles.formWrap}>
-        <div className={styles.innerWrap}>
-          <label className="edit-title">닉네임 수정</label>
+      <div className="flex flex-col gap-3 my-5 text-md">
+        <div className="flex gap-3">
+          <label className="font-semibold w-[100px]">닉네임</label>
           <input
+            className="w-[300px]"
             type="text"
             maxLength={10}
             placeholder="10자 이내 작성"
             onChange={handleNic}
           />
         </div>
-        <div className={styles.innerWrap}>
-          <label className="edit-title">프로필 사진</label>
+        <div className="flex gap-3">
+          <label className="font-semibold w-[100px]">프로필 사진</label>
           <input type="file" onChange={handleFile} />
         </div>
-        <div className={styles.innerWrap}>
-          <label className="edit-title">소개</label>
+        <div className="flex gap-3">
+          <label className="font-semibold w-[100px]">소개</label>
           <textarea
+            className="w-[300px]"
             type="text"
             maxLength={100}
             placeholder="100자 이내 작성"
             onChange={handleIntroduction}
           />
         </div>
-        <div className={styles.innerWrap}>
-          <label className="edit-title">휴대폰 번호</label>
-          <input type="text" onChange={null} />
+        <div className="flex gap-3">
+          <label className="font-semibold w-[100px]">휴대폰 번호</label>
+          <input className="w-[300px]" type="text" onChange={null} />
         </div>
       </div>
-      <Link to="/" onClick={handleLogout} className={styles.logout}>
-        로그아웃
-      </Link>
-      <Link to="/" onClick={handleDeleteAccount} className={styles.logout}>
-        회원탈퇴
-      </Link>
+      <div className="flex flex-col gap-5 my-5">
+        <Link
+          to="/"
+          onClick={handleLogout}
+          className="text-md text-neutral-500"
+        >
+          로그아웃
+        </Link>
+        <Link
+          to="/"
+          onClick={handleDeleteAccount}
+          className="text-md text-neutral-500"
+        >
+          회원탈퇴
+        </Link>
+      </div>
     </div>
   );
 };

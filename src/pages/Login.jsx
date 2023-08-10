@@ -2,7 +2,6 @@ import LoginForm from "../components/LoginForm";
 import { useState } from "react";
 import { auth } from "../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import styles from "./Login.module.css";
 
 const Login = () => {
   const [haveAccount, setHaveAccount] = useState(true);
@@ -21,36 +20,42 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className={styles.wrap}>
-        <h1 className={styles.title}>Manstagram</h1>
+    <div className="absolute m-[100px] p-[50px] rounded-lg bg-neutral-50 shadow-lg">
+      <div className="flex flex-col items-center h-full">
+        <h1 className="font-bold text-3xl m-10">Manstagram</h1>
         <LoginForm haveAccount={haveAccount} />
-        <div className={styles.and}>
-          <div name="line"></div>
-          <span>또는</span>
+        <div className="flex justify-center items-center">
+          <hr className="my-5 w-[250px]" />
+          <span className="absolute bg-neutral-50 px-3 text-neutral-400 text-md">
+            또는
+          </span>
         </div>
-        <div className={styles.googleIcon}>
+        <div className="text-2xl cursor-pointer">
           <i onClick={googleLogin} className="fa-brands fa-google"></i>
         </div>
       </div>
-      <div className={styles.bottomWrap}>
-        {haveAccount ? (
-          <div>
-            <p>계정이 없으신가요?</p>
-            <p onClick={handleLoginPage} className={styles.chooseButton}>
-              가입하기
-            </p>
-          </div>
-        ) : (
-          <div>
-            <p>이미 계정이 있으신가요?</p>
-            <p onClick={handleLoginPage} className={styles.chooseButton}>
-              로그인하기
-            </p>
-          </div>
-        )}
-      </div>
-    </>
+      {haveAccount ? (
+        <div className="flex justify-center mt-10 text-md gap-2">
+          <p>계정이 없으신가요?</p>
+          <p
+            onClick={handleLoginPage}
+            className="font-bold cursor-pointer text-green-500"
+          >
+            가입하기
+          </p>
+        </div>
+      ) : (
+        <div className="flex justify-center mt-10 text-md gap-2">
+          <p>이미 계정이 있으신가요?</p>
+          <p
+            onClick={handleLoginPage}
+            className="font-bold cursor-pointer text-blue-500"
+          >
+            로그인하기
+          </p>
+        </div>
+      )}
+    </div>
   );
 };
 

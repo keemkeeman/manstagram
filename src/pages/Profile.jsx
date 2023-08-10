@@ -1,5 +1,6 @@
 import ProfileInfo from "../components/Profile/ProfileInfo";
 import ProfileFeedList from "../components/Profile/ProfileFeedList";
+import ProfileEdit from "../components/Profile/ProfileEdit";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProfileUser } from "../fireUtil";
@@ -7,8 +8,12 @@ import { getProfileUser } from "../fireUtil";
 const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   const { userId } = useParams();
   const [profileUser, setProfileUser] = useState({});
-  const [isMyProfile, setIsMyProfile] = useState(false);
   const [profileFeedList, setProfileFeedList] = useState([]);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const handleOpenEdit = () => {
+    setIsEditOpen((prev) => !prev);
+  };
 
   /* 프로필 정보 가져오기 */
   useEffect(() => {
@@ -16,22 +21,34 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
       setProfileUser(await getProfileUser(userId, setProfileFeedList));
     };
     fetchProfileUser();
-    if (profileUser.id === nowUser.id) {
-      setIsMyProfile(true);
-    }
   }, [nowUser.id, profileUser.id, userId]);
 
   return (
-    <div className="flex w-[80vh] flex-col relative top-[10vh]">
+    <div className="flex w-[670px] my-3 pb-[100px] flex-col relative top-[10vh]">
       <ProfileInfo
-        isMyProfile={isMyProfile}
         profileUser={profileUser}
         nowUser={nowUser}
         setIsLoggedIn={setIsLoggedIn}
         setNowUser={setNowUser}
         profileFeedList={profileFeedList}
+        setIsEditOpen={setIsEditOpen}
       />
       <ProfileFeedList profileFeedList={profileFeedList} />
+      {isEditOpen && (
+        <div className="flex justify-center">
+          <div
+            id="modal-bg"
+            className={`absolute top-0 w-full h-full bg-black opacity-50 inset-0 rounded-lg`}
+          ></div>
+          <ProfileEdit
+            setIsLoggedIn={setIsLoggedIn}
+            nowUser={nowUser}
+            setNowUser={setNowUser}
+            setIsEditOpen={setIsEditOpen}
+            handleOpenEdit={handleOpenEdit}
+          />
+        </div>
+      )}
     </div>
   );
 };

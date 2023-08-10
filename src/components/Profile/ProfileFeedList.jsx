@@ -2,12 +2,14 @@ import ProfileFeed from "./ProfileFeed";
 
 const ProfileFeedList = ({ profileFeedList }) => {
   const newList = profileFeedList.map((feed) => (
-    <div key={feed.id}>
-      <ProfileFeed feed={feed} />
-    </div>
+    <ProfileFeed key={feed.id} feed={feed} />
   ));
 
-  return <div className="bg-green-500 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-10">{newList}</div>;
+  return (
+    <div className="relative shadow-md grid grid-cols-3 gap-1 w-full min-h-[600px]">
+      {newList}
+    </div>
+  );
 };
 
 export default ProfileFeedList;
