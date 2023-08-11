@@ -1,6 +1,6 @@
 const ProfileFeed = ({ feed }) => {
   return (
-    <img className="object-cover w-full h-full shadow-sm" src={feed.imgUrl} alt="feedImg" />
+    <img className="object-fit:cover w-full h-full shadow-sm overflow-auto" src={feed.imgUrl} alt="feedImg" />
   );
 };
 

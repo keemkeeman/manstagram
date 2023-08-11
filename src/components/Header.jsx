@@ -17,7 +17,7 @@ const Header = () => {
   }, [searchInput]);
 
   return (
-    <div className="bg-neutral-50 w-full shadow-sm top-0 fixed h-[80px] flex items-center">
+    <div className="bg-neutral-50 w-full shadow-sm top-0 fixed h-[10vh] flex items-center z-10">
       <div
         onClick={() => {
           navigate("/");

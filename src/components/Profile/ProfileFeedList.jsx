@@ -6,8 +6,8 @@ const ProfileFeedList = ({ profileFeedList }) => {
   ));
 
   return (
-    <div className="relative shadow-md grid grid-cols-3 gap-1 w-full min-h-[300px]">
-      {newList}
+    <div className="relative shadow-md grid grid-cols-3 gap-1 w-full h-full">
+      {newList.length > 0 ? newList : <p className="text-xl text-neutral-500">nothing on your feed...</p>}
     </div>
   );
 };

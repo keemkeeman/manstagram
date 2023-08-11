@@ -30,7 +30,7 @@ const FeedList = ({ feedList, setFeedList, nowUser }) => {
   }
 
   return (
-    <div className="min-h-[calc(100vh - 160px)] w-full relative flex flex-col justify-center items-center top-[10vh] my-3 pb-[80px]">
+    <div className="min-h-[calc(100vh - 160px)] w-full relative flex flex-col justify-center items-center top-[10vh] my-3 pb-[10vh]">
       {list}
     </div>
   );

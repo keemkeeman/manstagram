@@ -24,7 +24,7 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   }, [nowUser.id, profileUser.id, userId]);
 
   return (
-    <div className="flex w-[670px] my-3 pb-[100px] flex-col relative top-[10vh]">
+    <div className="flex w-[670px] my-3 pb-[10vh] flex-col relative top-[10vh]">
       <ProfileInfo
         profileUser={profileUser}
         nowUser={nowUser}

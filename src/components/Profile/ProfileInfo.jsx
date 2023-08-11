@@ -10,7 +10,7 @@ const ProfileInfo = ({
   const n = 10;
 
   return (
-    <div className="flex shadow-md flex-row p-10">
+    <div className="flex shadow-md flex-row px-10 py-20">
       <div className="m-3 w-[150px] h-[150px] overflow-hidden shadow-sm rounded-full relative">
         <img
           className="w-[150px] h-[150px] m-0 p-0 absolute"
@@ -22,7 +22,7 @@ const ProfileInfo = ({
           alt="profilePic"
         />
       </div>
-      <div className="mx-5 mt-1 flex flex-col gap-4">
+      <div className="mx-10 mt-1 flex flex-col gap-5">
         <div className="flex items-center gap-2">
           <div className="font-semibold text-2xl">{profileUser.nickName}</div>
           {profileUser.id === nowUser.id && (
