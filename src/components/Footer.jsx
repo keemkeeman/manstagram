@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
+import { AiFillHome, AiFillPlusCircle } from "react-icons/ai";
+import { IoPerson } from "react-icons/io5";
 
 const Footer = ({ nowUser }) => {
   return (
-    <div className="bg-neutral-50 w-full fixed h-[10vh] shadow-md bottom-0 flex items-center justify-center">
+    <div className="bg-neutral-50 w-full fixed h-[8vh] shadow-md bottom-0 flex items-center justify-center">
       <Link className="text-3xl m-10" to="/">
-        <i className="fa-solid fa-house"></i>
+        <AiFillHome size={30} />
       </Link>
       <Link to="/upload" className="text-3xl m-10 cursor-pointer">
-        <i className="fa-solid fa-circle-plus"></i>
+        <AiFillPlusCircle size={30} />
       </Link>
       <Link className="text-3xl m-10" to={`/profile/${nowUser.id}`}>
-        <i className="fa-solid fa-user-large"></i>
+        <IoPerson size={30} />
       </Link>
     </div>
   );

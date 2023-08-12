@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import { findUser } from "../fireUtil";
 import SearchResult from "./SearchResult";
 import { useNavigate } from "react-router-dom";
+import { BsInstagram } from "react-icons/bs";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BiSearch } from "react-icons/bi";
 
 const Header = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -17,22 +20,20 @@ const Header = () => {
   }, [searchInput]);
 
   return (
-    <div className="bg-neutral-50 w-full shadow-sm top-0 fixed h-[10vh] flex items-center z-10">
-      <div
-        onClick={() => {
-          navigate("/");
-        }}
-        className="text-4xl flex-1 m-8 cursor-pointer lg:text-5xl"
-      >
-        <i className="fa-brands fa-instagram"></i>
+    <div className="bg-neutral-50 w-full shadow-sm top-0 fixed border-b-[1px] h-[8vh] flex items-center z-10">
+      <div className="flex-1">
+        <BsInstagram
+          className="m-10 cursor-pointer"
+          onClick={() => {
+            navigate("/");
+          }}
+          size={30}
+        />
       </div>
-
       <div className="flex items-center mr-5">
         <div className="flex flex-col relative">
           <div className="flex flex-row p-2 mr-3 shadow-md items-center w-[300px] lg:w-[700px] rounded-md bg-neutral-200">
-            <div className="text-xl mx-3 font-semibold">
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </div>
+            <BiSearch className="mx-3" size={24} />
             <input
               className="bg-transparent text-md flex-1"
               onChange={(e) => {
@@ -52,9 +53,7 @@ const Header = () => {
             />
           )}
         </div>
-        <div className="text-3xl m-3 cursor-pointer ">
-          <i className="fa-regular fa-heart"></i>
-        </div>
+        <AiOutlineHeart className="m-3 cursor-pointer" size={30} />
       </div>
     </div>
   );
