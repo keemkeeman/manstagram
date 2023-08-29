@@ -55,34 +55,38 @@ const FeedForm = ({ nowUser, feedList, setFeedList }) => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-5 items-center py-24 text-xl">
-      <div className="text-3xl text-green-500 font-bold">SHOW ME WHAT YOU GOT?</div>
-      <div className="relative flex flex-col items-center">
-        <img src={fileUrl} alt="uploadImg" className="w-[480px] h-[400px]" />
+    <div className="w-full">
+      <div className="flex w-full flex-col gap-5 items-center pt-32 px-5 text-4xl">
+        <div className="text-5xl text-green-500 font-bold">
+          SHOW ME WHAT YOU GOT?
+        </div>
+        <div className="relative w-full flex flex-col items-center">
+          <img src={fileUrl} alt="uploadImg" className="w-full" />
 
-        <textarea
-          className="w-full my-5 h-[160px] shadow-md p-3"
-          name="feedText"
-          type="text"
-          value={feedText}
-          onChange={handleFeedText}
-          placeholder="최대 100자까지 작성"
-          maxLength={100}
-        />
-        <input
-          className="w-full"
-          name="image"
-          type="file"
-          accept="image/*"
-          onChange={handleFile}
-        />
+          <textarea
+            className="w-full my-5 h-[200px] shadow-md p-3"
+            name="feedText"
+            type="text"
+            value={feedText}
+            onChange={handleFeedText}
+            placeholder="최대 100자까지 작성"
+            maxLength={100}
+          />
+          <input
+            className="w-full py-10"
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleFile}
+          />
 
-        <button
-          className="bg-green-500 w-full my-5 py-2 font-bold"
-          onClick={handleSubmit}
-        >
-          완료
-        </button>
+          <button
+            className="bg-green-500 w-full py-10 font-bold"
+            onClick={handleSubmit}
+          >
+            업로드
+          </button>
+        </div>
       </div>
     </div>
   );

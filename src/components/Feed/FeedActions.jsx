@@ -24,8 +24,8 @@ const FeedActions = ({ feed, nowUser, inputRef }) => {
   }, [feed, nowUser]);
 
   return (
-    <>
-      <div className="flex mt-2 mx-5 text-4xl">
+    <div className="flex flex-col px-10">
+      <div className="flex mt-5 text-5xl">
         <div className="flex flex-1 gap-5">
           <div id="like" className="cursor-pointer" onClick={handleLike}>
             {isLiked ? (
@@ -59,10 +59,10 @@ const FeedActions = ({ feed, nowUser, inputRef }) => {
           )}
         </div>
       </div>
-      <div className="text-2xl font-semibold mx-5 mt-2">
+      <div className="text-3xl font-semibold mt-5">
         좋아요 {likesCount}개
       </div>
-    </>
+    </div>
   );
 };
 export default FeedActions;

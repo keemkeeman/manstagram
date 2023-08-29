@@ -21,14 +21,14 @@ const Header = () => {
 
   return (
     <div className="bg-white w-full shadow-sm top-0 fixed border-b-[1px] z-10">
-      <div className="flex flex-row mx-auto px-10 py-5 items-center justify-between max-w-[2000px]">
+      <div className="flex flex-row mx-auto px-10 py-10 items-center justify-between max-w-[2000px]">
         <div className="flex-1">
           <BsInstagram
             className="cursor-pointer"
             onClick={() => {
               navigate("/");
             }}
-            size={50}
+            size={60}
           />
         </div>
         <div className="flex items-center gap-5">
@@ -54,7 +54,7 @@ const Header = () => {
               />
             )}
           </div>
-          <AiOutlineHeart className="cursor-pointer" size={50} />
+          <AiOutlineHeart className="cursor-pointer" size={60} />
         </div>
       </div>
     </div>

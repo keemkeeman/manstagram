@@ -55,14 +55,14 @@ const ReplyComment = ({
           {/* 텍스트 수정 */}
           {isEditOpen ? (
             <input
-              className="ml-2 bg-red-400 border"
+              className="pl-3 border"
               value={editedReplyText}
               onChange={(e) => {
                 setEditedReplyText(e.target.value);
               }}
             />
           ) : (
-            <span className="text-xl ml-3">{reply.commentText}</span>
+            <span className="text-2xl pl-3">{reply.commentText}</span>
           )}
         </div>
 
@@ -72,7 +72,7 @@ const ReplyComment = ({
             onClick={() => {
               setRereplyInit((prev) => !prev);
             }}
-            className="text-xl text-neutral-500"
+            className="text-3xl text-neutral-500"
           >
             <i className="fa-solid fa-reply"></i>
           </div>
@@ -80,7 +80,7 @@ const ReplyComment = ({
           !isEditOpen && (
             <div
               onClick={handleEditSwitch}
-              className="text-xl text-neutral-500"
+              className="text-3xl text-neutral-500"
             >
               <i className="fa-solid fa-ellipsis"></i>
             </div>
@@ -89,7 +89,7 @@ const ReplyComment = ({
 
         {/* 수정 내부 버튼 */}
         {isEditOpen && (
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button className="hover:font-bold" onClick={handleEditReplyText}>
               수정
             </button>
@@ -115,14 +115,14 @@ const ReplyComment = ({
             placeholder="댓글을 작성해주세요."
             maxLength={100}
           />
-          <div onClick={submitReply} className="text-xl">
+          <div onClick={submitReply} className="text-3xl">
             <i className="fa-solid fa-circle-arrow-up"></i>
           </div>
           <div
             onClick={() => {
               setRereplyInit(false);
             }}
-            className="text-xl"
+            className="text-3xl"
           >
             <i className="fa-solid fa-xmark"></i>
           </div>

@@ -80,23 +80,23 @@ const Comment = ({
   };
 
   return (
-    <div className="mt-2 flex flex-col relative">
+    <div className="mt-5 flex flex-col relative">
       <div className="flex">
         {/* 닉네임, 댓글 텍스트 */}
-        <div className="flex-1 mr-3">
+        <div className="flex-1 pr-3">
           <Link to={`/profile/${comment.creatorId}`} className="font-bold">
             {comment.nickName}
           </Link>
           {isEditOpen ? (
             <input
-              className="ml-2 relative w-[400px]"
+              className="pl-3 relative w-[400px] border"
               value={editedCommentText}
               onChange={(e) => {
                 setEditedCommentText(e.target.value);
               }}
             />
           ) : (
-            <span className="ml-2">{comment.commentText}</span>
+            <span className="pl-3">{comment.commentText}</span>
           )}
         </div>
 
@@ -106,16 +106,16 @@ const Comment = ({
             onClick={() => {
               setReplyInit((prev) => !prev);
             }}
-            className="text-xl"
+            className="text-3xl"
           >
             <i className="fa-solid fa-reply"></i>
           </div>
         ) : !isEditOpen ? (
-          <div onClick={handleEditSwitch} className="text-xl">
+          <div onClick={handleEditSwitch} className="text-3xl">
             <i className="fa-solid fa-ellipsis"></i>
           </div>
         ) : (
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row gap-3">
             <button className="hover:font-bold" onClick={handleEditText}>
               수정
             </button>
@@ -155,7 +155,7 @@ const Comment = ({
 
       {/* 대댓글 리스트 */}
       {replies.length > 0 && (
-        <div className="flex flex-col mt-3 gap-3 ml-7 relative">
+        <div className="flex flex-col mt-5 gap-5 ml-7 relative">
           {replySwitch.map((reply) => (
             <ReplyComment
               key={reply.id}
@@ -168,7 +168,7 @@ const Comment = ({
             />
           ))}
           <div
-            className="text-neutral-500 text-lg cursor-pointer border-b border-1 border-neutral-300 relative w-full"
+            className="text-neutral-500 text-2xl cursor-pointer border-b pb-2 border-neutral-300 relative w-full"
             onClick={handleShowAllReply}
           >
             {replies.length > 1 && (wannaShowAllReply ? "접기" : "댓글 펼치기")}
