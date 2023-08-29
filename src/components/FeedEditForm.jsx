@@ -52,26 +52,33 @@ const FeedEditForm = ({
   };
 
   return (
-    <div className="absolute w-[500px] flex flex-col px-5 rounded-md shadow-lg top-10 py-5 z-10 bg-neutral-100">
-      <div className="flex text-lg justify-between border-b-2 pb-3">
-        <button onClick={handleEditClose} className="hover:font-bold">
+    <div className="fixed flex flex-col rounded-xl shadow-lg py-10 m-24 z-50 bg-white">
+      <div className="flex flex-row text-3xl justify-between border-b-2 p-5">
+        <button
+          onClick={handleEditClose}
+          className="p-5 font-bold hover:text-rose-500"
+        >
           취소
         </button>
-        <h3 className="font-bold">게시물 수정</h3>
-        <button onClick={handleEdit} className="hover:font-bold text-blue-700">
+        <h3 className="font-bold text-4xl">게시물 수정</h3>
+        <button
+          onClick={handleEdit}
+          className="p-5 font-bold hover:text-blue-700 text-blue-500"
+        >
           완료
         </button>
       </div>
-      <div className="flex flex-col items-center gap-3 my-5">
-        <img alt="feedImg" src={newFileUrl} className="h-full w-full" />
+      <div className="flex flex-col gap-10">
+        <img alt="feedImg" src={newFileUrl} className="w-full aspect-square" />
         <input
+          className="p-5 text-3xl"
           name="image"
           type="file"
           accept="image/*"
           onChange={handleFile}
         />
         <textarea
-          className="w-full h-full"
+          className="p-5 mx-5 text-3xl border"
           name="feedText"
           type="text"
           maxLength={100}
@@ -80,7 +87,7 @@ const FeedEditForm = ({
         />
         <button
           onClick={handleDelete}
-          className="border-2 border-neutral-300 text-sm text-neutral-500 my-5"
+          className=" bg-rose-400 hover:bg-rose-500 text-3xl text-white py-5 mx-5 rounded-xl"
         >
           삭제하기
         </button>

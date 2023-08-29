@@ -26,7 +26,7 @@ const FeedActions = ({ feed, nowUser, inputRef }) => {
   return (
     <div className="flex flex-col px-10">
       <div className="flex mt-5 text-5xl">
-        <div className="flex flex-1 gap-5">
+        <div className="flex flex-1 gap-10">
           <div id="like" className="cursor-pointer" onClick={handleLike}>
             {isLiked ? (
               <i className="fa-solid fa-heart"></i>

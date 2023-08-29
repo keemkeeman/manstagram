@@ -69,71 +69,73 @@ const ProfileEdit = ({
   };
 
   return (
-    <div className="absolute rounded-md shadow-lg top-10 z-50 bg-neutral-50">
-      <div className="flex flex-col p-10 items-center">
-        <div className="flex text-lg justify-between items-end w-full border-b-2 pb-5">
-          <button className="hover:font-bold" onClick={handleOpenEdit}>
-            취소
-          </button>
-          <h3 className="font-bold text-2xl">프로필 편집</h3>
-          <button
-            className="hover:font-bold text-blue-700"
-            onClick={handleEditProfile}
-          >
-            완료
-          </button>
+    <div className="fixed flex flex-col rounded-xl shadow-lg m-16 py-10 z-50 bg-white">
+      <div className="flex flex-row text-3xl justify-between border-b-2 p-5">
+        <button
+          className="p-5 font-bold hover:text-rose-500"
+          onClick={handleOpenEdit}
+        >
+          취소
+        </button>
+        <h3 className="font-bold text-4xl">프로필 편집</h3>
+        <button
+          className="p-5 font-bold hover:text-blue-700 text-blue-500"
+          onClick={handleEditProfile}
+        >
+          완료
+        </button>
+      </div>
+      <div className="flex flex-col gap-14 p-5 my-5 text-2xl">
+        <div className="flex flex-row gap-5">
+          <label className="font-semibold w-[200px]">닉네임</label>
+          <input
+            className="w-full border p-3"
+            type="text"
+            maxLength={10}
+            placeholder="10자 이내 작성"
+            onChange={handleNic}
+          />
         </div>
-        <div className="flex flex-col gap-10 py-5 text-lg">
-          <div className="flex gap-3">
-            <label className="font-semibold w-[100px]">닉네임</label>
-            <input
-              className="w-[320px]"
-              type="text"
-              maxLength={10}
-              placeholder="10자 이내 작성"
-              onChange={handleNic}
-            />
-          </div>
-          <div className="flex gap-3">
-            <label className="font-semibold w-[100px]">프로필 사진</label>
-            <input
-              name="image"
-              type="file"
-              accept="image/*"
-              onChange={handleFile}
-            />
-          </div>
-          <div className="flex gap-3">
-            <label className="font-semibold w-[100px]">소개</label>
-            <textarea
-              className="w-[320px]"
-              type="text"
-              maxLength={100}
-              placeholder="100자 이내 작성"
-              onChange={handleIntroduction}
-            />
-          </div>
-          <div className="flex gap-3">
-            <label className="font-semibold w-[100px]">휴대폰 번호</label>
-            <input className="w-[320px]" type="text" onChange={null} />
-          </div>
+        <div className="flex flex-row gap-5">
+          <label className="font-semibold w-[200px]">프로필 사진</label>
+          <input
+            className="w-full"
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleFile}
+          />
         </div>
-        <div className="flex flex-col gap-10 my-10">
-          <Link
-            to="/"
-            onClick={handleLogout}
-            className="text-md text-neutral-700"
-          >
-            로그아웃
-          </Link>
-          <Link
-            to="/"
-            onClick={handleDeleteAccount}
-            className="text-md text-neutral-500"
-          >
-            회원탈퇴
-          </Link>
+        <div className="flex flex-row">
+          <label className="font-semibold w-[200px]">소개</label>
+          <textarea
+            className="w-full h-[200px] border p-3"
+            type="text"
+            maxLength={100}
+            placeholder="100자 이내 작성"
+            onChange={handleIntroduction}
+          />
         </div>
+        <div className="flex flex-row">
+          <label className="font-semibold w-[200px]">휴대폰 번호</label>
+          <input className="w-full border p-3" placeholder="'-' 포함 하여 작성" type="text" onChange={null} />
+        </div>
+      </div>
+      <div className="flex flex-col items-center gap-14 my-10 text-2xl">
+        <Link
+          to="/"
+          onClick={handleLogout}
+          className="text-md text-neutral-700 hover:text-rose-500"
+        >
+          로그아웃
+        </Link>
+        <Link
+          to="/"
+          onClick={handleDeleteAccount}
+          className="text-md text-neutral-500 hover:text-rose-500"
+        >
+          회원탈퇴
+        </Link>
       </div>
     </div>
   );

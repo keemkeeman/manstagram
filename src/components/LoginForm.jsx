@@ -43,38 +43,42 @@ const LoginForm = ({ haveAccount }) => {
 
   return (
     <form
-      className="flex flex-col gap-10 w-full text-3xl"
+      className="flex flex-col gap-8 w-full text-3xl"
       onSubmit={haveAccount ? handleLogin : handleSubmit}
     >
       {/* 이메일 */}
-      <input
-        className="w-full border-b-2 border-black  rounded-md p-2"
-        name="email"
-        onChange={handleEmailInput}
-        value={email}
-        placeholder="이메일"
-        type="email"
-      />
-      {!isValidEmail && email.length > 1 && (
-        <span className="text-2xl text-rose-500">
-          올바른 이메일을 입력해주세요.
-        </span>
-      )}
+      <div className="flex flex-col gap-2">
+        <input
+          className="w-full border border-black rounded-md p-5"
+          name="email"
+          onChange={handleEmailInput}
+          value={email}
+          placeholder="이메일을 입력해주세요"
+          type="email"
+        />
+        {!isValidEmail && email.length > 1 && (
+          <span className="text-2xl text-rose-500">
+            올바른 이메일을 입력해주세요.
+          </span>
+        )}
+      </div>
 
       {/* 패스워드 */}
-      <input
-        className="w-full border-b-2 border-black p-2"
-        name="password"
-        onChange={handlePwInput}
-        value={pw}
-        placeholder="비밀번호"
-        type="password"
-      />
-      {!isValidPw && pw.length > 1 && (
-        <span className="text-2xl text-rose-500">
-          영문, 숫자 조합 8자리 이상 입력해주세요.
-        </span>
-      )}
+      <div className="flex flex-col gap-2">
+        <input
+          className="w-full border border-black p-5"
+          name="password"
+          onChange={handlePwInput}
+          value={pw}
+          placeholder="비밀번호"
+          type="password"
+        />
+        {!isValidPw && pw.length > 1 && (
+          <span className="text-2xl text-rose-500">
+            영문, 숫자 조합 8자리 이상 입력해주세요.
+          </span>
+        )}
+      </div>
 
       {/* 제출 버튼 */}
       <input

@@ -33,7 +33,7 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-5">
           <div className="flex flex-col relative">
-            <div className="flex flex-row p-3 gap-2 shadow-md items-center w-[400px] lg:w-[800px] rounded-md bg-neutral-200">
+            <div className="flex flex-row p-3 gap-2 shadow-md items-center w-[500px] xl:w-[800px] rounded-md bg-neutral-200">
               <BiSearch className="mx-3" size={40} />
               <input
                 className="bg-transparent text-xl flex-1"
