@@ -20,40 +20,42 @@ const Header = () => {
   }, [searchInput]);
 
   return (
-    <div className="bg-neutral-50 w-full shadow-sm top-0 fixed border-b-[1px] h-[8vh] flex items-center z-10">
-      <div className="flex-1">
-        <BsInstagram
-          className="m-10 cursor-pointer"
-          onClick={() => {
-            navigate("/");
-          }}
-          size={30}
-        />
-      </div>
-      <div className="flex items-center mr-5">
-        <div className="flex flex-col relative">
-          <div className="flex flex-row p-2 mr-3 shadow-md items-center w-[300px] lg:w-[700px] rounded-md bg-neutral-200">
-            <BiSearch className="mx-3" size={24} />
-            <input
-              className="bg-transparent text-md flex-1"
-              onChange={(e) => {
-                setSearchInput(e.target.value);
-              }}
-              value={searchInput}
-              name="search"
-              type="text"
-              placeholder="검색"
-            />
-          </div>
-          {searchResult.length > 0 && (
-            <SearchResult
-              searchResult={searchResult}
-              setSearchResult={setSearchResult}
-              setSearchInput={setSearchInput}
-            />
-          )}
+    <div className="bg-neutral-50 w-full shadow-sm top-0 fixed border-b-[1px] z-10">
+      <div className="flex flex-row mx-auto px-10 py-5 items-center justify-between max-w-[2000px]">
+        <div className="flex-1">
+          <BsInstagram
+            className="cursor-pointer"
+            onClick={() => {
+              navigate("/");
+            }}
+            size={40}
+          />
         </div>
-        <AiOutlineHeart className="m-3 cursor-pointer" size={30} />
+        <div className="flex items-center gap-5">
+          <div className="flex flex-col relative">
+            <div className="flex flex-row p-3 gap-2 shadow-md items-center w-[350px] lg:w-[700px] rounded-md bg-neutral-200">
+              <BiSearch className="mx-3" size={30} />
+              <input
+                className="bg-transparent text-lg flex-1"
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                }}
+                value={searchInput}
+                name="search"
+                type="text"
+                placeholder="검색"
+              />
+            </div>
+            {searchResult.length > 0 && (
+              <SearchResult
+                searchResult={searchResult}
+                setSearchResult={setSearchResult}
+                setSearchInput={setSearchInput}
+              />
+            )}
+          </div>
+          <AiOutlineHeart className="cursor-pointer" size={40} />
+        </div>
       </div>
     </div>
   );

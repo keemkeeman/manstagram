@@ -19,7 +19,7 @@ const ProfileEdit = ({
   /* 이미지 불러오기 */
   const handleFile = (e) => {
     const file = e.target.files[0];
-    if (!file || !file.type.startsWith("image/")) {
+    if (!file) {
       window.alert("올바른 이미지 파일을 선택해주세요!");
       return;
     } else {
@@ -66,6 +66,7 @@ const ProfileEdit = ({
       profilePicUrl: profilePicUrl,
     }));
     setIsEditOpen(false);
+    window.location.reload();
   };
 
   /* 유저 삭제 */
@@ -73,29 +74,6 @@ const ProfileEdit = ({
     deleteAccount();
     navigate("/");
   };
-  /* <div className="flex flex-col items-center gap-3 my-5">
-        <img alt="feedImg" src={newFileUrl} className="h-full w-full" />
-        <input
-          name="image"
-          type="file"
-          accept="image/*"
-          onChange={handleFile}
-        />
-        <textarea
-          className="w-full h-full"
-          name="feedText"
-          type="text"
-          maxLength={100}
-          value={newText}
-          onChange={handleNewText}
-        />
-        <button
-          onClick={handleDelete}
-          className="border-2 border-neutral-300 text-sm text-neutral-500 my-5"
-        >
-          삭제하기
-        </button>
-      </div> */
 
   return (
     <div className="absolute w-[500px] flex flex-col px-5 rounded-md shadow-lg items-center top-10 py-5 z-10 bg-neutral-100">

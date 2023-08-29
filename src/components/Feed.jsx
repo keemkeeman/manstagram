@@ -10,7 +10,7 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
 
   return (
     <div className="flex relative flex-col justify-center w-full lg:w-[670px]">
-      <div className="bg-neutral-50 mb-10 pb-5 rounded-md shadow-lg z-0">
+      <div className="border mb-10 pb-10 rounded-sm shadow-lg z-0">
         <FeedTop
           feed={feed}
           validUser={validUser}
