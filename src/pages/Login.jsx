@@ -20,22 +20,22 @@ const Login = () => {
   };
 
   return (
-    <div className="absolute m-[100px] p-[50px] rounded-lg bg-neutral-50 shadow-lg">
-      <div className="flex flex-col items-center h-full">
-        <h1 className="font-bold text-3xl m-10">Manstagram</h1>
+    <div className="w-[70%]">
+      <div className="flex flex-col gap-10 items-center h-full py-48 px-10">
+        <h1 className="font-bold text-6xl m-10">Manstagram</h1>
         <LoginForm haveAccount={haveAccount} />
-        <div className="flex justify-center items-center">
-          <hr className="my-5 w-[250px]" />
-          <span className="absolute bg-neutral-50 px-3 text-neutral-400 text-md">
+        <div className="flex w-full justify-center items-center">
+          <hr className="my-5 w-full border-2" />
+          <span className="absolute bg-white px-3 text-neutral-400 text-3xl">
             또는
           </span>
         </div>
-        <div className="text-2xl cursor-pointer">
+        <div className="text-5xl cursor-pointer">
           <i onClick={googleLogin} className="fa-brands fa-google"></i>
         </div>
       </div>
       {haveAccount ? (
-        <div className="flex justify-center mt-10 text-md gap-2">
+        <div className="flex justify-center gap-3 text-3xl">
           <p>계정이 없으신가요?</p>
           <p
             onClick={handleLoginPage}
@@ -45,7 +45,7 @@ const Login = () => {
           </p>
         </div>
       ) : (
-        <div className="flex justify-center mt-10 text-md gap-2">
+        <div className="flex justify-center text-3xl gap-3">
           <p>이미 계정이 있으신가요?</p>
           <p
             onClick={handleLoginPage}

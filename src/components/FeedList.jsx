@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Feed from "./Feed";
 import { getFeeds } from "../fireUtil";
 import Loading from "./Loading";

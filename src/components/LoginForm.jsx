@@ -43,12 +43,12 @@ const LoginForm = ({ haveAccount }) => {
 
   return (
     <form
-      className="flex flex-col my-5 gap-3 w-full"
+      className="flex flex-col gap-10 w-full text-3xl"
       onSubmit={haveAccount ? handleLogin : handleSubmit}
     >
       {/* 이메일 */}
       <input
-        className="w-full shadow-md rounded-md p-2"
+        className="w-full border-b-2 border-black  rounded-md p-2"
         name="email"
         onChange={handleEmailInput}
         value={email}
@@ -56,14 +56,14 @@ const LoginForm = ({ haveAccount }) => {
         type="email"
       />
       {!isValidEmail && email.length > 1 && (
-        <span className="text-xs text-rose-500">
+        <span className="text-2xl text-rose-500">
           올바른 이메일을 입력해주세요.
         </span>
       )}
 
       {/* 패스워드 */}
       <input
-        className="w-full shadow-md rounded-md p-2"
+        className="w-full border-b-2 border-black p-2"
         name="password"
         onChange={handlePwInput}
         value={pw}
@@ -71,14 +71,14 @@ const LoginForm = ({ haveAccount }) => {
         type="password"
       />
       {!isValidPw && pw.length > 1 && (
-        <span className="text-xs text-rose-500">
+        <span className="text-2xl text-rose-500">
           영문, 숫자 조합 8자리 이상 입력해주세요.
         </span>
       )}
 
       {/* 제출 버튼 */}
       <input
-        className={`cursor-pointer rounded-lg text-md shadow-md font-bold text-white py-2 ${
+        className={`cursor-pointer rounded-lg shadow-md font-bold text-white py-5 ${
           haveAccount ? "bg-blue-500" : "bg-green-500"
         }`}
         type="submit"
