@@ -9,18 +9,20 @@ const Feed = ({ nowUser, validUser, feedList, setFeedList, feed }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <div className="flex relative flex-col justify-center w-full lg:w-[670px]">
+    <div className="flex relative flex-col justify-center w-[540px] lg:w-[1050px]">
       <div className="border mb-10 pb-10 rounded-sm shadow-lg z-0">
         <FeedTop
           feed={feed}
           validUser={validUser}
           setIsEditOpen={setIsEditOpen}
         />
-        <img
-          className="max-h-[1000px] w-full lg:w-[670px] object-fit:cover shadow-sm"
-          src={feed.imgUrl}
-          alt="feedImg"
-        />
+        <div className="max-w-[1080px] max-h-[1080px] overflow-hidden">
+          <img
+            className="h-full w-full shadow-sm"
+            src={feed.imgUrl}
+            alt="feedImg"
+          />
+        </div>
         <FeedActions feed={feed} nowUser={nowUser} />
         <FeedDescription feed={feed} />
         <FeedComments feed={feed} nowUser={nowUser} />

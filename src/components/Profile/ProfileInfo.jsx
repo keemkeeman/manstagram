@@ -10,10 +10,10 @@ const ProfileInfo = ({
   const n = 10;
 
   return (
-    <div className="flex shadow-md flex-row px-10 py-20">
-      <div className="m-3 w-[150px] h-[150px] overflow-hidden shadow-sm rounded-full relative">
+    <div className="flex border flex-row p-10 gap-10 w-full">
+      <div className="w-[220px] h-[220px] overflow-hidden shadow-lg rounded-full">
         <img
-          className="w-[150px] h-[150px] m-0 p-0 absolute"
+          className="w-full h-full"
           src={
             profileUser.profilePicUrl !== ""
               ? profileUser.profilePicUrl
@@ -22,21 +22,21 @@ const ProfileInfo = ({
           alt="profilePic"
         />
       </div>
-      <div className="mx-10 mt-1 flex flex-col gap-5">
-        <div className="flex items-center gap-2">
-          <div className="font-semibold text-2xl">{profileUser.nickName}</div>
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-row items-center gap-3">
+          <div className="font-semibold text-3xl">{profileUser.nickName}</div>
           {profileUser.id === nowUser.id && (
             <div
               onClick={() => {
                 setIsEditOpen((prev) => !prev);
               }}
-              className="text-xl cursor-pointer"
+              className="text-2xl cursor-pointer"
             >
               <i className="fa-solid fa-gear"></i>
             </div>
           )}
         </div>
-        <div className="flex gap-3 text-md">
+        <div className="flex gap-3 text-lg">
           <div className="flex gap-1">
             <span>게시물</span>
             <span className="font-semibold">{profileFeedList.length}</span>
@@ -50,7 +50,7 @@ const ProfileInfo = ({
             <span className="font-semibold">{n}</span>
           </div>
         </div>
-        <div className="text-md">{profileUser.introduction}</div>
+        <div className="text-lg">{profileUser.introduction}</div>
       </div>
     </div>
   );

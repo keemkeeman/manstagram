@@ -4,12 +4,15 @@ import ProfileEdit from "../components/Profile/ProfileEdit";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProfileUser } from "../fireUtil";
+import BackDrop from "../layouts/BackDrop";
+import ReactDom from "react-dom";
 
 const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   const { userId } = useParams();
   const [profileUser, setProfileUser] = useState({});
   const [profileFeedList, setProfileFeedList] = useState([]);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const portalElement = document.getElementById("layout");
 
   const handleOpenEdit = () => {
     setIsEditOpen((prev) => !prev);
@@ -24,7 +27,7 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   }, [nowUser.id, profileUser.id, userId]);
 
   return (
-    <div className="flex w-[670px] my-3 pb-[10vh] flex-col relative top-[10vh]">
+    <div className="flex w-full lg:w-[1050px] my-16 px-10 flex-col relative">
       <ProfileInfo
         profileUser={profileUser}
         nowUser={nowUser}
@@ -35,19 +38,21 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
       />
       <ProfileFeedList profileFeedList={profileFeedList} />
       {isEditOpen && (
-        <div className="flex justify-center">
-          <div
-            id="modal-bg"
-            className={`absolute top-0 w-full h-full bg-black opacity-50 inset-0 rounded-lg`}
-          ></div>
-          <ProfileEdit
-            setIsLoggedIn={setIsLoggedIn}
-            nowUser={nowUser}
-            setNowUser={setNowUser}
-            setIsEditOpen={setIsEditOpen}
-            handleOpenEdit={handleOpenEdit}
-          />
-        </div>
+        <>
+          {ReactDom.createPortal(
+            <div className="flex justify-center">
+              <BackDrop toggle={setIsEditOpen} />
+              <ProfileEdit
+                setIsLoggedIn={setIsLoggedIn}
+                nowUser={nowUser}
+                setNowUser={setNowUser}
+                setIsEditOpen={setIsEditOpen}
+                handleOpenEdit={handleOpenEdit}
+              />
+            </div>,
+            portalElement
+          )}
+        </>
       )}
     </div>
   );

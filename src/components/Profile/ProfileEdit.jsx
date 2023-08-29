@@ -76,64 +76,66 @@ const ProfileEdit = ({
   };
 
   return (
-    <div className="absolute w-[500px] flex flex-col px-5 rounded-md shadow-lg items-center top-10 py-5 z-10 bg-neutral-100">
-      <div className="flex text-lg justify-between w-full border-b-2 pb-3">
-        <button className="hover:font-bold" onClick={handleOpenEdit}>
-          취소
-        </button>
-        <h3 className="font-bold">프로필 편집</h3>
-        <button
-          className="hover:font-bold text-blue-700"
-          onClick={handleEditProfile}
-        >
-          완료
-        </button>
-      </div>
-      <div className="flex flex-col gap-3 my-5 text-md">
-        <div className="flex gap-3">
-          <label className="font-semibold w-[100px]">닉네임</label>
-          <input
-            className="w-[300px]"
-            type="text"
-            maxLength={10}
-            placeholder="10자 이내 작성"
-            onChange={handleNic}
-          />
+    <div className="absolute rounded-md shadow-lg top-10 z-50 bg-neutral-50">
+      <div className="flex flex-col p-10 items-center">
+        <div className="flex text-lg justify-between items-end w-full border-b-2 pb-5">
+          <button className="hover:font-bold" onClick={handleOpenEdit}>
+            취소
+          </button>
+          <h3 className="font-bold text-2xl">프로필 편집</h3>
+          <button
+            className="hover:font-bold text-blue-700"
+            onClick={handleEditProfile}
+          >
+            완료
+          </button>
         </div>
-        <div className="flex gap-3">
-          <label className="font-semibold w-[100px]">프로필 사진</label>
-          <input type="file" onChange={handleFile} />
+        <div className="flex flex-col gap-10 py-5 text-lg">
+          <div className="flex gap-3">
+            <label className="font-semibold w-[100px]">닉네임</label>
+            <input
+              className="w-[320px]"
+              type="text"
+              maxLength={10}
+              placeholder="10자 이내 작성"
+              onChange={handleNic}
+            />
+          </div>
+          <div className="flex gap-3">
+            <label className="font-semibold w-[100px]">프로필 사진</label>
+            <input type="file" onChange={handleFile} />
+          </div>
+          <div className="flex gap-3">
+            <label className="font-semibold w-[100px]">소개</label>
+            <textarea
+              className="w-[320px]"
+              type="text"
+              maxLength={100}
+              placeholder="100자 이내 작성"
+              onChange={handleIntroduction}
+            />
+          </div>
+          <div className="flex gap-3">
+            <label className="font-semibold w-[100px]">휴대폰 번호</label>
+            <input className="w-[320px]" type="text" onChange={null} />
+          </div>
         </div>
-        <div className="flex gap-3">
-          <label className="font-semibold w-[100px]">소개</label>
-          <textarea
-            className="w-[300px]"
-            type="text"
-            maxLength={100}
-            placeholder="100자 이내 작성"
-            onChange={handleIntroduction}
-          />
+        <div className="flex flex-col gap-10 my-10">
+          <Link
+            to="/"
+            onClick={handleLogout}
+            className="text-md text-neutral-700"
+          >
+            로그아웃
+          </Link>
+          <Link
+            to="/"
+            onClick={handleDeleteAccount}
+            className="text-md text-neutral-500"
+          >
+            회원탈퇴
+          </Link>
         </div>
-        <div className="flex gap-3">
-          <label className="font-semibold w-[100px]">휴대폰 번호</label>
-          <input className="w-[300px]" type="text" onChange={null} />
-        </div>
-      </div>
-      <div className="flex flex-col gap-5 my-5">
-        <Link
-          to="/"
-          onClick={handleLogout}
-          className="text-md text-neutral-500"
-        >
-          로그아웃
-        </Link>
-        <Link
-          to="/"
-          onClick={handleDeleteAccount}
-          className="text-md text-neutral-500"
-        >
-          회원탈퇴
-        </Link>
       </div>
     </div>
   );
