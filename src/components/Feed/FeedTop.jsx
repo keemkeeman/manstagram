@@ -19,27 +19,27 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   }, [feed]);
 
   return (
-    <div className="flex py-2 items-center shadow-sm mx-5 gap-2">
+    <div className="flex py-2 items-center shadow-sm mx-5 gap-3">
       <Link
         to={`/profile/${feed.creatorId}`}
-        className="w-12 h-12 overflow-hidden shadow-sm rounded-full relative"
+        className="w-16 h-16 overflow-hidden shadow-md rounded-full relative"
       >
         <img
-          className="w-12 h-12 m-0 p-0 absolute"
+          className="w-full h-full absolute"
           src={profilePicUrl ? profilePicUrl : defaultImage}
           alt="profilePic"
         />
       </Link>
-      <div className="flex flex-1 items-center gap-2">
-        <Link to={`/profile/${feed.creatorId}`} className="text-lg font-bold">
+      <div className="flex flex-1 items-center gap-2 text-2xl">
+        <Link to={`/profile/${feed.creatorId}`} className="font-bold">
           {feed.nickName}
         </Link>
-        <span className="text-md">•</span>
-        <span className="text-md">2시간</span>
+        <span className="text-xl">•</span>
+        <span className="text-xl">2시간</span>
         {/* 현재 시간에서 작성일자 빼기  */}
       </div>
       {validUser ? (
-        <div className="text-2xl cursor-pointer" onClick={handleEditOpen}>
+        <div className="text-3xl cursor-pointer" onClick={handleEditOpen}>
           <i className="fa-solid fa-ellipsis"></i>
         </div>
       ) : null}

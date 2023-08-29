@@ -28,15 +28,15 @@ const Header = () => {
             onClick={() => {
               navigate("/");
             }}
-            size={40}
+            size={50}
           />
         </div>
         <div className="flex items-center gap-5">
           <div className="flex flex-col relative">
             <div className="flex flex-row p-3 gap-2 shadow-md items-center w-[350px] lg:w-[700px] rounded-md bg-neutral-200">
-              <BiSearch className="mx-3" size={30} />
+              <BiSearch className="mx-3" size={40} />
               <input
-                className="bg-transparent text-lg flex-1"
+                className="bg-transparent text-xl flex-1"
                 onChange={(e) => {
                   setSearchInput(e.target.value);
                 }}
@@ -54,7 +54,7 @@ const Header = () => {
               />
             )}
           </div>
-          <AiOutlineHeart className="cursor-pointer" size={40} />
+          <AiOutlineHeart className="cursor-pointer" size={50} />
         </div>
       </div>
     </div>

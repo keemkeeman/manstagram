@@ -7,13 +7,13 @@ const Footer = ({ nowUser }) => {
     <div className="bg-neutral-50 w-full shadow-md bottom-0 fixed border-t z-10">
       <div className="flex flex-row mx-auto px-10 py-5 items-center justify-around max-w-[2000px]">
         <Link className="text-3xl" to="/">
-          <AiFillHome size={50} />
+          <AiFillHome size={60} />
         </Link>
         <Link to="/upload" className="text-3xl cursor-pointer">
-          <AiFillPlusCircle size={50} />
+          <AiFillPlusCircle size={60} />
         </Link>
         <Link className="text-3xl" to={`/profile/${nowUser.id}`}>
-          <IoPerson size={50} />
+          <IoPerson size={60} />
         </Link>
       </div>
     </div>

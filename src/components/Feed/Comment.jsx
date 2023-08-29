@@ -131,9 +131,9 @@ const Comment = ({
 
       {/* 대댓글 작성란 */}
       {replyInit && (
-        <div className="flex ml-5 gap-3">
-          <input
-            className="flex-1"
+        <div className="flex ml-5 gap-3 mt-3">
+          ㄴ<input
+            className="flex-1 border-2"
             value={replyCommentText}
             onChange={handleComment}
             placeholder="댓글을 작성해주세요."
@@ -155,7 +155,7 @@ const Comment = ({
 
       {/* 대댓글 리스트 */}
       {replies.length > 0 && (
-        <div className="mt-2 ml-5 relative">
+        <div className="flex flex-col mt-3 gap-3 ml-7 relative">
           {replySwitch.map((reply) => (
             <ReplyComment
               key={reply.id}

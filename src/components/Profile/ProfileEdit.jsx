@@ -16,10 +16,10 @@ const ProfileEdit = ({
   const [introduction, setIntroduction] = useState(nowUser.introduction);
   const navigate = useNavigate();
 
-  /* 이미지 불러오기 */
+  /* 이미지 url 생성 */
   const handleFile = (e) => {
     const file = e.target.files[0];
-    if (!file) {
+    if (!file || !file.type.startsWith("image/")) {
       window.alert("올바른 이미지 파일을 선택해주세요!");
       return;
     } else {
@@ -59,12 +59,6 @@ const ProfileEdit = ({
       profilePicUrl,
       introduction
     );
-    setNowUser((prev) => ({
-      ...prev,
-      nickName: nic,
-      introduction: introduction,
-      profilePicUrl: profilePicUrl,
-    }));
     setIsEditOpen(false);
     window.location.reload();
   };

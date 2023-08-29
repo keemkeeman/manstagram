@@ -46,7 +46,7 @@ const ReplyComment = ({
   return (
     <>
       <div className="flex">
-        <div className="flex-1 mb-2 mr-3">
+        <div className="flex-1 mr-3">
           {/* 닉네임 */}
           <Link to={`/profile/${reply.creatorId}`} className="font-bold">
             {reply.nickName}
@@ -55,14 +55,14 @@ const ReplyComment = ({
           {/* 텍스트 수정 */}
           {isEditOpen ? (
             <input
-              className="ml-2 w-[350px]"
+              className="ml-2 bg-red-400 border"
               value={editedReplyText}
               onChange={(e) => {
                 setEditedReplyText(e.target.value);
               }}
             />
           ) : (
-            <span className="text-lg ml-2">{reply.commentText}</span>
+            <span className="text-xl ml-3">{reply.commentText}</span>
           )}
         </div>
 
@@ -105,9 +105,9 @@ const ReplyComment = ({
 
       {/* 대댓글 작성란 */}
       {rereplyInit && (
-        <div className="flex gap-3 ml-5">
-          <input
-            className="flex-1"
+        <div className="flex gap-3 ml-5 text-xl">
+          ㄴ<input
+            className="flex-1 border-2"
             value={rereplyText}
             onChange={(e) => {
               setRereplyText(e.target.value);

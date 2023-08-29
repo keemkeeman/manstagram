@@ -26,15 +26,15 @@ const FeedCommentInput = ({
   };
 
   return (
-    <div className="mt-5 flex">
+    <div className="mt-5 flex text-xl">
       <input
         id="commentInput"
         value={commentText}
-        className="flex-1 outline-none bg-transparent text-lg text-neutral-500"
+        className="flex-1 outline-none bg-transparent text-neutral-500"
         placeholder="댓글 달기..."
         onChange={handleComment}
       />
-      <div onClick={handleSubmit} className="text-xl cursor-pointer">
+      <div onClick={handleSubmit} className="text-3xl cursor-pointer">
         <i className="fa-solid fa-circle-arrow-up"></i>
       </div>
     </div>
