@@ -27,7 +27,7 @@ const FeedCommentInput = ({
   };
 
   return (
-    <div className="mt-5 flex text-xl">
+    <div className="mt-5 flex text-3xl">
       <input
         ref={inputRef}
         value={commentText}

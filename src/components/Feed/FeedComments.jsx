@@ -51,7 +51,7 @@ const FeedComments = ({ feed, nowUser, inputRef }) => {
   ));
 
   return (
-    <div className="flex flex-col px-10 text-2xl">
+    <div className="flex flex-col px-10 text-3xl">
       {wannaShowAll}
       {commentList}
       <FeedCommentInput

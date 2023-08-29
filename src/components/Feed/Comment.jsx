@@ -80,7 +80,7 @@ const Comment = ({
   };
 
   return (
-    <div className="mt-5 flex flex-col relative">
+    <div className="mt-5 flex flex-col relative text-3xl">
       <div className="flex">
         {/* 닉네임, 댓글 텍스트 */}
         <div className="flex-1 pr-3">

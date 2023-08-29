@@ -45,7 +45,7 @@ const ReplyComment = ({
 
   return (
     <>
-      <div className="flex">
+      <div className="flex text-3xl">
         <div className="flex-1 mr-3">
           {/* 닉네임 */}
           <Link to={`/profile/${reply.creatorId}`} className="font-bold">
@@ -62,7 +62,7 @@ const ReplyComment = ({
               }}
             />
           ) : (
-            <span className="text-2xl pl-3">{reply.commentText}</span>
+            <span className="pl-3">{reply.commentText}</span>
           )}
         </div>
 
@@ -105,7 +105,7 @@ const ReplyComment = ({
 
       {/* 대댓글 작성란 */}
       {rereplyInit && (
-        <div className="flex gap-3 ml-5 text-xl">
+        <div className="flex gap-3 ml-5">
           ㄴ<input
             className="flex-1 border-2"
             value={rereplyText}
