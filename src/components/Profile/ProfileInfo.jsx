@@ -1,12 +1,11 @@
+import defaultImage from "../../images/defaultImage.jpg";
+
 const ProfileInfo = ({
   nowUser,
   profileUser,
   profileFeedList,
   setIsEditOpen,
 }) => {
-  const defaultImgUrl =
-    "https://firebasestorage.googleapis.com/v0/b/manstagram-77636.appspot.com/o/38bEHAI7i494M9oxAHWG%2Fhuman-icon-png-2.jpg?alt=media&token=f85ab951-df2e-4144-8256-f72028c7cf32";
-
   const n = 10;
 
   return (
@@ -15,9 +14,7 @@ const ProfileInfo = ({
         <img
           className="w-full h-full"
           src={
-            profileUser.profilePicUrl !== ""
-              ? profileUser.profilePicUrl
-              : defaultImgUrl
+            profileUser.profilePicUrl ? profileUser.profilePicUrl : defaultImage
           }
           alt="profilePic"
         />

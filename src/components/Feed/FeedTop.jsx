@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getProfilePic } from "../../fireUtil";
 import { useState } from "react";
+import defaultImage from "../../images/defaultImage.jpg";
 
 const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   const [profilePicUrl, setProfilePicUrl] = useState("");
@@ -25,7 +26,7 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
       >
         <img
           className="w-12 h-12 m-0 p-0 absolute"
-          src={profilePicUrl}
+          src={profilePicUrl ? profilePicUrl : defaultImage}
           alt="profilePic"
         />
       </Link>

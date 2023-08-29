@@ -3,6 +3,7 @@ import AppRoutes from "./components/AppRoutes";
 import { auth } from "./firebase";
 import { getUser } from "./fireUtil";
 import "./index.css"; // 임포트 꼭 하자!
+import Loading from "./components/Loading";
 
 function App() {
   const [init, setInit] = useState(false);
@@ -25,8 +26,6 @@ function App() {
     });
   }, []);
 
-  console.log("app rander");
-
   return (
     <>
       {init ? (
@@ -39,7 +38,7 @@ function App() {
           setFeedList={setFeedList}
         />
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
     </>
   );

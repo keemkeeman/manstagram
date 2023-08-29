@@ -25,6 +25,7 @@ import {
   uploadString,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+import defaultImage from "./images/defaultImage.jpg";
 
 /* 피드 CRUD */
 
@@ -428,7 +429,7 @@ export const createUser = async (email, pw) => {
       email: email,
       nickName: "임시 닉네임",
       phoneNumber: "",
-      profilePicUrl: "",
+      profilePicUrl: defaultImage,
       introduction: "",
     });
   } catch (err) {
@@ -462,31 +463,11 @@ export const getUser = async (setNowUser) => {
         where("email", "==", auth.currentUser.email)
       )
     );
-    if (userSnap.empty) {
-      const docRef = await addDoc(collection(db, "users"), {
-        createdAt: Timestamp.now(),
-        email: auth.currentUser.email,
-        nickName: "임시 닉네임",
-        phoneNumber: "",
-        profilePicUrl: "",
-        introduction: "",
-      });
-      setNowUser({
-        id: docRef.id,
-        createdAt: Timestamp.now(),
-        email: auth.currentUser.email,
-        nickName: "임시 닉네임",
-        phoneNumber: "",
-        profilePicUrl: "",
-        introduction: "",
-      });
-    } else {
-      const users = userSnap.docs.map((user) => ({
-        id: user.id,
-        ...user.data(),
-      }));
-      setNowUser(users[0]);
-    }
+    const users = userSnap.docs.map((user) => ({
+      id: user.id,
+      ...user.data(),
+    }));
+    setNowUser(users[0]);
   } catch (err) {
     console.error(`User Get error: ${err.error}`);
   }
