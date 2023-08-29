@@ -3,7 +3,7 @@ import FeedCommentInput from "./FeedCommentInput";
 import { useEffect, useState } from "react";
 import { getComments, getCommentCount } from "../../fireUtil";
 
-const FeedComments = ({ feed, nowUser }) => {
+const FeedComments = ({ feed, nowUser, inputRef }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [openAllComments, setOpenAllComments] = useState(false);
@@ -62,6 +62,7 @@ const FeedComments = ({ feed, nowUser }) => {
         commentText={commentText}
         setCommentText={setCommentText}
         setCommentCounts={setCommentCounts}
+        inputRef={inputRef}
       />
     </div>
   );

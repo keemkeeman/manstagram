@@ -19,7 +19,7 @@ const FeedTop = ({ feed, validUser, setIsEditOpen }) => {
   }, [feed]);
 
   return (
-    <div className="flex py-2 items-center shadow-sm mx-5 gap-3">
+    <div className="flex py-4 items-center shadow-sm mx-8 gap-3">
       <Link
         to={`/profile/${feed.creatorId}`}
         className="w-16 h-16 overflow-hidden shadow-md rounded-full relative"

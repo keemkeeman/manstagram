@@ -8,6 +8,7 @@ const FeedCommentInput = ({
   commentText,
   setCommentText,
   setCommentCounts,
+  inputRef,
 }) => {
   const handleComment = (e) => {
     setCommentText(e.target.value);
@@ -28,9 +29,9 @@ const FeedCommentInput = ({
   return (
     <div className="mt-5 flex text-xl">
       <input
-        id="commentInput"
+        ref={inputRef}
         value={commentText}
-        className="flex-1 outline-none bg-transparent text-neutral-500"
+        className="flex-1 outline-none bg-transparent text-neutral-500 border-b"
         placeholder="댓글 달기..."
         onChange={handleComment}
       />

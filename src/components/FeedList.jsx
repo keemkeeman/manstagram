@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Feed from "./Feed";
 import { getFeeds } from "../fireUtil";
+import Loading from "./Loading";
 
 const FeedList = ({ feedList, setFeedList, nowUser }) => {
   /* 피드 읽기 */
@@ -15,7 +16,7 @@ const FeedList = ({ feedList, setFeedList, nowUser }) => {
   /* 리스트 뿌려주기 */
   let list;
   if (!feedList || feedList.length === 0) {
-    list = <div>What's going on?</div>;
+    list = <Loading />;
   } else {
     list = feedList.map((feed) => (
       <Feed
@@ -30,7 +31,10 @@ const FeedList = ({ feedList, setFeedList, nowUser }) => {
   }
 
   return (
-    <div className="w-full lg:w-[1050px] relative flex flex-col justify-center items-center py-16">
+    <div
+      id="feedList"
+      className="w-full lg:w-[1050px] relative flex flex-col justify-center items-center py-16"
+    >
       {list}
     </div>
   );

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { likeFeed, isLikedUser, countLikes } from "../../fireUtil";
 
-const FeedActions = ({ feed, nowUser }) => {
+const FeedActions = ({ feed, nowUser, inputRef }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isMarked, setIsMarked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
@@ -34,10 +34,16 @@ const FeedActions = ({ feed, nowUser }) => {
               <i className="fa-regular fa-heart"></i>
             )}
           </div>
-          <div id="comment" className="cursor-pointer" onClick={() => {}}>
+          <div
+            id="comment"
+            className="cursor-pointer"
+            onClick={() => {
+              inputRef.current.focus();
+            }}
+          >
             <i className="fa-regular fa-comment"></i>
           </div>
-          <div id="share" className="cursor-pointer" onClick={() => {}}>
+          <div id="share" className="cursor-pointer" onClick={()=>{window.alert("지원하지 않는 기능입니다.")}}>
             <i className="fa-regular fa-paper-plane"></i>
           </div>
         </div>

@@ -93,7 +93,6 @@ export const getFeeds = async (nowUser) => {
 };
 
 /* 피드 프로필 사진 읽기 */
-
 export const getProfilePic = async (feed) => {
   try {
     const userSnap = await getDoc(doc(db, "users", `${feed.creatorId}`));
@@ -483,25 +482,35 @@ export const updateUser = async (
   introduction
 ) => {
   try {
-    const userRef = doc(db, "users", nowUser.id);
-    const updatedFields = {}; // 빈 객체를 만들어 변경할 프로퍼티를 수집합니다.
+    /* 이미지 처리 */
+    if (profilePicUrl) {
+      /* Storage 업데이트 */
+      /* 이전 사진 삭제하고*/
+      if (nowUser.profilePicUrl) {
+        await deleteObject(ref(storage, nowUser.profilePicUrl));
+      }
+      /* storage 추가 */
+      const fileRef = ref(storage, `${nowUser.id}/${uuidv4()}`);
+      const response = await uploadString(fileRef, profilePicUrl, "data_url");
+      const imgUrl = await getDownloadURL(response.ref);
+      /* firestore 추가 */
+      const userRef = doc(db, "users", nowUser.id);
+      const updatedFields = {}; // 빈 객체를 만들어 변경할 프로퍼티를 수집합니다.
 
-    // 값이 새로 들어온 경우에만 업데이트할 프로퍼티를 추가합니다.
-    // 닉네임은 해당 계정이 작성한 모든 피드를 가져와야해서
-    // getDocs로 다 가져오고 updateDoc으로 업데이트
-    if (nic) updatedFields.nickName = nic;
-    if (phoneNumber) updatedFields.phoneNumber = phoneNumber;
-    if (profilePicUrl) updatedFields.profilePicUrl = profilePicUrl;
-    if (introduction) updatedFields.introduction = introduction;
+      if (nic) updatedFields.nickName = nic;
+      if (phoneNumber) updatedFields.phoneNumber = phoneNumber;
+      if (imgUrl) updatedFields.profilePicUrl = imgUrl;
+      if (introduction) updatedFields.introduction = introduction;
 
-    await updateDoc(userRef, updatedFields);
+      await updateDoc(userRef, updatedFields);
 
-    setNowUser((prev) => ({
-      ...prev,
-      ...updatedFields, // 변경된 프로퍼티를 기존 데이터에 병합합니다.
-    }));
-  } catch (err) {
-    console.error(`User Update Error: ${err.error}`);
+      setNowUser((prev) => ({
+        ...prev,
+        ...updatedFields, // 변경된 프로퍼티를 기존 데이터에 병합합니다.
+      }));
+    }
+  } catch (error) {
+    console.error(`User Update Error:`, error);
   }
 };
 

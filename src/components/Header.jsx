@@ -20,7 +20,7 @@ const Header = () => {
   }, [searchInput]);
 
   return (
-    <div className="bg-neutral-50 w-full shadow-sm top-0 fixed border-b-[1px] z-10">
+    <div className="bg-white w-full shadow-sm top-0 fixed border-b-[1px] z-10">
       <div className="flex flex-row mx-auto px-10 py-5 items-center justify-between max-w-[2000px]">
         <div className="flex-1">
           <BsInstagram
@@ -33,7 +33,7 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-5">
           <div className="flex flex-col relative">
-            <div className="flex flex-row p-3 gap-2 shadow-md items-center w-[350px] lg:w-[700px] rounded-md bg-neutral-200">
+            <div className="flex flex-row p-3 gap-2 shadow-md items-center w-[400px] lg:w-[800px] rounded-md bg-neutral-200">
               <BiSearch className="mx-3" size={40} />
               <input
                 className="bg-transparent text-xl flex-1"

@@ -60,7 +60,6 @@ const ProfileEdit = ({
       introduction
     );
     setIsEditOpen(false);
-    window.location.reload();
   };
 
   /* 유저 삭제 */
@@ -97,7 +96,12 @@ const ProfileEdit = ({
           </div>
           <div className="flex gap-3">
             <label className="font-semibold w-[100px]">프로필 사진</label>
-            <input type="file" onChange={handleFile} />
+            <input
+              name="image"
+              type="file"
+              accept="image/*"
+              onChange={handleFile}
+            />
           </div>
           <div className="flex gap-3">
             <label className="font-semibold w-[100px]">소개</label>

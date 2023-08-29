@@ -55,13 +55,13 @@ const FeedForm = ({ nowUser, feedList, setFeedList }) => {
   };
 
   return (
-    <div className="flex w-full min-h-[calc(100vh - 160px)] flex-col items-center py-[80px] ">
-      <div className="text-2xl my-10">Share everything </div>
+    <div className="flex w-full flex-col gap-5 items-center py-24 text-xl">
+      <div className="text-3xl text-green-500 font-bold">SHOW ME WHAT YOU GOT?</div>
       <div className="relative flex flex-col items-center">
-        <img src={fileUrl} alt="uploadImg" className="w-[400px] shadow-md" />
+        <img src={fileUrl} alt="uploadImg" className="w-[480px] h-[400px]" />
 
         <textarea
-          className="w-full my-5 h-[100px] shadow-md p-3"
+          className="w-full my-5 h-[160px] shadow-md p-3"
           name="feedText"
           type="text"
           value={feedText}
