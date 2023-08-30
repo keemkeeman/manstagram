@@ -9,6 +9,7 @@ const ProfileEdit = ({
   setNowUser,
   setIsEditOpen,
   handleOpenEdit,
+  setLoading,
 }) => {
   const [nic, setNic] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -55,15 +56,26 @@ const ProfileEdit = ({
   /* 유저 수정 */
   const handleEditProfile = async (e) => {
     e.preventDefault();
-    await updateUser(
-      nowUser,
-      setNowUser,
-      nic,
-      phoneNumber,
-      profilePicUrl,
-      introduction
-    );
-    setIsEditOpen(false);
+    try {
+      setLoading(true);
+      const updatedData = await updateUser(
+        nowUser,
+        setNowUser,
+        nic,
+        phoneNumber,
+        profilePicUrl,
+        introduction
+      );
+      setNowUser((prev) => ({
+        ...prev,
+        ...updatedData, // 변경된 프로퍼티를 기존 데이터에 병합합니다.
+      }));
+    } catch (error) {
+      console.error("프로필 수정 에러", error);
+    } finally {
+      setLoading(false);
+      setIsEditOpen(false);
+    }
   };
 
   /* 유저 삭제 */
@@ -73,7 +85,7 @@ const ProfileEdit = ({
   };
 
   return (
-    <div className="fixed flex flex-col rounded-xl shadow-lg m-16 py-10 z-50 bg-white">
+    <div className="fixed flex flex-col w-[800px] rounded-xl shadow-lg m-16 py-10 z-50 bg-white">
       <div className="flex flex-row text-3xl items-end justify-between border-b-2 p-5">
         <button
           className="p-5 font-bold hover:text-rose-500"

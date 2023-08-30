@@ -7,6 +7,7 @@ const FeedEditForm = ({
   feedList,
   setFeedList,
   setIsEditOpen,
+  setLoading,
 }) => {
   const [newFileUrl, setNewFileUrl] = useState(imgSrc);
   const [newText, setNewText] = useState(feed.feedText);
@@ -38,11 +39,14 @@ const FeedEditForm = ({
 
   /* 피드 수정 */
   const handleEdit = async () => {
+    setLoading(true);
     try {
       await updateFeed(feed, newText, feedList, newFileUrl, setFeedList);
       setIsEditOpen(false);
     } catch (error) {
       console.error("피드 수정 에러", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,7 +57,7 @@ const FeedEditForm = ({
   };
 
   return (
-    <div className="fixed flex flex-col rounded-xl shadow-lg py-10 m-24 z-50 bg-white">
+    <div className="fixed flex flex-col w-[800px] rounded-xl shadow-lg py-10 m-24 z-50 bg-white">
       <div className="flex flex-row text-3xl justify-between border-b-2 p-5">
         <button
           onClick={handleEditClose}

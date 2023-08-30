@@ -4,9 +4,8 @@ const Loading = () => {
   return (
     <div
       className="
-      h-[70vh]
+      h-[50vh]
       flex 
-      flex-col 
       justify-center 
       items-center 
     "

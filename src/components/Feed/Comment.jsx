@@ -132,7 +132,8 @@ const Comment = ({
       {/* 대댓글 작성란 */}
       {replyInit && (
         <div className="flex ml-5 gap-3 mt-3">
-          ㄴ<input
+          ㄴ
+          <input
             className="flex-1 border-2"
             value={replyCommentText}
             onChange={handleComment}

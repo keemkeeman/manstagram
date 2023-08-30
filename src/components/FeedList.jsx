@@ -1,14 +1,23 @@
-import { useEffect } from "react";
-import Feed from "./Feed";
+import { useEffect, useState } from "react";
 import { getFeeds } from "../fireUtil";
+import Feed from "./Feed";
 import Loading from "./Loading";
 
 const FeedList = ({ feedList, setFeedList, nowUser }) => {
+  const [loading, setLoading] = useState(false);
+
   /* 피드 읽기 */
   useEffect(() => {
+    setLoading(true);
     const fetchFeedList = async () => {
-      const newFeeds = await getFeeds(nowUser);
-      setFeedList(newFeeds);
+      try {
+        const newFeeds = await getFeeds(nowUser);
+        setFeedList(newFeeds);
+      } catch (error) {
+        console.error("피드 가져오기 에러", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchFeedList();
   }, [nowUser, setFeedList]);
@@ -26,6 +35,8 @@ const FeedList = ({ feedList, setFeedList, nowUser }) => {
         feedList={feedList}
         setFeedList={setFeedList}
         feed={feed}
+        loading={loading}
+        setLoading={setLoading}
       />
     ));
   }
@@ -35,7 +46,7 @@ const FeedList = ({ feedList, setFeedList, nowUser }) => {
       id="feedList"
       className="w-full lg:w-[1050px] relative flex flex-col justify-center items-center py-16"
     >
-      {list}
+      {loading ? <Loading /> : list}
     </div>
   );
 };

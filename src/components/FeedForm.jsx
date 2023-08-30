@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFeed } from "../fireUtil";
 import { useNavigate } from "react-router-dom";
-import uploadImage from "../images/uploadImage.png";
+import uploadImage from "../images/cookie.jpg";
 
 const FeedForm = ({ nowUser, feedList, setFeedList }) => {
   const navigate = useNavigate();
@@ -56,11 +56,9 @@ const FeedForm = ({ nowUser, feedList, setFeedList }) => {
   return (
     <div className="w-full">
       <div className="flex w-full flex-col gap-5 items-center py-32 px-5 text-4xl">
-        <div className="text-5xl text-green-500 font-bold">
-          기록하고 공유하고
-        </div>
+        <div className="text-5xl text-amber-800 font-bold">내가 만든 쿠키</div>
         <div className="relative flex flex-col items-center">
-          <img src={fileUrl} alt="uploadImg" className="w-[70%]" />
+          <img src={fileUrl} alt="uploadImg" className="w-full" />
 
           <textarea
             className="w-full my-5 h-[200px] shadow-md p-3 border"

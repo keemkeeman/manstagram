@@ -506,10 +506,7 @@ export const updateUser = async (
 
     await updateDoc(userRef, updatedFields);
 
-    setNowUser((prev) => ({
-      ...prev,
-      ...updatedFields, // 변경된 프로퍼티를 기존 데이터에 병합합니다.
-    }));
+    return updatedFields;
   } catch (error) {
     console.error(`유저 수정 에러`, error);
   }

@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import { getProfileUser } from "../fireUtil";
 import BackDrop from "../layouts/BackDrop";
 import ReactDom from "react-dom";
+import Loading from "../components/Loading";
 
 const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
   const { userId } = useParams();
   const [profileUser, setProfileUser] = useState({});
   const [profileFeedList, setProfileFeedList] = useState([]);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const portalElement = document.getElementById("layout");
 
   const handleOpenEdit = () => {
@@ -20,37 +22,56 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
 
   /* 프로필 정보 가져오기 */
   useEffect(() => {
+    setLoading(true);
     const fetchProfileUser = async () => {
-      setProfileUser(await getProfileUser(userId, setProfileFeedList));
+      try {
+        const response = await getProfileUser(userId, setProfileFeedList);
+        setProfileUser(response);
+      } catch (error) {
+        console.error("프로필 정보 불러오기 오류", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchProfileUser();
   }, [nowUser, profileUser.id, userId]);
 
-  console.log(nowUser.profilePicUrl);
-
   return (
     <div className="flex w-full lg:w-[1050px] my-16 px-auto flex-col relative">
-      <ProfileInfo
-        profileUser={profileUser}
-        nowUser={nowUser}
-        setIsLoggedIn={setIsLoggedIn}
-        setNowUser={setNowUser}
-        profileFeedList={profileFeedList}
-        setIsEditOpen={setIsEditOpen}
-      />
-      <ProfileFeedList profileFeedList={profileFeedList} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <ProfileInfo
+            profileUser={profileUser}
+            nowUser={nowUser}
+            setIsLoggedIn={setIsLoggedIn}
+            setNowUser={setNowUser}
+            profileFeedList={profileFeedList}
+            setIsEditOpen={setIsEditOpen}
+          />
+          <ProfileFeedList profileFeedList={profileFeedList} />
+        </>
+      )}
       {isEditOpen && (
         <>
           {ReactDom.createPortal(
             <div className="flex justify-center">
-              <BackDrop toggle={setIsEditOpen} />
-              <ProfileEdit
-                setIsLoggedIn={setIsLoggedIn}
-                nowUser={nowUser}
-                setNowUser={setNowUser}
-                setIsEditOpen={setIsEditOpen}
-                handleOpenEdit={handleOpenEdit}
-              />
+              {loading ? (
+                <Loading />
+              ) : (
+                <>
+                  <BackDrop toggle={setIsEditOpen} />
+                  <ProfileEdit
+                    setIsLoggedIn={setIsLoggedIn}
+                    nowUser={nowUser}
+                    setNowUser={setNowUser}
+                    setIsEditOpen={setIsEditOpen}
+                    handleOpenEdit={handleOpenEdit}
+                    setLoading={setLoading}
+                  />
+                </>
+              )}
             </div>,
             portalElement
           )}

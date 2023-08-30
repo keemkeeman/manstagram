@@ -43,7 +43,7 @@ const FeedActions = ({ feed, nowUser, inputRef }) => {
           >
             <i className="fa-regular fa-comment"></i>
           </div>
-          <div id="share" className="cursor-pointer" onClick={()=>{window.alert("지원하지 않는 기능입니다.")}}>
+          <div id="share" className="cursor-pointer" onClick={()=>{window.alert("준비 중입니다😋")}}>
             <i className="fa-regular fa-paper-plane"></i>
           </div>
         </div>

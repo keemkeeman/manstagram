@@ -54,7 +54,7 @@ const Header = () => {
               />
             )}
           </div>
-          <AiOutlineHeart onClick={()=>{window.alert("지원하지 않는 기능입니다.")}} className="cursor-pointer" size={60} />
+          <AiOutlineHeart onClick={()=>{window.alert("준비 중입니다😋")}} className="cursor-pointer" size={60} />
         </div>
       </div>
     </div>
