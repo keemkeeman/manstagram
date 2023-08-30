@@ -20,7 +20,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col w-[70%]">
+    <div className="flex flex-col lg:w-[1050px] w-[80%]">
       <div className="flex flex-col gap-12 items-center h-full py-48 px-10">
         <div className="flex flex-col gap-5 font-bold text-6xl w-full text-left">
           <p>안녕하세요!</p>
@@ -36,28 +36,28 @@ const Login = () => {
         <div className="text-5xl cursor-pointer">
           <i onClick={googleLogin} className="fa-brands fa-google"></i>
         </div>
+        {haveAccount ? (
+          <div className="flex justify-center gap-3 text-3xl py-10">
+            <p>계정이 없으신가요?</p>
+            <p
+              onClick={handleLoginPage}
+              className="font-bold cursor-pointer text-green-500"
+            >
+              가입하기
+            </p>
+          </div>
+        ) : (
+          <div className="flex justify-center text-3xl gap-3 py-10">
+            <p>이미 계정이 있으신가요?</p>
+            <p
+              onClick={handleLoginPage}
+              className="font-bold cursor-pointer text-blue-500"
+            >
+              로그인하기
+            </p>
+          </div>
+        )}
       </div>
-      {haveAccount ? (
-        <div className="flex justify-center gap-3 text-3xl">
-          <p>계정이 없으신가요?</p>
-          <p
-            onClick={handleLoginPage}
-            className="font-bold cursor-pointer text-green-500"
-          >
-            가입하기
-          </p>
-        </div>
-      ) : (
-        <div className="flex justify-center text-3xl gap-3">
-          <p>이미 계정이 있으신가요?</p>
-          <p
-            onClick={handleLoginPage}
-            className="font-bold cursor-pointer text-blue-500"
-          >
-            로그인하기
-          </p>
-        </div>
-      )}
     </div>
   );
 };
