@@ -139,14 +139,14 @@ const Comment = ({
             placeholder="댓글을 작성해주세요."
             maxLength={100}
           />
-          <div onClick={submitReply} className="text-xl">
+          <div onClick={submitReply} className="text-3xl">
             <i className="fa-solid fa-circle-arrow-up"></i>
           </div>
           <div
             onClick={() => {
               setReplyInit(false);
             }}
-            className="text-xl"
+            className="text-3xl"
           >
             <i className="fa-solid fa-xmark"></i>
           </div>

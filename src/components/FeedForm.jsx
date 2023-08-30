@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { createFeed } from "../fireUtil";
 import { useNavigate } from "react-router-dom";
+import uploadImage from "../images/uploadImage.png";
 
 const FeedForm = ({ nowUser, feedList, setFeedList }) => {
-  const defaultImgUrl =
-    "https://firebasestorage.googleapis.com/v0/b/manstagram-77636.appspot.com/o/38bEHAI7i494M9oxAHWG%2F126477.png?alt=media&token=931c054b-e9f7-4fbd-9f41-60515b6ec680";
   const navigate = useNavigate();
   const [feedText, setFeedText] = useState("");
-  const [fileUrl, setFileUrl] = useState(defaultImgUrl);
+  const [fileUrl, setFileUrl] = useState(uploadImage);
 
   const handleFeedText = (e) => {
     setFeedText(e.target.value);
@@ -45,7 +44,7 @@ const FeedForm = ({ nowUser, feedList, setFeedList }) => {
           setFileUrl
         );
         setFeedList([newFeed, ...feedList]);
-        setFileUrl(defaultImgUrl);
+        setFileUrl(uploadImage);
         setFeedText("");
         navigate("/");
       } catch (err) {
@@ -58,10 +57,10 @@ const FeedForm = ({ nowUser, feedList, setFeedList }) => {
     <div className="w-full">
       <div className="flex w-full flex-col gap-5 items-center py-32 px-5 text-4xl">
         <div className="text-5xl text-green-500 font-bold">
-          SHOW ME WHAT YOU GOT
+          기록하고 공유하고
         </div>
         <div className="relative flex flex-col items-center">
-          <img src={fileUrl} alt="uploadImg" className="w-full" />
+          <img src={fileUrl} alt="uploadImg" className="w-[70%]" />
 
           <textarea
             className="w-full my-5 h-[200px] shadow-md p-3 border"

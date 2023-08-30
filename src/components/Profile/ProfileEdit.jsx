@@ -48,6 +48,10 @@ const ProfileEdit = ({
     setIntroduction(e.target.value);
   };
 
+  const handlePhone = (e) => {
+    setPhoneNumber(e.target.value);
+  };
+
   /* 유저 수정 */
   const handleEditProfile = async (e) => {
     e.preventDefault();
@@ -70,14 +74,14 @@ const ProfileEdit = ({
 
   return (
     <div className="fixed flex flex-col rounded-xl shadow-lg m-16 py-10 z-50 bg-white">
-      <div className="flex flex-row text-3xl justify-between border-b-2 p-5">
+      <div className="flex flex-row text-3xl items-end justify-between border-b-2 p-5">
         <button
           className="p-5 font-bold hover:text-rose-500"
           onClick={handleOpenEdit}
         >
           취소
         </button>
-        <h3 className="font-bold text-4xl">프로필 편집</h3>
+        <h3 className="font-bold text-4xl p-5">프로필 편집</h3>
         <button
           className="p-5 font-bold hover:text-blue-700 text-blue-500"
           onClick={handleEditProfile}
@@ -122,7 +126,7 @@ const ProfileEdit = ({
             className="w-full border p-3"
             placeholder="'-' 포함 하여 작성"
             type="text"
-            onChange={null}
+            onChange={handlePhone}
           />
         </div>
       </div>

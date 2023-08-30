@@ -33,17 +33,17 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-5">
           <div className="flex flex-col relative">
-            <div className="flex flex-row p-3 gap-2 shadow-md items-center w-[500px] xl:w-[800px] rounded-md bg-neutral-200">
+            <div className="flex flex-row p-3 gap-2 shadow-md items-center w-[500px] xl:w-[800px] rounded-md bg-neutral-100">
               <BiSearch className="mx-3" size={40} />
               <input
-                className="bg-transparent text-xl flex-1"
+                className="bg-transparent text-2xl flex-1"
                 onChange={(e) => {
                   setSearchInput(e.target.value);
                 }}
                 value={searchInput}
                 name="search"
                 type="text"
-                placeholder="검색"
+                placeholder="닉네임 검색..."
               />
             </div>
             {searchResult.length > 0 && (
@@ -54,7 +54,7 @@ const Header = () => {
               />
             )}
           </div>
-          <AiOutlineHeart className="cursor-pointer" size={60} />
+          <AiOutlineHeart onClick={()=>{window.alert("지원하지 않는 기능입니다.")}} className="cursor-pointer" size={60} />
         </div>
       </div>
     </div>
