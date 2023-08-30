@@ -26,6 +26,8 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
     fetchProfileUser();
   }, [nowUser, profileUser.id, userId]);
 
+  console.log(nowUser.profilePicUrl);
+
   return (
     <div className="flex w-full lg:w-[1050px] my-16 px-auto flex-col relative">
       <ProfileInfo

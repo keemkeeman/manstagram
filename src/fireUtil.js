@@ -117,12 +117,11 @@ export const updateFeed = async (
     };
 
     /* 이미지 처리 */
-    if (newFileUrl) {
+    if (newFileUrl !== feed.imgUrl) {
       /* Storage 업데이트 */
       /* 이전 사진 삭제하고*/
-      if (feed.imgUrl) {
-        await deleteObject(ref(storage, feed.imgUrl));
-      }
+      await deleteObject(ref(storage, feed.imgUrl));
+
       /* 새로운 사진 등록 */
       const fileRef = ref(storage, `${feed.creatorId}/${uuidv4()}`);
       const response = await uploadString(fileRef, newFileUrl, "data_url");
@@ -487,35 +486,32 @@ export const updateUser = async (
   introduction
 ) => {
   try {
+    const updatedFields = {};
     /* 이미지 처리 */
-    if (profilePicUrl) {
+    if (profilePicUrl !== nowUser.profilePicUrl) {
       /* Storage 업데이트 */
-      /* 이전 사진 삭제하고*/
-      if (nowUser.profilePicUrl) {
-        await deleteObject(ref(storage, nowUser.profilePicUrl));
-      }
-      /* storage 추가 */
+      await deleteObject(ref(storage, nowUser.profilePicUrl));
+
       const fileRef = ref(storage, `${nowUser.id}/${uuidv4()}`);
       const response = await uploadString(fileRef, profilePicUrl, "data_url");
       const imgUrl = await getDownloadURL(response.ref);
-      /* firestore 추가 */
-      const userRef = doc(db, "users", nowUser.id);
-      const updatedFields = {}; // 빈 객체를 만들어 변경할 프로퍼티를 수집합니다.
-
-      if (nic) updatedFields.nickName = nic;
-      if (phoneNumber) updatedFields.phoneNumber = phoneNumber;
-      if (imgUrl) updatedFields.profilePicUrl = imgUrl;
-      if (introduction) updatedFields.introduction = introduction;
-
-      await updateDoc(userRef, updatedFields);
-
-      setNowUser((prev) => ({
-        ...prev,
-        ...updatedFields, // 변경된 프로퍼티를 기존 데이터에 병합합니다.
-      }));
+      updatedFields.profilePicUrl = imgUrl;
     }
+
+    /* firestore 추가 */
+    const userRef = doc(db, "users", nowUser.id);
+    if (nic) updatedFields.nickName = nic;
+    if (phoneNumber) updatedFields.phoneNumber = phoneNumber;
+    if (introduction) updatedFields.introduction = introduction;
+
+    await updateDoc(userRef, updatedFields);
+
+    setNowUser((prev) => ({
+      ...prev,
+      ...updatedFields, // 변경된 프로퍼티를 기존 데이터에 병합합니다.
+    }));
   } catch (error) {
-    console.error(`User Update Error:`, error);
+    console.error(`유저 수정 에러`, error);
   }
 };
 

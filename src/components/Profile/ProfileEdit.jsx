@@ -10,10 +10,10 @@ const ProfileEdit = ({
   setIsEditOpen,
   handleOpenEdit,
 }) => {
-  const [nic, setNic] = useState(nowUser.nickName);
-  const [phoneNumber, setPhoneNumber] = useState(nowUser.phoneNumber);
+  const [nic, setNic] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [profilePicUrl, setProfilePicUrl] = useState(nowUser.profilePicUrl);
-  const [introduction, setIntroduction] = useState(nowUser.introduction);
+  const [introduction, setIntroduction] = useState("");
   const navigate = useNavigate();
 
   /* 이미지 url 생성 */
@@ -118,7 +118,12 @@ const ProfileEdit = ({
         </div>
         <div className="flex flex-row">
           <label className="font-semibold w-[200px]">휴대폰 번호</label>
-          <input className="w-full border p-3" placeholder="'-' 포함 하여 작성" type="text" onChange={null} />
+          <input
+            className="w-full border p-3"
+            placeholder="'-' 포함 하여 작성"
+            type="text"
+            onChange={null}
+          />
         </div>
       </div>
       <div className="flex flex-col items-center gap-14 my-10 text-2xl">
