@@ -22,7 +22,7 @@ const Login = () => {
   return (
     <div className="flex flex-col w-[70%]">
       <div className="flex flex-col gap-12 items-center h-full py-48 px-10">
-        <div className="font-bold text-6xl w-full text-left">
+        <div className="flex flex-col gap-5 font-bold text-6xl w-full text-left">
           <p>안녕하세요!</p>
           <p>만스타그램입니다.</p>
         </div>

@@ -86,7 +86,7 @@ const ProfileEdit = ({
         </button>
       </div>
       <div className="flex flex-col gap-14 p-5 my-5 text-2xl">
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-row">
           <label className="font-semibold w-[200px]">닉네임</label>
           <input
             className="w-full border p-3"
@@ -96,7 +96,7 @@ const ProfileEdit = ({
             onChange={handleNic}
           />
         </div>
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-row">
           <label className="font-semibold w-[200px]">프로필 사진</label>
           <input
             className="w-full"

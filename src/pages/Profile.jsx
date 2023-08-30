@@ -24,7 +24,7 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
       setProfileUser(await getProfileUser(userId, setProfileFeedList));
     };
     fetchProfileUser();
-  }, [nowUser.id, profileUser.id, userId]);
+  }, [nowUser, profileUser.id, userId]);
 
   return (
     <div className="flex w-full lg:w-[1050px] my-16 px-auto flex-col relative">

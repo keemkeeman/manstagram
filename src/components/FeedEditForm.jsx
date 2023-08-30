@@ -11,8 +11,6 @@ const FeedEditForm = ({
   const [newFileUrl, setNewFileUrl] = useState(imgSrc);
   const [newText, setNewText] = useState(feed.feedText);
 
-  console.log(newFileUrl);
-
   const handleEditClose = () => {
     setIsEditOpen(false);
   };
@@ -40,9 +38,12 @@ const FeedEditForm = ({
 
   /* 피드 수정 */
   const handleEdit = async () => {
-    const updatedList = await updateFeed(feed, newText, feedList, newFileUrl);
-    setFeedList(updatedList);
-    setIsEditOpen(false);
+    try {
+      await updateFeed(feed, newText, feedList, newFileUrl, setFeedList);
+      setIsEditOpen(false);
+    } catch (error) {
+      console.error("피드 수정 에러", error);
+    }
   };
 
   /* 피드 삭제 */

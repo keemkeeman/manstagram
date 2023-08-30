@@ -104,7 +104,13 @@ export const getProfilePic = async (feed) => {
 };
 
 /* 3. 피드 수정 */
-export const updateFeed = async (feed, newText, feedList, newFileUrl) => {
+export const updateFeed = async (
+  feed,
+  newText,
+  feedList,
+  newFileUrl,
+  setFeedList
+) => {
   try {
     const updatedFeedData = {
       feedText: newText,
@@ -138,9 +144,9 @@ export const updateFeed = async (feed, newText, feedList, newFileUrl) => {
     const prevList = feedList.slice(0, feedIndex);
     const nextList = feedList.slice(feedIndex + 1);
     const newList = [...prevList, updatedFeed, ...nextList];
-    return newList;
-  } catch (err) {
-    console.error(`Feed Update error: ${err.error}`);
+    setFeedList(newList);
+  } catch (error) {
+    console.error(`피드 수정 에러`, error);
   }
 };
 
@@ -149,9 +155,8 @@ export const deleteFeed = async (feed, feedList, setFeedList) => {
   try {
     const ok = window.confirm("게시물을 삭제하시겠습니까?");
     if (ok) {
-      if (feed.id) {
-        await deleteDoc(doc(db, "feeds", feed.id));
-      }
+      await deleteDoc(doc(db, "feeds", feed.id));
+
       if (feed.imgUrl) {
         await deleteObject(ref(storage, feed.imgUrl));
       }

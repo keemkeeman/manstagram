@@ -25,6 +25,8 @@ function App() {
       setInit(true);
     });
   }, []);
+  
+  console.log("rander")
 
   return (
     <>
