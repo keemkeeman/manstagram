@@ -25,7 +25,6 @@ import {
   uploadString,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-import defaultImage from "./images/defaultImage.jpg";
 
 /* 피드 CRUD */
 
@@ -432,7 +431,7 @@ export const createUser = async (email, pw) => {
       email: email,
       nickName: "임시 닉네임",
       phoneNumber: "",
-      profilePicUrl: defaultImage,
+      profilePicUrl: "",
       introduction: "",
     });
   } catch (err) {
@@ -448,7 +447,7 @@ export const signInUser = async (email, pw) => {
     if (err.code === "auth/user-not-found" || "auth/wrong-password") {
       window.alert("이메일 또는 비밀번호를 확인해주세요.");
     }
-    console.error(`Login error: ${err.error}`);
+    console.error("로그인 에러", err);
   }
 };
 
@@ -458,19 +457,16 @@ export const logOut = async () => {
 };
 
 /* 유저 읽기 */
-export const getUser = async (setNowUser) => {
+export const getUser = async (loggedUser) => {
   try {
     const userSnap = await getDocs(
-      query(
-        collection(db, "users"),
-        where("email", "==", auth.currentUser.email)
-      )
+      query(collection(db, "users"), where("email", "==", loggedUser.email))
     );
     const users = userSnap.docs.map((user) => ({
       id: user.id,
       ...user.data(),
     }));
-    setNowUser(users[0]);
+    return users[0];
   } catch (err) {
     console.error(`User Get error: ${err.error}`);
   }
@@ -479,7 +475,6 @@ export const getUser = async (setNowUser) => {
 /* 유저 정보 수정 */
 export const updateUser = async (
   nowUser,
-  setNowUser,
   nic,
   phoneNumber,
   profilePicUrl,
@@ -488,10 +483,11 @@ export const updateUser = async (
   try {
     const updatedFields = {};
     /* 이미지 처리 */
-    if (profilePicUrl !== nowUser.profilePicUrl) {
-      /* Storage 업데이트 */
-      await deleteObject(ref(storage, nowUser.profilePicUrl));
-
+    if (profilePicUrl) {
+      if (nowUser.profilePicUrl) {
+        /* Storage 업데이트 */
+        await deleteObject(ref(storage, nowUser.profilePicUrl));
+      }
       const fileRef = ref(storage, `${nowUser.id}/${uuidv4()}`);
       const response = await uploadString(fileRef, profilePicUrl, "data_url");
       const imgUrl = await getDownloadURL(response.ref);
@@ -515,34 +511,37 @@ export const updateUser = async (
 /* 유저 검색 */
 export const findUser = async (searchInput, setSearchResult) => {
   try {
-    const userSnap = await getDocs(
-      query(collection(db, "users"), where("nickName", "==", searchInput))
-    );
-
-    if (userSnap.docs.length === 0) {
-      return setSearchResult([]);
+    if (searchInput) {
+      const userSnap = await getDocs(
+        query(collection(db, "users"), where("nickName", "==", searchInput))
+      );
+      if (userSnap.docs.length === 0) {
+        return setSearchResult([]);
+      }
+      const searchResult = userSnap.docs.map((user) => ({
+        id: user.id,
+        ...user.data(),
+      }));
+      setSearchResult(searchResult);
     }
-
-    const searchResult = userSnap.docs.map((user) => ({
-      id: user.id,
-      ...user.data(),
-    }));
-    setSearchResult(searchResult);
   } catch (error) {
-    throw new Error(error);
+    console.error("사용자 검색 에러", error);
   }
 };
 
 /* 유저 탈퇴 */
-export const deleteAccount = async () => {
+export const deleteAccount = async (ok) => {
   try {
-    const ok = window.confirm("are you sure?");
     if (ok) {
+      /* firestore 에서 삭제 */
+      await deleteDoc(doc(db, "users", auth.currentUser.uid));
       /* auth 에서 삭제 */
-      await deleteUser(auth.currentUser);
+      await deleteUser(auth.currentUser.uid);
+    } else {
+      return;
     }
-  } catch (err) {
-    console.error(`User Delete Error: ${err.error}`);
+  } catch (error) {
+    console.error("회원 탈퇴 에러", error);
   }
 };
 

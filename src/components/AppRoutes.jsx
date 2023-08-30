@@ -6,15 +6,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import FeedForm from "./FeedForm";
 
-const AppRoutes = ({
-  isLoggedIn,
-  setIsLoggedIn,
-  nowUser,
-  setNowUser,
-  feedList,
-  setFeedList,
-}) => {
-  const homeRoutes = !isLoggedIn ? (
+const AppRoutes = ({ nowUser, setNowUser, feedList, setFeedList }) => {
+  const homeRoutes = !nowUser ? (
     <Route path="/" element={<Login />} />
   ) : (
     <>
@@ -40,13 +33,7 @@ const AppRoutes = ({
       />
       <Route
         path="/profile/:userId"
-        element={
-          <Profile
-            setIsLoggedIn={setIsLoggedIn}
-            nowUser={nowUser}
-            setNowUser={setNowUser}
-          />
-        }
+        element={<Profile nowUser={nowUser} setNowUser={setNowUser} />}
       />
     </>
   );
@@ -55,7 +42,7 @@ const AppRoutes = ({
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <div className="relative flex justify-center mx-auto py-20">
         <Routes>{homeRoutes}</Routes>
-        {isLoggedIn && (
+        {nowUser && (
           <>
             <Header />
             <Footer nowUser={nowUser} />

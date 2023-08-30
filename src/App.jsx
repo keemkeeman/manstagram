@@ -6,34 +6,36 @@ import "./index.css"; // 임포트 꼭 하자!
 import Loading from "./components/Loading";
 
 function App() {
-  const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [nowUser, setNowUser] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [nowUser, setNowUser] = useState({});
   const [feedList, setFeedList] = useState([]);
 
   /* 로그인 정보 받아오기 */
   useEffect(() => {
-    auth.onAuthStateChanged((loggedUser) => {
-      if (loggedUser) {
-        console.log("login");
-        setIsLoggedIn(true);
-        getUser(setNowUser);
-      } else {
-        console.log("logout");
-        setIsLoggedIn(false);
-      }
-      setInit(true);
-    });
+    setLoading(true);
+    try {
+      auth.onAuthStateChanged(async (loggedUser) => {
+        if (loggedUser) {
+          console.log("login");
+          const response = await getUser(loggedUser);
+          setNowUser(response);
+        } else {
+          console.log("logout");
+          setNowUser(null);
+        }
+      });
+    } catch (error) {
+      console.error("로그인 정보 가져오기 에러", error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
-  
-  console.log("rander")
+  console.log("rander");
 
   return (
     <>
-      {init ? (
+      {!loading ? (
         <AppRoutes
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
           nowUser={nowUser}
           setNowUser={setNowUser}
           feedList={feedList}

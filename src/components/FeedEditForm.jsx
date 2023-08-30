@@ -52,8 +52,15 @@ const FeedEditForm = ({
 
   /* 피드 삭제 */
   const handleDelete = async () => {
-    await deleteFeed(feed, feedList, setFeedList);
-    await deleteFeedComments(feed);
+    setLoading(true);
+    try {
+      await deleteFeed(feed, feedList, setFeedList);
+      await deleteFeedComments(feed);
+    } catch (error) {
+      console.error("피드 삭제 오류", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

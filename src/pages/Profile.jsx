@@ -1,20 +1,21 @@
 import ProfileInfo from "../components/Profile/ProfileInfo";
 import ProfileFeedList from "../components/Profile/ProfileFeedList";
 import ProfileEdit from "../components/Profile/ProfileEdit";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProfileUser } from "../fireUtil";
 import BackDrop from "../layouts/BackDrop";
 import ReactDom from "react-dom";
 import Loading from "../components/Loading";
 
-const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
+const Profile = ({ nowUser, setNowUser }) => {
   const { userId } = useParams();
   const [profileUser, setProfileUser] = useState({});
   const [profileFeedList, setProfileFeedList] = useState([]);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const portalElement = document.getElementById("layout");
+  const navigate = useNavigate();
 
   const handleOpenEdit = () => {
     setIsEditOpen((prev) => !prev);
@@ -26,6 +27,10 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
     const fetchProfileUser = async () => {
       try {
         const response = await getProfileUser(userId, setProfileFeedList);
+        if (!response) {
+          window.alert("탈퇴한 회원입니다.");
+          navigate("/");
+        }
         setProfileUser(response);
       } catch (error) {
         console.error("프로필 정보 불러오기 오류", error);
@@ -34,7 +39,7 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
       }
     };
     fetchProfileUser();
-  }, [nowUser, profileUser.id, userId]);
+  }, [userId, nowUser]);
 
   return (
     <div className="flex w-full lg:w-[1050px] my-16 px-auto flex-col relative">
@@ -45,8 +50,6 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
           <ProfileInfo
             profileUser={profileUser}
             nowUser={nowUser}
-            setIsLoggedIn={setIsLoggedIn}
-            setNowUser={setNowUser}
             profileFeedList={profileFeedList}
             setIsEditOpen={setIsEditOpen}
           />
@@ -63,7 +66,6 @@ const Profile = ({ setIsLoggedIn, nowUser, setNowUser }) => {
                 <>
                   <BackDrop toggle={setIsEditOpen} />
                   <ProfileEdit
-                    setIsLoggedIn={setIsLoggedIn}
                     nowUser={nowUser}
                     setNowUser={setNowUser}
                     setIsEditOpen={setIsEditOpen}

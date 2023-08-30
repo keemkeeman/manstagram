@@ -4,7 +4,6 @@ import { logOut, updateUser, deleteAccount } from "../../fireUtil";
 import { useNavigate } from "react-router-dom";
 
 const ProfileEdit = ({
-  setIsLoggedIn,
   nowUser,
   setNowUser,
   setIsEditOpen,
@@ -13,7 +12,7 @@ const ProfileEdit = ({
 }) => {
   const [nic, setNic] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [profilePicUrl, setProfilePicUrl] = useState(nowUser.profilePicUrl);
+  const [profilePicUrl, setProfilePicUrl] = useState("");
   const [introduction, setIntroduction] = useState("");
   const navigate = useNavigate();
 
@@ -38,7 +37,7 @@ const ProfileEdit = ({
   /* 로그아웃 */
   const handleLogout = () => {
     logOut();
-    setIsLoggedIn(false);
+    setNowUser(null);
   };
 
   const handleNic = (e) => {
@@ -56,16 +55,16 @@ const ProfileEdit = ({
   /* 유저 수정 */
   const handleEditProfile = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
       const updatedData = await updateUser(
         nowUser,
-        setNowUser,
         nic,
         phoneNumber,
         profilePicUrl,
         introduction
       );
+
       setNowUser((prev) => ({
         ...prev,
         ...updatedData, // 변경된 프로퍼티를 기존 데이터에 병합합니다.
@@ -79,9 +78,18 @@ const ProfileEdit = ({
   };
 
   /* 유저 삭제 */
-  const handleDeleteAccount = () => {
-    deleteAccount();
-    navigate("/");
+  const handleDeleteAccount = async () => {
+    setLoading(true);
+    const ok = window.confirm("탈퇴하시겠습니까?");
+    try {
+      await deleteAccount(ok);
+      setNowUser(null);
+      navigate("/");
+    } catch (error) {
+      console.error("유저 탈퇴 에러", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

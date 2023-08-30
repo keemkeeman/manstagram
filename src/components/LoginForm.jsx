@@ -7,7 +7,7 @@ import {
   pwValidationAtom,
 } from "./recoil/Atoms";
 
-const LoginForm = ({ haveAccount }) => {
+const LoginForm = ({ haveAccount, setLoading }) => {
   const [email, setEmail] = useRecoilState(emailAtom);
   const isValidEmail = useRecoilValue(emailValidationAtom);
   const [pw, setPw] = useRecoilState(pwAtom);
@@ -24,21 +24,35 @@ const LoginForm = ({ haveAccount }) => {
   /* 회원 생성 */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isValidEmail || !isValidPw) {
-      window.alert("이메일 또는 비밀번호가 올바르지 않습니다.");
-    } else {
-      await createUser(email, pw);
-      setEmail("");
-      setPw("");
+    setLoading(true);
+    try {
+      if (!isValidEmail || !isValidPw) {
+        window.alert("이메일 또는 비밀번호가 올바르지 않습니다.");
+      } else {
+        await createUser(email, pw);
+        setEmail("");
+        setPw("");
+      }
+    } catch (error) {
+      console.error("회원 `가입 에러", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   /* 회원 로그인 */
   const handleLogin = async (e) => {
     e.preventDefault();
-    await signInUser(email, pw);
-    setEmail("");
-    setPw("");
+    setLoading(true);
+    try {
+      await signInUser(email, pw);
+      setEmail("");
+      setPw("");
+    } catch (error) {
+      console.error("로그인 에러", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
