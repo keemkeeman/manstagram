@@ -17,6 +17,8 @@ import {
   query,
   where,
   getDoc,
+  startAt,
+  endAt,
 } from "firebase/firestore";
 import {
   deleteObject,
@@ -513,7 +515,12 @@ export const findUser = async (searchInput, setSearchResult) => {
   try {
     if (searchInput) {
       const userSnap = await getDocs(
-        query(collection(db, "users"), where("nickName", "==", searchInput))
+        query(
+          collection(db, "users"),
+          orderBy("nickName"),
+          startAt(searchInput),
+          endAt(searchInput + "\uf8ff") // uf8ff는 모든 문자보다 큰 값을 나타냄 그래서 검색어로 시작하는 모든 문자열 검색
+        )
       );
       if (userSnap.docs.length === 0) {
         return setSearchResult([]);

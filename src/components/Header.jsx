@@ -46,7 +46,7 @@ const Header = () => {
                 placeholder="닉네임 검색..."
               />
             </div>
-            {searchResult.length > 0 && (
+            {searchInput !== "" && searchResult.length > 0 && (
               <SearchResult
                 searchResult={searchResult}
                 setSearchResult={setSearchResult}
