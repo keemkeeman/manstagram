@@ -28,4 +28,4 @@ Vercel
 ![image](https://github.com/keemkeeman/manstagram/assets/82154123/f9a3a9cb-0372-4789-a0ff-070ca6175142)
 - vercel로 배포(CI, CD)
 - 백엔드 파이어베이스 서버리스
-- 이미지는 database, 나머지 정보는 firestore 활용
+- 이미지는 storage, 나머지 정보는 firestore 활용
