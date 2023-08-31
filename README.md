@@ -6,14 +6,14 @@
 https://manstagram.vercel.app/
 
 ## Stacks
-Html, Javascript, React, Firebase, Tailwind
-
-## 상태관리
-recoil
+Html, Javascript, React, Tailwind, recoil, Firebase(Auth, Stoage, Database)
 
 ## Deploy
 Vercel
 
 ## Features
-Firebase Auth, Firebase Stoage, Firestore Database, Google authentication,
-사용자 CRUD, 게시물 CRUD, 댓글 CRUD, 사용자 검색, 좋아요, fetch 중 로딩 처리
+사용자 인증(로그인, 로그아웃), 구글 로그인, 사용자 CRUD, 게시물 CRUD,
+댓글 CRUD, 사용자 검색, 좋아요, fetch 중 로딩 처리
+
+## Roadmap
+게시물 페이징 처리, 무한 스크롤, 권한별 라우팅 제어
