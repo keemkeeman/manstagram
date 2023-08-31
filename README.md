@@ -11,7 +11,7 @@ https://manstagram.vercel.app/
 - react-icons v4
 - react-spinners
 - recoil
-- tailwind v3
+- tailwindcss v3
 - firebase v10 (Auth, Stoage, Database)
 
 ## Deploy
