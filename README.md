@@ -23,3 +23,9 @@ Vercel
 
 ## Roadmap
 게시물 페이징 처리, 무한 스크롤, 권한별 라우팅 제어, PWA
+
+## Architecture
+![image](https://github.com/keemkeeman/manstagram/assets/82154123/f9a3a9cb-0372-4789-a0ff-070ca6175142)
+- vercel로 배포(CI, CD)
+- 백엔드 파이어베이스 서버리스
+- 이미지는 database, 나머지 정보는 firestore 활용
