@@ -1,12 +1,18 @@
 ## 만스타그램
-소셜 네트워크 서비스 만스타그램입니다.
-주요 기능과 UI는 인스타그램에서 가져왔고 리액트JS + 파이어베이스 서버리스로 구현하였습니다.
+소셜 네트워크 서비스의 주요 기능을 리액트JS + 파이어베이스 서버리스로 구현하였습니다.
 
-## 링크
+## Link
 https://manstagram.vercel.app/
 
-## Stacks
-Html, Javascript, React, Tailwind, recoil, Firebase(Auth, Stoage, Database)
+## Libraries
+- react v18.2
+- react-dom v18.2
+- react-router-dom v6.14
+- react-icons v4
+- react-spinners
+- recoil
+- tailwind v3
+- firebase v10 (Auth, Stoage, Database)
 
 ## Deploy
 Vercel
